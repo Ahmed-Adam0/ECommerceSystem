@@ -1,6 +1,6 @@
 <Solution>
   <Folder Name="/Application/">
-    <Project Path="ECommerce.Application/ECommerce.Applicatin.csproj" />
+    <Project Path="ECommerce.Application/ECommerce.ApplicationLayer.csproj" />
   </Folder>
   <Folder Name="/Domain/">
     <Project Path="ECommerce.Domain/ECommerce.Domain.csproj" />

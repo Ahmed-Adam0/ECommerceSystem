@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ECommerce.Application\ECommerce.Applicatin.csproj" />
+    <ProjectReference Include="..\ECommerce.Application\ECommerce.ApplicationLayer.csproj" />
     <ProjectReference Include="..\ECommerce.Infrastructure\ECommerce.Infrastructure.csproj" />
   </ItemGroup>
 
