@@ -20,7 +20,7 @@ namespace ECommerce.Infrastructure.Data
             if (!optionsBuilder.IsConfigured)
             {
                 // SQL Server connection string
-                optionsBuilder.UseSqlServer("Data Source =.\\SQLEXPRESS; Initial Catalog = TestOnionArch; Integrated Security = True; Encrypt = False;").EnableDetailedErrors(true);
+                optionsBuilder.UseSqlServer("Data Source =.\\SQLEXPRESS; Initial Catalog = ECommerceSystem; Integrated Security = True; Encrypt = False;").EnableDetailedErrors(true);
             }
         }
 
@@ -142,6 +142,7 @@ namespace ECommerce.Infrastructure.Data
                     Id = 1,
                     FullName = "Admin User",
                     Username = "admin",
+                    Email = "admin@example.com",
                     Password = "admin123",
                     Role = Domain.Enums.UserRole.Admin,
                     createdAt = new DateTime(2026, 1, 1)
@@ -151,6 +152,7 @@ namespace ECommerce.Infrastructure.Data
                     Id = 2,
                     FullName = "Customer User",
                     Username = "customer",
+                    Email = "customer@example.com",
                     Password = "customer123",
                     Role = Domain.Enums.UserRole.Customer,
                     createdAt = new DateTime(2026, 1, 1)

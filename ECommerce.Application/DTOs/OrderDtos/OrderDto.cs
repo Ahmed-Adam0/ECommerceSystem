@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using ECommerce.ApplicationLayer.DTOs.OrderitemDtos;
+using ECommerce.ApplicationLayer.DTOs.OrderItemDtos;
+using ECommerce.ApplicationLayer.DTOs.OrderItemDtos;
 
 namespace ECommerce.ApplicationLayer.DTOs.OrderDtos
 {
