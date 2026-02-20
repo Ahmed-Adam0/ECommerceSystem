@@ -12,7 +12,7 @@ namespace ECommerce.Presentation.WinForms
     {
         public static IServiceProvider ServiceProvider { get; private set; }
 
-        [STAThread]
+       // [STAThread]
         static void Main()
         {
             System.Windows.Forms.Application.EnableVisualStyles();

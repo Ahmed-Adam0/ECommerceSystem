@@ -11,5 +11,7 @@ namespace ECommerce.ApplicationLayer.DTOs.CartItemDtos
         public string ProductName { get; set; } // لو عايز تعرض الاسم
         public int Quantity { get; set; }
         public decimal Price { get; set; }
+        public int UserId { get; internal set; }
+        public bool IsOrdered { get; internal set; }
     }
 }

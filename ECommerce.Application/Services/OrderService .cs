@@ -24,12 +24,22 @@ namespace ECommerce.ApplicationLayer.Services
             _cartItemRepo = cartItemRepo;
         }
 
-        public List<Order> GetAllOrders()
+        public List<OrderDto> GetAllOrders()
         {
-            return _orderRepo.GetAll().ToList();
+            return _orderRepo.GetAll()
+                .Select(o => new OrderDto
+                {
+                    Id = o.Id,
+                    CustomerName = o.User.FullName,
+                    TotalPrice = o.TotalPrice,
+                    OrderDate = o.OrderDate,
+                    Status = o.Status.ToString()
+                })
+                .ToList();
         }
 
-  
+
+
         public void CreateOrder(int customerId)
         {
            
