@@ -16,12 +16,20 @@ namespace ECommerce.ApplicationLayer.Services
             _cartItemRepo = cartItemRepo;
         }
 
-        public List<CartItem> GetAllCartItems()
+        public List<CartItemDto> GetAllCartItems()
         {
             return _cartItemRepo.GetAll()
-                                .Where(ci => !ci.IsOrdered)
-                                .ToList();
+                .Select(c => new CartItemDto
+                {
+                    Id = c.Id,
+                    ProductId = c.ProductId,
+                    Quantity = c.Quantity,
+                    UserId = c.UserId,
+                    IsOrdered = c.IsOrdered
+                })
+                .ToList();
         }
+
 
 
         public void CreateCartItem(int userId, CreateCartItemDto dto)

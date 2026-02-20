@@ -8,7 +8,7 @@ namespace ECommerce.ApplicationLayer.Services
 {
     public interface IOrderService
     {
-        List<Order> GetAllOrders();
+        List<OrderDto> GetAllOrders();
         void CreateOrder(int customerId);
         void UpdateOrder(UpdateOrderDto dto);
         void DeleteOrder(int id);

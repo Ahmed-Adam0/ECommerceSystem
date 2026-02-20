@@ -8,7 +8,7 @@ namespace ECommerce.ApplicationLayer.Services
 {
     public interface IProductService
     {
-        List<Product> GetAllProducts();
+        List<ProductDto> GetAllProducts();
         void CreateProduct(CreateProductDto dto);
         void UpdateProduct(UpdateProductDto dto);
         void DeleteProduct(int id);

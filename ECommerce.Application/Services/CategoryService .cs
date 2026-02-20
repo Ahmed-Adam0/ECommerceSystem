@@ -17,9 +17,20 @@ namespace ECommerce.ApplicationLayer.Services
             _categoryRepo = categoryRepo;
         }
 
-        public List<Category> GetAllCategories()
+        public List<CategoryDto> GetAllCategories()
         {
-            return _categoryRepo.GetAll().ToList();
+          
+            var categories = _categoryRepo.GetAll().ToList();
+
+            
+            var dtoList = categories.Select(c => new CategoryDto
+            {
+                Id = c.Id,
+                Name = c.Name
+
+            }).ToList();
+
+            return dtoList;
         }
 
         public void CreateCategory(CreateCategoryDto createCategory)

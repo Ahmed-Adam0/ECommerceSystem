@@ -8,7 +8,7 @@ namespace ECommerce.ApplicationLayer.Services
 {
     public interface ICartItemService
     {
-        List<CartItem> GetAllCartItems();
+        List<CartItemDto> GetAllCartItems();
         void CreateCartItem(int userId, CreateCartItemDto dto);
         void UpdateCartItem(UpdateCartItemDto dto);
         void DeleteCartItem(int id);

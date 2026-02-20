@@ -11,5 +11,7 @@ namespace ECommerce.ApplicationLayer.DTOs.ProductDtos
         public decimal Price { get; set; }
         public string Description { get; set; }
         public string CategoryName { get; set; }
+        public int Stock { get; internal set; }
+        public int CategoryId { get; internal set; }
     }
 }

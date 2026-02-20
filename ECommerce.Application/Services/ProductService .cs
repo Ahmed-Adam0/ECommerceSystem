@@ -16,10 +16,20 @@ namespace ECommerce.ApplicationLayer.Services
             _productRepo = productRepo;
         }
 
-        public List<Product> GetAllProducts()
+        public List<ProductDto> GetAllProducts()
         {
-            return _productRepo.GetAll().ToList();
+            return _productRepo.GetAll()
+                .Select(p => new ProductDto
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Price = p.Price,
+                    Stock = p.Stock,
+                    CategoryId = p.CategoryId
+                })
+                .ToList();
         }
+
 
         public void CreateProduct(CreateProductDto dto)
         {
