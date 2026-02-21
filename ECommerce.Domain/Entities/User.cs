@@ -9,7 +9,7 @@ namespace ECommerce.Domain.Entities
     public class User:BaseEntity<int>
     {
         public string FullName { get; set; } = string.Empty;
-        public string Username { get; set; } = string.Empty;
+        //public string Username { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty; // بسيط للتسليم
         public UserRole Role { get; set; } = UserRole.Customer;
 

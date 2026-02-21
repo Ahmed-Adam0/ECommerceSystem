@@ -9,12 +9,12 @@ namespace ECommerce.ApplicationLayer.Services
 {
     public interface IUserService
     {
-        List<User> GetAllCustomers();
-        void CreateCustomer(CreateUserDto dto);
+        List<UserDto> GetAllCustomers();
+        UserDto CreateCustomer(CreateUserDto dto);
         void UpdateCustomer(UpdateUserDto dto);
         void DeleteCustomer(int id);
 
-        User Login(LoginDto dto);
+        UserDto Login(LoginDto dto);
 
     }
 }
