@@ -25,11 +25,30 @@ namespace ECommerce.ApplicationLayer.Services
                     Name = p.Name,
                     Price = p.Price,
                     Stock = p.Stock,
-                    CategoryId = p.CategoryId
+                    CategoryId = p.CategoryId,
+                    ImageUrl=p.ImageUrl
                 })
                 .ToList();
         }
+        public ProductDto GetProductById(int id)
+        {
+            var product = _productRepo.GetAll()
+                .FirstOrDefault(p => p.Id == id);
 
+            if (product == null)
+                return null;
+
+            return new ProductDto
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Price = product.Price,
+                Stock = product.Stock,
+                Description=product.Description,
+                CategoryId = product.CategoryId,
+                ImageUrl=product.ImageUrl
+            };
+        }
 
         public void CreateProduct(CreateProductDto dto)
         {

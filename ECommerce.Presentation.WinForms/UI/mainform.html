@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/js/bootstrap.min.js"
+        integrity="sha512-nKXmKvJyiGQy343jatQlzDprflyB5c+tKCzGP3Uq67v+lmzfnZUi/ZT+fc6ITZfSC5HhaBKUIvr/nTLCV+7F+Q=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/css/bootstrap-grid.min.css"
+        integrity="sha512-dOjUSaLkr6G2pwQ7ry9juX+iXw5602zg1kg8yH+guR3uSEidGyCnOEQnGlr7xwu/8WE+pVm1ZNqaIs5ETTIJQg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+.nav_ul li {
+    margin-right: 20px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
+    cursor: pointer;
+}
+
+header {
+    padding: 20px 0;
+}
+
+.mycon .header-row .header-col {
+    align-items: center;
+    justify-content: space-between;
+}
+    .search {
+        position: relative;
+    }
+    .search__input {
+        padding: 8px 20px;
+        border: none;
+        border-radius: 40px;
+        width: 300px;
+        background-color: #f5f5f5;
+    }
+    .search__button {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0 8px;
+    }
+.cart-counter {
+    position: relative;
+    margin-right: 20px;
+    margin-top: 10px;
+    cursor: pointer;
+    
+}
+#fi_9454066 {
+    fill: #333;
+    font-size: 20px;
+    height: 30px;
+    width: 30px;
+}
+.cart-count-bubble {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: #5B3652;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 12px;
+}
+
+
+.hero-slider {
+    position: relative;
+    width: 100%;
+    height: 500px; /* ارتفاع الهيرو */
+    overflow: hidden;
+  }
+  
+  .slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+  }
+  
+  .slide.active {
+    opacity: 1;
+  }
+  .hero-slider {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    overflow: hidden;
+  }
+  html, body {
+    height: auto;       /* بدل 100% */
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;   /* مهم جدًا */
+}
+  
+  .slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+  }
+  
+  .slide.active {
+    opacity: 1;
+  }
+  
+  .slide-text {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #fff;
+    max-width: 50%;
+    opacity: 0;
+    transition: all 1s ease-in-out;
+  }
+  
+  .slide-text.left {
+    left: 50px;
+    text-align: left;
+  }
+  
+  .slide-text.right {
+    right: 50px;
+    text-align: right;
+  }
+  
+  /* عند تفعيل السلايد، يظهر النص مع تحريك خفيف */
+  .slide.active .slide-text {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+  }
+  
+  /* التحريك عند البداية قبل الظهور */
+  .slide-text.left {
+    transform: translateY(-50%) translateX(-50px);
+  }
+  
+  .slide-text.right {
+    transform: translateY(-50%) translateX(50px);
+  }
+  
+  .slide-text h1 {
+    font-size: 56px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  
+  .slide-text p {
+    font-size: 28px;
+  }
+
+  .category-cards {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap; 
+    margin: 70px 0;
+  }
+  
+  .card {
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    text-align: center;
+    width: calc(25% - 15px); /* 4 كاردات جنب بعض */
+    transition: transform 0.3s ease;
+    cursor: pointer;
+  }
+  
+
+  
+  .card-image img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+  }
+  
+  .card-image img:hover {
+    transform: scale(1.1); /* تكبير الصورة عند المرور */
+  }
+  
+  .card-info h3 {
+    font-size: 18px;
+    margin: 10px 0 5px 0;
+  }
+  
+  .card-info p {
+    font-size: 16px;
+    color: #666;
+  }
+
+  /* Section header */
+.best-sellers {
+    padding: 50px 20px;
+  }
+  
+  .section-header h2 {
+    font-size: 32px;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  
+  .section-header p {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 50px;
+    text-align: center;
+  }
+  
+  /* Products Grid */
+  .products-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+  }
+  
+  .product-card {
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    width: calc(25% - 15px);
+    text-align: center;
+   
+    transition: transform 0.3s ease;
+    cursor: pointer;
+  }
+  
+ 
+  /* Product Image */
+  .product-image {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+  }
+  
+  .product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  
+  .product-image .hover-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+  }
+  
+  /* Show hover image on hover */
+  .product-card:hover .hover-img {
+    opacity: 1;
+  }
+  
+  .product-card:hover .main-img {
+    opacity: 0.3; /* تعتيم الصورة الأصلية عند hover */
+  }
+  
+  /* Product Actions (Icons) */
+  .product-actions {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .product-card:hover .product-actions {
+    opacity: 1;
+  }
+  
+  .product-actions button {
+    background-color: rgba(255,255,255,0.9);
+    border: none;
+    padding: 12px 8px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .product-actions button:hover {
+    background-color: #5d3754;
+    fill: #fff;
+
+  } .product-actions button.add-cart:hover {
+    background-color: #5d3754;
+    fill: #fff !important;
+
+  }
+  
+  /* Product Info */
+  .product-card h3 {
+    font-size: 18px;
+    margin: 10px 0 5px 0;
+  }
+  
+  .product-card p {
+    font-size: 16px;
+    color: #5d3754;
+    margin-bottom: 15px;
+  }
+/* Banner full width */
+.promo-banner {
+    width: 100%;
+    height: 300px;
+    background-image: url('./images/footer.webp'); /* ضع هنا صورة البانر */
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Inner dotted border */
+  .promo-banner::before {
+    content: "";
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    border: 2px dotted rgba(255,255,255,0.5);
+    pointer-events: none;
+  }
+  
+  /* Banner Content */
+  .banner-content {
+    position: relative;
+    z-index: 2;
+    margin-left: 40px;
+    color: #fff;
+  }
+  
+  /* Discount Text */
+  .discount-text {
+    display: flex;
+    align-items: center;
+    font-size: 72px;
+    font-weight: bold;
+    gap: 15px;
+  }
+  
+  .discount-text .percent {
+    color: #5d3754;
+  }
+  
+  .discount-text .off {
+    -webkit-text-stroke: 2px #fff; /* يجعل النص مفرغ */
+    color: transparent;
+    font-size: 72px;
+  }
+  
+  /* Description Text */
+  .banner-content p {
+    font-size: 18px;
+    margin: 15px 0;
+  }
+  
+  /* Shop Button */
+  .shop-btn {
+    background-color: #ff6f61;
+    color: #fff;
+    padding: 12px 30px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .shop-btn:hover {
+    background-color: #e05550;
+  }
+</style>
+
+
+</head>
+
+<body>
+    <header>
+        <div class="container my-con">
+            <div class="row header-row justify-content-between">
+                <div class="col justify-content-between   d-flex align-items-center">
+                    <img class="img-fluid " src="./images/logo.png" alt="">
+
+                    <nav>
+                        <ul class="d-flex nav_ul " style="list-style: none; ">
+                            <li style="margin-right: 20px;">Home</li>
+                            <li>Shop</li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col justify-content-between   d-flex align-items-center">
+                    <form action="/search" class="search">
+
+                        <input class="search__input" id="Search-In-Modal" type="search" name="q"
+                            placeholder="Search our store">
+
+                        <button class="search__button">
+                            <svg class="icon icon-search" aria-hidden="true" focusable="false" role="presentation"
+                                width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M0.833313 9.16659C0.833313 4.56421 4.56427 0.833252 9.16665 0.833252C13.769 0.833252 17.5 4.56421 17.5 9.16659C17.5 11.1677 16.7946 13.004 15.6191 14.4405L19.1666 17.9881L17.9881 19.1666L14.4406 15.619C13.0041 16.7946 11.1677 17.4999 9.16665 17.4999C4.56427 17.4999 0.833313 13.7689 0.833313 9.16659ZM9.16665 2.49992C5.48475 2.49992 2.49998 5.48469 2.49998 9.16659C2.49998 12.8485 5.48475 15.8333 9.16665 15.8333C12.8486 15.8333 15.8333 12.8485 15.8333 9.16659C15.8333 5.48469 12.8486 2.49992 9.16665 2.49992Z"
+                                    fill="currentColor"></path>
+                            </svg>
+                        </button>
+
+                    </form>
+                    <div class="cart-counter">
+
+                        <svg id="fi_9454066" enable-background="new 0 0 512 512" height="20" viewBox="0 0 512 512"
+                            width="20" xmlns="http://www.w3.org/2000/svg" cursorshover="true">
+                            <path
+                                d="m182.436 381.615h-24v-114.404h24zm85.125-124.313h-24v134.221h24zm85.096 9.909h-24v114.404h24zm139.343-53.313h-23.645l-38.681 195.749c-5.696 29.01-30.366 49.281-59.99 49.281h-227.368c-29.605 0-54.286-20.265-60.019-49.281l-38.653-195.749h-23.644v-24h111.88l30.479-87.796c10.311-29.781 37.383-49.03 68.965-49.03h49.351c31.548 0 58.618 19.245 68.964 49.028l30.454 87.798h111.907zm-334.715-24h197.406l-27.724-79.928c-6.942-19.983-25.113-32.898-46.292-32.898h-49.351c-21.202 0-39.371 12.911-46.29 32.892zm286.606 24h-375.784l37.735 191.098c3.482 17.623 18.48 29.932 36.474 29.932h227.368c17.998 0 32.984-12.303 36.442-29.919z"
+                                cursorshover="true"></path>
+                        </svg>
+                        <div class="cart-count-bubble header"><span id="cart-notification-count">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="hero-slider">
+        <div class="slide active" style="background-image: url('./images/bg1.webp');">
+          <div class=" container slide-text left">
+            <h1>Welcome to Our Store</h1>
+            <p>The Best Online Shopping Experience</p>
+          </div>
+        </div>
+        <div class="slide" style="background-image: url('./images/bg2.webp');">
+          <div class="  container slide-text right">
+            <h1>Discover Our Products</h1>
+            <p>High Quality at Affordable Prices</p>
+          </div>
+        </div>
+        <div class="slide" style="background-image: url('./images/bg3.webp');">
+          <div class=" container slide-text right">
+            <h1>Fast & Secure Delivery</h1>
+            <p>Enjoy Excellent Service</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Categories -->
+<div class="category-cards container justify-content-center text-center" id="categories-container">
+</div>
+
+
+<script>
+window.chrome.webview.addEventListener('message', function (event) {
+
+    console.log("Message received from C#");
+    console.log(event.data);
+
+    let data;
+    try {
+        data = JSON.parse(event.data);
+        console.log("Parsed data:", data);
+    } catch (e) {
+        console.error("JSON parse error", e);
+        return;
+    }
+
+    // ===== Categories =====
+    if (data.categories && data.categories.length > 0) {
+        const container = document.getElementById('categories-container');
+        container.innerHTML = '';
+
+        data.categories.forEach(c => {
+            const div = document.createElement('div');
+            div.className = 'card';
+            div.innerHTML = `
+                <div class="card-image">
+                    <img src="./images/${c.ImageUrl}" alt="${c.Name}">
+                </div>
+                <div class="card-info">
+                    <h3>${c.Name}</h3>
+                </div>
+            `;
+            container.appendChild(div);
+        });
+    } else {
+        console.log("No categories found");
+    }
+
+    // ===== Products =====
+    if (data.products && data.products.length > 0) {
+        const container = document.getElementById('best-sellers-container');
+        container.innerHTML = '';
+
+       data.products.forEach(p => {
+            const div = document.createElement('div');
+            div.className = 'product-card';
+
+            div.innerHTML = `
+                <div class="product-image">
+                    <img src="./images/${p.ImageUrl}" alt="${p.Name}" class="main-img">
+                    <img src="./images/${p.ImageUrl}" alt="${p.Name}" class="hover-img">
+
+                    <div class="product-actions">
+
+                        <button class="add-cart" onclick="addToCart(${p.Id})">
+                            <svg class="cart_bags" height="20" viewBox="0 0 512 512" width="20" xmlns="http://www.w3.org/2000/svg">
+                                <path d="m182.436 381.615h-24v-114.404h24zm85.125-124.313h-24v134.221h24zm85.096 9.909h-24v114.404h24zm139.343-53.313h-23.645l-38.681 195.749c-5.696 29.01-30.366 49.281-59.99 49.281h-227.368c-29.605 0-54.286-20.265-60.019-49.281l-38.653-195.749h-23.644v-24h111.88l30.479-87.796c10.311-29.781 37.383-49.03 68.965-49.03h49.351c31.548 0 58.618 19.245 68.964 49.028l30.454 87.798h111.907zm-334.715-24h197.406l-27.724-79.928c-6.942-19.983-25.113-32.898-46.292-32.898h-49.351c-21.202 0-39.371 12.911-46.29 32.892zm286.606 24h-375.784l37.735 191.098c3.482 17.623 18.48 29.932 36.474 29.932h227.368c17.998 0 32.984-12.303 36.442-29.919z"></path>
+                            </svg>
+                        </button>
+
+                        <button class="view" onclick="viewProduct(${p.Id})">
+                            <svg width="24" height="17" viewBox="0 0 511.999 511.999" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M508.745,246.041c-4.574-6.257-113.557-153.206-252.748-153.206S7.818,239.784,3.249,246.035c-4.332,5.936-4.332,13.987,0,19.923c4.569,6.257,113.557,153.206,252.748,153.206s248.174-146.95,252.748-153.201C513.083,260.028,513.083,251.971,508.745,246.041z"/>
+                                <path d="M255.997,154.725c-55.842,0-101.275,45.433-101.275,101.275s45.433,101.275,101.275,101.275s101.275-45.433,101.275-101.275S311.839,154.725,255.997,154.725z"/>
+                            </svg>
+                        </button>
+
+                    </div>
+                </div>
+
+                <h3>${p.Name}</h3>
+                <p>$${p.Price}</p>
+            `;
+
+            container.appendChild(div);
+        });
+    } else {
+        console.log("No products found");
+    }
+});
+</script>
+
+<!-- Products -->
+<section class="best-sellers container">
+    <div class="section-header">
+        <h2>Best Sellers For You</h2>
+        <p>Discover our most popular products hand-picked for you.</p>
+    </div>
+    <div class="products-grid" id="best-sellers-container">
+        <!-- المنتجات هتتضاف هنا ديناميكيًا -->
+    </div>
+</section>
+
+
+      <section class="promo-banner">
+  <div class="banner-content">
+    <div class="discount-text">
+      <span class="percent">50%</span>
+      <span class="off">OFF</span>
+    </div>
+    <p>Grab your favorite products at half price for a limited time!</p>
+  </div>
+</section>
+
+
+
+
+
+
+      <script>
+        const slides = document.querySelectorAll('.slide');
+let currentIndex = 0;
+
+function showNextSlide() {
+  slides[currentIndex].classList.remove('active');
+  currentIndex = (currentIndex + 1) % slides.length;
+  slides[currentIndex].classList.add('active');
+}
+
+setInterval(showNextSlide, 5000);
+      </script>
+</body>
+
+</html>

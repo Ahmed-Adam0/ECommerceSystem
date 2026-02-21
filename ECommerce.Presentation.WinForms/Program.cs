@@ -6,6 +6,7 @@ using ECommerce.Infrastructure.Data;
 using ECommerce.Infrastructure.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using ECommerce.Presentation.WinForms.Forms;
+using ECommerce.Presentation.WinForms.Forms.MainForm;
 
 namespace ECommerce.Presentation.WinForms
 {
@@ -24,9 +25,13 @@ namespace ECommerce.Presentation.WinForms
 
             ServiceProvider = services.BuildServiceProvider();
 
-         
-            var loginForm = ServiceProvider.GetRequiredService<LoginForm>();
-            Application.Run(loginForm);
+
+            //var loginForm = ServiceProvider.GetRequiredService<LoginForm>();
+            //Application.Run(loginForm);
+            var productService = ServiceProvider.GetRequiredService<IProductService>();
+            var categoryService = ServiceProvider.GetRequiredService<ICategoryService>();
+            var cartItemService = ServiceProvider.GetRequiredService<ICartItemService>();
+            Application.Run(new MainForm(productService,categoryService, cartItemService));
         }
 
         private static void ConfigureServices(IServiceCollection services)

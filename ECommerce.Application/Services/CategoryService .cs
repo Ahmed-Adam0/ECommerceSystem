@@ -26,7 +26,8 @@ namespace ECommerce.ApplicationLayer.Services
             var dtoList = categories.Select(c => new CategoryDto
             {
                 Id = c.Id,
-                Name = c.Name
+                Name = c.Name,
+                ImageUrl=c.ImageUrl
 
             }).ToList();
 

@@ -20,7 +20,7 @@ namespace ECommerce.Infrastructure.Data
             if (!optionsBuilder.IsConfigured)
             {
                 // SQL Server connection string
-                optionsBuilder.UseSqlServer("Data Source =.\\SQLEXPRESS; Initial Catalog = ECommerceSystem; Integrated Security = True; Encrypt = False;").EnableDetailedErrors(true);
+                optionsBuilder.UseSqlServer("Data Source =.; Initial Catalog = ECommerceSystem; Integrated Security = True; Encrypt = False;").EnableDetailedErrors(true);
             }
         }
 
