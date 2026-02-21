@@ -19,34 +19,63 @@ namespace ECommerce.ApplicationLayer.Services
             _userRepo = userRepo;
         }
 
-        public List<User> GetAllCustomers()
+        public List<UserDto> GetAllCustomers()
         {
             return _userRepo.GetAll()
-                            .Where(x => x.Role == UserRole.Customer)
-                            .ToList();
+                .Where(x => x.Role == UserRole.Customer)
+                .Select(x => new UserDto
+                {
+                    Id = x.Id,
+                    FullName = x.FullName,
+                    Email = x.Email
+                })
+                .ToList();
         }
 
-        public void CreateCustomer(CreateUserDto dto)
+        public UserDto CreateCustomer(CreateUserDto dto)
         {
-            var entity = new User()
+            var existing = _userRepo.GetAll()
+                .FirstOrDefault(x => x.Email == dto.Email);
+
+            if (existing != null)
+                throw new Exception("Email already exists");
+
+            var entity = new User
             {
                 FullName = dto.FullName,
                 Email = dto.Email,
-                Password = dto.Password,
-                Role = UserRole.Customer
+                Password = dto.Password, 
+                Role = dto.Role
             };
 
             _userRepo.Add(entity);
+
+            return new UserDto
+            {
+                Id = entity.Id,
+                FullName = entity.FullName,
+                Email = entity.Email,
+                Role = entity.Role
+            };
         }
 
-        public User Login(LoginDto dto)
+        public UserDto Login(LoginDto dto)
         {
             var user = _userRepo.GetAll()
                 .FirstOrDefault(x =>
                     x.Email == dto.Email &&
                     x.Password == dto.Password);
 
-            return user;
+            if (user == null)
+                return null;
+
+            return new UserDto
+            {
+                Id = user.Id,
+                FullName = user.FullName,
+                Email = user.Email,
+                Role = user.Role
+            };
         }
 
         public void UpdateCustomer(UpdateUserDto dto)

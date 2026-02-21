@@ -41,9 +41,7 @@ namespace ECommerce.Infrastructure.Data
                     .IsRequired()
                     .HasMaxLength(100);
 
-                entity.Property(e => e.Username)
-                    .IsRequired()
-                    .HasMaxLength(50);
+           
 
                 entity.Property(e => e.Password)
                     .IsRequired()
@@ -141,7 +139,7 @@ namespace ECommerce.Infrastructure.Data
                 {
                     Id = 1,
                     FullName = "Admin User",
-                    Username = "admin",
+                   
                     Email = "admin@example.com",
                     Password = "admin123",
                     Role = Domain.Enums.UserRole.Admin,
@@ -151,7 +149,7 @@ namespace ECommerce.Infrastructure.Data
                 {
                     Id = 2,
                     FullName = "Customer User",
-                    Username = "customer",
+                   
                     Email = "customer@example.com",
                     Password = "customer123",
                     Role = Domain.Enums.UserRole.Customer,
