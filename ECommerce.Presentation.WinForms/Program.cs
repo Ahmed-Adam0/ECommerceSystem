@@ -27,6 +27,8 @@ namespace ECommerce.Presentation.WinForms
          
             var loginForm = ServiceProvider.GetRequiredService<LoginForm>();
             Application.Run(loginForm);
+
+           
         }
 
         private static void ConfigureServices(IServiceCollection services)
