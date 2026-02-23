@@ -13,7 +13,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Windows.Forms;
 
-namespace ECommerce.Presentation.WinForms.Forms.MainForm
+namespace ECommerce.Presentation.WinForms.Forms
 {
 
     public partial class MainForm : Form
@@ -22,7 +22,7 @@ namespace ECommerce.Presentation.WinForms.Forms.MainForm
         private readonly IProductService _productService;
         private readonly ICategoryService _categoryService;
         private readonly ICartItemService _cartItemService;
-        private int _currentUserId = 1;
+        private int _currentUserId;
 
         private WebView2 webView;
 
@@ -37,7 +37,10 @@ namespace ECommerce.Presentation.WinForms.Forms.MainForm
 
             InitializeComponent();
         }
-
+        public void SetUser(int userId)
+        {
+            _currentUserId = userId;
+        }
         private void InitializeComponent()
         {
             this.Text = "Home";
@@ -92,7 +95,7 @@ namespace ECommerce.Presentation.WinForms.Forms.MainForm
         // =========================
         private async Task SendHomePageData()
         {
-            int cartCount = await _cartItemService.GetUserCartCountAsync(1);
+            int cartCount = await _cartItemService.GetUserCartCountAsync(_currentUserId);
 
             var allProductsList = await _productService.GetAllProductsAsync();
 
@@ -157,7 +160,7 @@ namespace ECommerce.Presentation.WinForms.Forms.MainForm
                     ? qtyProp.GetInt32()
                     : 1;
 
-            int userId = 1;
+            int userId = _currentUserId;
 
             // 1️⃣ هات المنتج
             var product = _productService.GetProductById(productId);
@@ -236,7 +239,7 @@ namespace ECommerce.Presentation.WinForms.Forms.MainForm
 
         private async Task OpenCartPage()
         {
-            int userId = 1;
+            int userId = _currentUserId;
 
             string cartPath = Path.Combine(Application.StartupPath, "UI", "cart.html");
 

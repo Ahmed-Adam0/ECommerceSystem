@@ -84,11 +84,15 @@ namespace ECommerce.Presentation.WinForms.Forms
             }
             else
             {
-                var customerForm = Program.ServiceProvider.GetRequiredService<CustomerHomeForm>();
-                customerForm.ShowDialog();
+                var mainForm = Program.ServiceProvider.GetRequiredService<MainForm>();
+                mainForm.SetUser(user.Id);
+
+                this.Hide();
+                mainForm.ShowDialog();
+                this.Close();
             }
 
-            this.Show();
+
         }
     }
 }

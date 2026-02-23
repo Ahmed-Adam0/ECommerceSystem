@@ -6,7 +6,7 @@ using ECommerce.Infrastructure.Data;
 using ECommerce.Infrastructure.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using ECommerce.Presentation.WinForms.Forms;
-using ECommerce.Presentation.WinForms.Forms.MainForm;
+using ECommerce.Presentation.WinForms.Forms;
 
 namespace ECommerce.Presentation.WinForms
 {
@@ -22,7 +22,6 @@ namespace ECommerce.Presentation.WinForms
 
             var services = new ServiceCollection();
             ConfigureServices(services);
-
             ServiceProvider = services.BuildServiceProvider();
 
 
@@ -52,6 +51,7 @@ namespace ECommerce.Presentation.WinForms
             services.AddTransient<RegisterForm>();
             services.AddTransient<AdminDashboardForm>();
             services.AddTransient<CustomerHomeForm>();
+            services.AddTransient<MainForm>();
         }
     }
 }
