@@ -42,6 +42,7 @@
             button5 = new Button();
             textBox4 = new TextBox();
             button6 = new Button();
+            tabPage3 = new TabPage();
             Products.SuspendLayout();
             tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
@@ -53,6 +54,7 @@
             // 
             Products.Controls.Add(tabPage1);
             Products.Controls.Add(tabPage2);
+            Products.Controls.Add(tabPage3);
             Products.Location = new Point(-4, 0);
             Products.Name = "Products";
             Products.SelectedIndex = 0;
@@ -213,6 +215,17 @@
             button6.UseVisualStyleBackColor = false;
             button6.Click += button6_Click;
             // 
+            // tabPage3
+            // 
+            tabPage3.Location = new Point(4, 29);
+            tabPage3.Name = "tabPage3";
+            tabPage3.Padding = new Padding(3);
+            tabPage3.Size = new Size(799, 416);
+            tabPage3.TabIndex = 2;
+            tabPage3.Text = "Orders";
+            tabPage3.UseVisualStyleBackColor = true;
+            tabPage3.UseWaitCursor = true;
+            // 
             // AdminDashboardForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -248,5 +261,6 @@
         private Button button5;
         private TextBox textBox4;
         private Button button6;
+        private TabPage tabPage3;
     }
 }
