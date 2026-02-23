@@ -14,5 +14,7 @@ namespace ECommerce.ApplicationLayer.Services
         void UpdateProduct(UpdateProductDto dto);
         void DeleteProduct(int id);
         Task SaveChangesAsync();
+        public List<ProductDto> GetAllProducts();
+
     }
 }

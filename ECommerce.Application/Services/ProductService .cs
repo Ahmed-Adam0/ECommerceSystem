@@ -38,6 +38,26 @@ namespace ECommerce.ApplicationLayer.Services
                 })
                 .ToListAsync();
         }
+        public List<ProductDto> GetAllProducts()
+        {
+            return _productRepo.GetAll()
+                .AsNoTracking()
+                .Include(p => p.Images)
+                .Include(p => p.Category)
+                .Where(p => p.Stock > 0)
+                .Select(p => new ProductDto
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Price = p.Price,
+                    Stock = p.Stock,
+                    CategoryId = p.CategoryId,
+                    CategoryName = p.Category.Name,
+                    MainImageUrl = p.ImageUrl,
+                    ImageUrls = p.Images.OrderBy(i => i.Id).Select(i => i.ImageUrl).Take(1).ToList()
+                })
+                .ToList(); // مزامنة بدون Async
+        }
         public ProductDto GetProductById(int id)
         {
             var product = _productRepo.GetAll()
