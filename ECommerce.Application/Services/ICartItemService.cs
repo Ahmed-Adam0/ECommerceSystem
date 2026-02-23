@@ -11,6 +11,11 @@ namespace ECommerce.ApplicationLayer.Services
         List<CartItemDto> GetAllCartItems();
         void CreateCartItem(int userId, CreateCartItemDto dto);
         void UpdateCartItem(UpdateCartItemDto dto);
-        void DeleteCartItem(int id);
+        Task ChangeQuantityAsync(int userId, int productId, int delta);
+        Task RemoveFromCartAsync(int userId, int productId);
+        Task<CartItem?> GetCartItemAsync(int userId, int productId);
+        Task<int> GetUserCartCountAsync(int userId);
+        Task SaveChangesAsync();
+        Task<List<CartItem>> GetUserCartAsync(int userId);
     }
 }

@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using ECommerce.ApplicationLayer.DTOs.ProductDtos;
+﻿using ECommerce.ApplicationLayer.DTOs.ProductDtos;
 using ECommerce.ApplicationLayer.Interfaces;
 using ECommerce.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace ECommerce.ApplicationLayer.Services
 {
@@ -16,20 +17,55 @@ namespace ECommerce.ApplicationLayer.Services
             _productRepo = productRepo;
         }
 
-        public List<ProductDto> GetAllProducts()
+
+        public async Task<List<ProductDto>> GetAllProductsAsync()
         {
-            return _productRepo.GetAll()
+            return await _productRepo.GetAll()
+                .AsNoTracking()
+                .Include(p => p.Images)
+                .Include(p => p.Category)
+                .Where(p => p.Stock > 0) // 👈 فقط المنتجات المتوفرة
                 .Select(p => new ProductDto
                 {
                     Id = p.Id,
                     Name = p.Name,
                     Price = p.Price,
                     Stock = p.Stock,
-                    CategoryId = p.CategoryId
+                    CategoryId = p.CategoryId,
+                    CategoryName = p.Category.Name,
+                    MainImageUrl = p.ImageUrl,
+                    ImageUrls = p.Images.OrderBy(i => i.Id).Select(i => i.ImageUrl).Take(1).ToList()
                 })
-                .ToList();
+                .ToListAsync();
         }
+        public ProductDto GetProductById(int id)
+        {
+            var product = _productRepo.GetAll()
+                .OfType<Product>()
+                .Include(p => p.Images)
+                 .Include(p => p.Category)
+                .FirstOrDefault(p => p.Id == id);
 
+            if (product == null)
+                return null;
+
+            return new ProductDto
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Price = product.Price,
+                Stock = product.Stock,
+                Description=product.Description,
+                CategoryId = product.CategoryId,
+                CategoryName = product.Category.Name,
+                MainImageUrl =product.ImageUrl,
+                ImageUrls = product.Images
+                .OrderBy(i => i.Id)
+                .Select(i => i.ImageUrl)
+                .ToList()
+
+            };
+        }
 
         public void CreateProduct(CreateProductDto dto)
         {
@@ -45,14 +81,15 @@ namespace ECommerce.ApplicationLayer.Services
 
         public void UpdateProduct(UpdateProductDto dto)
         {
-            var entity = new Product()
-            {
-                Id = dto.Id,
-                Name = dto.Name,
-                Price = dto.Price,
-                Description = dto.Description,
-                CategoryId = dto.CategoryId
-            };
+            var entity = _productRepo.GetAll().FirstOrDefault(x => x.Id == dto.Id);
+            if (entity == null) return;
+
+            entity.Name = dto.Name;
+            entity.Price = dto.Price;
+            entity.Description = dto.Description;
+            entity.CategoryId = dto.CategoryId;
+            entity.Stock = dto.Stock;
+
             _productRepo.Update(entity);
         }
 
@@ -61,6 +98,11 @@ namespace ECommerce.ApplicationLayer.Services
             var entity = _productRepo.GetAll().FirstOrDefault(x => x.Id == id);
             if (entity != null)
                 _productRepo.Delete(entity);
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await _productRepo.SaveChangesAsync();
         }
     }
 }

@@ -6,6 +6,7 @@ using ECommerce.Infrastructure.Data;
 using ECommerce.Infrastructure.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using ECommerce.Presentation.WinForms.Forms;
+using ECommerce.Presentation.WinForms.Forms.MainForm;
 
 namespace ECommerce.Presentation.WinForms
 {
@@ -24,11 +25,14 @@ namespace ECommerce.Presentation.WinForms
 
             ServiceProvider = services.BuildServiceProvider();
 
+
          
             var loginForm = ServiceProvider.GetRequiredService<LoginForm>();
             Application.Run(loginForm);
 
            
+
+
         }
 
         private static void ConfigureServices(IServiceCollection services)

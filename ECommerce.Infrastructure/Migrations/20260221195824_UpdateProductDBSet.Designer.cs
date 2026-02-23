@@ -4,6 +4,7 @@ using ECommerce.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ECommerce.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260221195824_UpdateProductDBSet")]
+    partial class UpdateProductDBSet
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -74,10 +77,6 @@ namespace ECommerce.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -106,7 +105,6 @@ namespace ECommerce.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            ImageUrl = "",
                             Name = "Electronics",
                             createdAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             isdeleted = false
@@ -114,7 +112,6 @@ namespace ECommerce.Infrastructure.Migrations
                         new
                         {
                             Id = 2,
-                            ImageUrl = "",
                             Name = "Books",
                             createdAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             isdeleted = false
@@ -122,7 +119,6 @@ namespace ECommerce.Infrastructure.Migrations
                         new
                         {
                             Id = 3,
-                            ImageUrl = "",
                             Name = "Clothing",
                             createdAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             isdeleted = false
@@ -305,44 +301,6 @@ namespace ECommerce.Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ECommerce.Domain.Entities.ProductImage", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("nvarchar(300)");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("createdAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("createdby")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("isdeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("updatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("updatedby")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("ProductImages");
-                });
-
             modelBuilder.Entity("ECommerce.Domain.Entities.User", b =>
                 {
                     b.Property<int>("Id")
@@ -471,17 +429,6 @@ namespace ECommerce.Infrastructure.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("ECommerce.Domain.Entities.ProductImage", b =>
-                {
-                    b.HasOne("ECommerce.Domain.Entities.Product", "Product")
-                        .WithMany("Images")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("ECommerce.Domain.Entities.Category", b =>
                 {
                     b.Navigation("Products");
@@ -495,8 +442,6 @@ namespace ECommerce.Infrastructure.Migrations
             modelBuilder.Entity("ECommerce.Domain.Entities.Product", b =>
                 {
                     b.Navigation("CartItems");
-
-                    b.Navigation("Images");
 
                     b.Navigation("OrderItems");
                 });

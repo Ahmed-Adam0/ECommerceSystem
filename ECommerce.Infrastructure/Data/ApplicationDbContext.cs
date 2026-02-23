@@ -14,13 +14,15 @@ namespace ECommerce.Infrastructure.Data
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
+        public DbSet<ProductImage> ProductImages { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                // SQL Server connection string
+
                 optionsBuilder.UseSqlServer("Data Source=.; Initial Catalog=ECommerceSystem; Integrated Security=True; Encrypt=False; TrustServerCertificate=True;").EnableDetailedErrors(true);
+
             }
         }
 
@@ -129,6 +131,21 @@ namespace ECommerce.Infrastructure.Data
 
                 entity.Property(e => e.Quantity)
                     .IsRequired();
+            });
+
+            // ProductImage
+            modelBuilder.Entity<ProductImage>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.ImageUrl)
+                    .IsRequired()
+                    .HasMaxLength(300);
+
+                entity.HasOne(e => e.Product)
+                    .WithMany(p => p.Images)
+                    .HasForeignKey(e => e.ProductId)
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             // =========================
