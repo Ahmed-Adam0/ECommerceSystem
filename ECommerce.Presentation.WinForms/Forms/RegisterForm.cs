@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using ECommerce.ApplicationLayer.DTOs.UserDtos;
 using ECommerce.ApplicationLayer.Interfaces;
 using ECommerce.ApplicationLayer.Services;
+using ECommerce.Domain.Enums;
 
 namespace ECommerce.Presentation.WinForms.Forms
 {
@@ -24,7 +25,8 @@ namespace ECommerce.Presentation.WinForms.Forms
                 {
                     FullName = txtFullName.Text,
                     Email = txtEmail.Text,
-                    Password = txtPassword.Text
+                    Password = txtPassword.Text,
+                    Role = UserRole.Customer
                 };
 
                 var user = _userService.CreateCustomer(dto);
