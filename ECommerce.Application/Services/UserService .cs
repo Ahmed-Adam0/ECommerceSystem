@@ -34,17 +34,25 @@ namespace ECommerce.ApplicationLayer.Services
 
         public UserDto CreateCustomer(CreateUserDto dto)
         {
+            if (string.IsNullOrWhiteSpace(dto.FullName) ||
+                string.IsNullOrWhiteSpace(dto.Email) ||
+                string.IsNullOrWhiteSpace(dto.Password))
+            {
+                throw new Exception("All fields are required");
+            }
+
             var existing = _userRepo.GetAll()
                 .FirstOrDefault(x => x.Email == dto.Email);
 
             if (existing != null)
                 throw new Exception("Email already exists");
 
+            
             var entity = new User
             {
-                FullName = dto.FullName,
-                Email = dto.Email,
-                Password = dto.Password, 
+                FullName = dto.FullName.Trim(),
+                Email = dto.Email.Trim(),
+                Password = dto.Password.Trim(),
                 Role = dto.Role
             };
 

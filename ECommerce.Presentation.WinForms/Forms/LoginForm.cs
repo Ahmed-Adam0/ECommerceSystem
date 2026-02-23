@@ -35,10 +35,35 @@ namespace ECommerce.Presentation.WinForms.Forms
 
         private void btnLogin_Click_1(object sender, EventArgs e)
         {
+            var email = txtEmail.Text.Trim();
+            var password = txtPassword.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
+            {
+                MessageBox.Show("Email and Password are required");
+                return;
+            }
+
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+            }
+            catch
+            {
+                MessageBox.Show("Invalid email format");
+                return;
+            }
+
+            if (password.Length < 8)
+            {
+                MessageBox.Show("Password must be at least 8 characters");
+                return;
+            }
+
             var dto = new LoginDto
             {
-                Email = txtEmail.Text,
-                Password = txtPassword.Text
+                Email = email,
+                Password = password
             };
 
             var user = _userService.Login(dto);
