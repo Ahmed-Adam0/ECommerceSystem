@@ -17,21 +17,50 @@ namespace ECommerce.Presentation.WinForms.Forms
             _userService = userService;
         }
 
-        private void btnRegister_Click_1(object sender, EventArgs e)
+        private void btnRegister_Click(object sender, EventArgs e)
         {
+            var fullName = txtFullName.Text.Trim();
+            var email = txtEmail.Text.Trim();
+            var password = txtPassword.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(fullName) ||
+                string.IsNullOrWhiteSpace(email) ||
+                string.IsNullOrWhiteSpace(password))
+            {
+                MessageBox.Show("All fields are required");
+                return;
+            }
+
             try
             {
-                var dto = new CreateUserDto
-                {
-                    FullName = txtFullName.Text,
-                    Email = txtEmail.Text,
-                    Password = txtPassword.Text,
-                    Role = UserRole.Customer
-                };
+                var addr = new System.Net.Mail.MailAddress(email);
+            }
+            catch
+            {
+                MessageBox.Show("Invalid email format");
+                return;
+            }
 
-                var user = _userService.CreateCustomer(dto);
+            if (password.Length < 8)
+            {
+                MessageBox.Show("Password must be at least 8 characters");
+                return;
+            }
 
-                MessageBox.Show("Account Created Successfully for " + user.FullName);
+            var dto = new CreateUserDto
+            {
+                FullName = fullName,
+                Email = email,
+                Password = password,
+                Role = UserRole.Customer
+            };
+
+            try
+            {
+                _userService.CreateCustomer(dto);
+
+                MessageBox.Show("Account Created Successfully");
+
                 this.Close();
             }
             catch (Exception ex)
