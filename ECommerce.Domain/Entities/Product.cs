@@ -18,6 +18,9 @@ namespace ECommerce.Domain.Entities
         public int CategoryId { get; set; }
         public Category? Category { get; set; }
 
+
+        public List<ProductImage> Images { get; set; } = new();
+
         public List<OrderItem> OrderItems { get; set; } = new();
         public List<CartItem> CartItems { get; set; } = new();
     }

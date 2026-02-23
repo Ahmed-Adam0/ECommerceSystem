@@ -12,5 +12,6 @@ namespace ECommerce.ApplicationLayer.Services
         void CreateCategory(CreateCategoryDto createCategory);
         void UpdateCategory(UpdateCategoryDto updateCategory);
         void DeleteCategory(int id);
+
     }
 }

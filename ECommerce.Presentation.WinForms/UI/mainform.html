@@ -23,6 +23,11 @@
         box-sizing: border-box;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
+
+     a{
+     color: inherit;
+     text-decoration: none;
+ }
 .nav_ul li {
     margin-right: 20px;
     font-size: 18px;
@@ -33,6 +38,7 @@
 
 header {
     padding: 20px 0;
+
 }
 
 .mycon .header-row .header-col {
@@ -67,7 +73,7 @@ header {
     
 }
 #fi_9454066 {
-    fill: #333;
+    color: #333;
     font-size: 20px;
     height: 30px;
     width: 30px;
@@ -186,7 +192,7 @@ header {
     justify-content: space-between;
     gap: 20px;
     flex-wrap: wrap; 
-    margin: 70px 0;
+    margin: 70px auto;
   }
   
   .card {
@@ -312,20 +318,36 @@ header {
   .product-actions button {
     background-color: rgba(255,255,255,0.9);
     border: none;
-    padding: 12px 8px;
+    color:#5d3754;
+    padding: 8px;
     border-radius: 50%;
     cursor: pointer;
     font-size: 16px;
     transition: background-color 0.3s ease;
   }
-  
+  /* نبضة صغيرة عند زيادة العدد */
+@keyframes pop {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.5);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.cart-count-bubble.pop {
+    animation: pop 0.3s ease-in-out;
+}
   .product-actions button:hover {
     background-color: #5d3754;
-    fill: #fff;
+    color: #fff;
 
   } .product-actions button.add-cart:hover {
     background-color: #5d3754;
-    fill: #fff !important;
+    color: #fff !important;
 
   }
   
@@ -415,6 +437,146 @@ header {
   }
 </style>
 
+<style>
+/* بطاقة المنتج */
+.product-card {
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    background: #fff;
+}
+
+.product-card img {
+    width: 100%;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.product-card h3 {
+    margin: 10px;
+    font-size: 16px;
+    color: #5D3754;
+}
+
+.product-card p {
+    margin: 0 10px 10px 10px;
+    font-size: 14px;
+    color: #555;
+}
+
+.product-card .product-category {
+    margin: 0 10px 10px 10px;
+    font-size: 12px;
+    color: #888;
+}
+
+.category-buttons button {
+    padding: 8px 16px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background: #fff;
+    color: #5D3754;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+
+.category-buttons{
+    text-align: center;
+}
+.category-buttons button:hover,
+.category-buttons button.active {
+    background: #5D3754;
+    color: #fff;
+}
+
+.all-products .product-card {
+    
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    background: #fff;
+    text-align: center;
+}
+
+.all-products .product-card img {
+    width: 100%;
+    object-fit: cover;
+}
+
+.all-products .product-card h3 {
+    margin: 10px 5px 5px 5px;
+    font-size: 16px;
+    color: #5D3754;
+}
+
+.all-products .product-card p {
+    margin: 0 5px 10px 5px;
+    font-size: 14px;
+    color: #555;
+}
+
+.all-products .product-card .product-category {
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 10px;
+}
+</style>
+
+
+<style>
+/* Hover effect لكل نتيجة */
+#search-dropdown .dropdown-item:hover {
+    background-color: #f5f5f5;
+}
+
+/* كل نتيجة تظهر كـ flex row */
+#search-dropdown .dropdown-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+    transition: background 0.2s;
+}
+
+/* صورة المنتج */
+#search-dropdown .dropdown-item img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-right: 12px;
+}
+
+/* نصوص المنتج */
+#search-dropdown .dropdown-item div {
+    display: flex;
+    flex-direction: column;
+}
+
+/* اسم المنتج */
+#search-dropdown .dropdown-item div .product-name {
+    font-weight: 500;
+    color: #333;
+}
+
+/* السعر */
+#search-dropdown .dropdown-item div .product-price {
+    font-size: 14px;
+    color: #555;
+}
+
+/* اسم الكاتيجوري */
+#search-dropdown .dropdown-item div .product-category {
+    font-size: 12px;
+    color: #999;
+}
+</style>
+
 
 </head>
 
@@ -427,29 +589,57 @@ header {
 
                     <nav>
                         <ul class="d-flex nav_ul " style="list-style: none; ">
-                            <li style="margin-right: 20px;">Home</li>
+                            <li style="margin-right: 20px;">
+                            <a href="./mainform.html">
+                            Home
+                            </a>
+                            </li>
                             <li>Shop</li>
                         </ul>
                     </nav>
                 </div>
                 <div class="col justify-content-between   d-flex align-items-center">
-                    <form action="/search" class="search">
+                 <div style="position: relative; display:inline-block; width: 100%;">
+  <!-- Search Wrapper -->
+<div class="search-wrapper" style="position: relative; width: 100%; max-width: 400px; margin: 0 auto;">
 
-                        <input class="search__input" id="Search-In-Modal" type="search" name="q"
-                            placeholder="Search our store">
+    <form class="search" style="margin: 0;">
+        <input class="search__input" id="search-input" type="search" name="q"
+            placeholder="Search our store" 
+            style="
+                width: 100%;
+                padding: 12px 20px;
+                border-radius: 30px;
+                border: 1px solid #ddd;
+                font-size: 16px;
+                outline: none;
+                transition: all 0.3s;
+            "
+        >
+    </form>
 
-                        <button class="search__button">
-                            <svg class="icon icon-search" aria-hidden="true" focusable="false" role="presentation"
-                                width="20" height="20" viewBox="0 0 20 20" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                    d="M0.833313 9.16659C0.833313 4.56421 4.56427 0.833252 9.16665 0.833252C13.769 0.833252 17.5 4.56421 17.5 9.16659C17.5 11.1677 16.7946 13.004 15.6191 14.4405L19.1666 17.9881L17.9881 19.1666L14.4406 15.619C13.0041 16.7946 11.1677 17.4999 9.16665 17.4999C4.56427 17.4999 0.833313 13.7689 0.833313 9.16659ZM9.16665 2.49992C5.48475 2.49992 2.49998 5.48469 2.49998 9.16659C2.49998 12.8485 5.48475 15.8333 9.16665 15.8333C12.8486 15.8333 15.8333 12.8485 15.8333 9.16659C15.8333 5.48469 12.8486 2.49992 9.16665 2.49992Z"
-                                    fill="currentColor"></path>
-                            </svg>
-                        </button>
+    <!-- Dropdown لنتائج البحث -->
+    <div id="search-dropdown" style="
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        max-height: 350px;
+        overflow-y: auto;
+        z-index: 999;
+        display: none;
+        margin-top: 5px;
+    ">
+        <!-- النتائج هتظهر هنا -->
+    </div>
+</div>
 
-                    </form>
-                    <div class="cart-counter">
+</div>
+                    <div class="cart-counter" style="cursor:pointer;" onclick="openCartPage()">
 
                         <svg id="fi_9454066" enable-background="new 0 0 512 512" height="20" viewBox="0 0 512 512"
                             width="20" xmlns="http://www.w3.org/2000/svg" cursorshover="true">
@@ -490,88 +680,6 @@ header {
 <div class="category-cards container justify-content-center text-center" id="categories-container">
 </div>
 
-
-<script>
-window.chrome.webview.addEventListener('message', function (event) {
-
-    console.log("Message received from C#");
-    console.log(event.data);
-
-    let data;
-    try {
-        data = JSON.parse(event.data);
-        console.log("Parsed data:", data);
-    } catch (e) {
-        console.error("JSON parse error", e);
-        return;
-    }
-
-    // ===== Categories =====
-    if (data.categories && data.categories.length > 0) {
-        const container = document.getElementById('categories-container');
-        container.innerHTML = '';
-
-        data.categories.forEach(c => {
-            const div = document.createElement('div');
-            div.className = 'card';
-            div.innerHTML = `
-                <div class="card-image">
-                    <img src="./images/${c.ImageUrl}" alt="${c.Name}">
-                </div>
-                <div class="card-info">
-                    <h3>${c.Name}</h3>
-                </div>
-            `;
-            container.appendChild(div);
-        });
-    } else {
-        console.log("No categories found");
-    }
-
-    // ===== Products =====
-    if (data.products && data.products.length > 0) {
-        const container = document.getElementById('best-sellers-container');
-        container.innerHTML = '';
-
-       data.products.forEach(p => {
-            const div = document.createElement('div');
-            div.className = 'product-card';
-
-            div.innerHTML = `
-                <div class="product-image">
-                    <img src="./images/${p.ImageUrl}" alt="${p.Name}" class="main-img">
-                    <img src="./images/${p.ImageUrl}" alt="${p.Name}" class="hover-img">
-
-                    <div class="product-actions">
-
-                        <button class="add-cart" onclick="addToCart(${p.Id})">
-                            <svg class="cart_bags" height="20" viewBox="0 0 512 512" width="20" xmlns="http://www.w3.org/2000/svg">
-                                <path d="m182.436 381.615h-24v-114.404h24zm85.125-124.313h-24v134.221h24zm85.096 9.909h-24v114.404h24zm139.343-53.313h-23.645l-38.681 195.749c-5.696 29.01-30.366 49.281-59.99 49.281h-227.368c-29.605 0-54.286-20.265-60.019-49.281l-38.653-195.749h-23.644v-24h111.88l30.479-87.796c10.311-29.781 37.383-49.03 68.965-49.03h49.351c31.548 0 58.618 19.245 68.964 49.028l30.454 87.798h111.907zm-334.715-24h197.406l-27.724-79.928c-6.942-19.983-25.113-32.898-46.292-32.898h-49.351c-21.202 0-39.371 12.911-46.29 32.892zm286.606 24h-375.784l37.735 191.098c3.482 17.623 18.48 29.932 36.474 29.932h227.368c17.998 0 32.984-12.303 36.442-29.919z"></path>
-                            </svg>
-                        </button>
-
-                        <button class="view" onclick="viewProduct(${p.Id})">
-                            <svg width="24" height="17" viewBox="0 0 511.999 511.999" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M508.745,246.041c-4.574-6.257-113.557-153.206-252.748-153.206S7.818,239.784,3.249,246.035c-4.332,5.936-4.332,13.987,0,19.923c4.569,6.257,113.557,153.206,252.748,153.206s248.174-146.95,252.748-153.201C513.083,260.028,513.083,251.971,508.745,246.041z"/>
-                                <path d="M255.997,154.725c-55.842,0-101.275,45.433-101.275,101.275s45.433,101.275,101.275,101.275s101.275-45.433,101.275-101.275S311.839,154.725,255.997,154.725z"/>
-                            </svg>
-                        </button>
-
-                    </div>
-                </div>
-
-                <h3>${p.Name}</h3>
-                <p>$${p.Price}</p>
-            `;
-
-            container.appendChild(div);
-        });
-    } else {
-        console.log("No products found");
-    }
-});
-</script>
-
 <!-- Products -->
 <section class="best-sellers container">
     <div class="section-header">
@@ -596,10 +704,240 @@ window.chrome.webview.addEventListener('message', function (event) {
 
 
 
+<section class="all-products container">
+    <div class="section-header">
+        <h2 style="color:#5D3754;">Our Products</h2>
+        <p>Browse all products and filter by category.</p>
+
+        <!-- فلتر الكاتيجوري -->
+       <div class="category-buttons" id="category-buttons-container" style="margin-bottom:20px;">
+    <!-- بوتنز الكاتيجوري هتتضاف هنا -->
+</div>
+    </div>
+
+    <div class="products-grid" id="all-products-container">
+        <!-- المنتجات هتتضاف هنا ديناميكيًا -->
+    </div>
+</section>
+
+
+  
 
 
 
-      <script>
+
+ <script>
+let allProducts = [];
+let allCategories = [];
+
+// ===============================
+// Receive messages from C#
+// ===============================
+window.chrome.webview.addEventListener('message', event => {
+
+    const payload = typeof event.data === "string"
+        ? JSON.parse(event.data)
+        : event.data;
+
+    console.log("Payload from C#:", payload);
+
+    if (!payload.action) return;
+
+    switch (payload.action) {
+        case 'homeData':
+            handleHomeData(payload.data);
+            break;
+
+        case 'displayProductDetails':
+            handleProductDetails(payload.product);
+            break;
+
+         case 'updateCartCount':
+            updateCartCounter(payload.count);
+            break;
+
+    }
+});
+
+
+function updateCartCounter(count) {
+    const counter = document.getElementById("cart-notification-count");
+    counter.textContent = count;
+    counter.style.display = count > 0 ? "block" : "none";
+
+    // حذف أي أنيميشن موجود
+    counter.classList.remove("pop");
+
+    // إعادة تطبيق الأنيميشن بعد إعادة الرسم
+    void counter.offsetWidth; // trick لإعادة تفعيل الأنيميشن
+    counter.classList.add("pop");
+}
+
+// ===============================
+// Handle Home Page Data
+// ===============================
+function handleHomeData(data) {
+    allProducts = data.allProducts || [];
+    allCategories = data.allCategories || [];
+
+     if (data.cartCount !== undefined) {
+        updateCartCounter(data.cartCount);
+    }
+
+    // ===== Categories =====
+    if (data.categories && data.categories.length > 0) {
+        const container = document.getElementById('categories-container');
+        container.innerHTML = '';
+
+        data.categories.forEach(c => {
+            const div = document.createElement('div');
+            div.className = 'card';
+            div.innerHTML = `
+                <div class="card-image">
+                    <img src="./images/${c.ImageUrl}" alt="${c.Name}">
+                </div>
+                <div class="card-info">
+                    <h3>${c.Name}</h3>
+                    <p>${c.ProductCount} Items</p>
+                </div>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    // ===== Products =====
+    renderProducts(data.products || [], 'best-sellers-container');
+    renderProducts(allProducts, 'all-products-container');
+
+    // ===== Category Buttons =====
+    renderCategoryButtons();
+}
+
+// ===============================
+// Render Products
+// ===============================
+function renderProducts(products, containerId) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    container.innerHTML = '';
+
+    products.forEach(p => {
+        const div = document.createElement('div');
+        div.className = 'product-card';
+
+        div.onclick = () => {
+            console.log("Sending viewProduct:", p.Id);
+            window.chrome.webview.postMessage({
+                action: 'viewProduct',
+                productId: p.Id
+            });
+        };
+
+        div.innerHTML = `
+            <div class="product-image">
+                <img src="./images/${p.MainImageUrl}" alt="${p.Name}" class="main-img">
+                <img src="./images/${p.HoverImageUrl}" alt="${p.Name}" class="hover-img">
+                <div class="product-actions">
+                    <button class="add-cart" onclick="event.stopPropagation(); addToCart(${p.Id})">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                    </button>
+                    <button class="view" onclick="event.stopPropagation();
+                        window.chrome.webview.postMessage({
+                            action:'viewProduct',
+                            productId:${p.Id}
+                        })">
+                        <i class="fa-solid fa-eye"></i>
+                    </button>
+                </div>
+            </div>
+            <h3>${p.Name}</h3>
+            <p>$${p.Price}</p>
+            <div class="product-category">${p.CategoryName}</div>
+        `;
+        container.appendChild(div);
+    });
+}
+
+// ===============================
+// Category Buttons
+// ===============================
+function renderCategoryButtons() {
+    const container = document.getElementById('category-buttons-container');
+    if (!container) return;
+
+    container.innerHTML = '';
+
+    const allBtn = document.createElement('button');
+    allBtn.textContent = 'All';
+    allBtn.classList.add('active');
+    allBtn.onclick = () => {
+        setActiveButton(allBtn);
+        renderProducts(allProducts, 'all-products-container');
+    };
+    container.appendChild(allBtn);
+
+    allCategories.forEach(c => {
+        const btn = document.createElement('button');
+        btn.textContent = c.Name;
+        btn.onclick = () => {
+            setActiveButton(btn);
+            const filtered = allProducts.filter(p => p.CategoryName === c.Name);
+            renderProducts(filtered, 'all-products-container');
+        };
+        container.appendChild(btn);
+    });
+}
+
+function setActiveButton(activeBtn) {
+    document.querySelectorAll('.category-buttons button')
+        .forEach(b => b.classList.remove('active'));
+    activeBtn.classList.add('active');
+}
+</script>
+
+    <script>
+const searchInput = document.getElementById('search-input');
+const searchDropdown = document.getElementById('search-dropdown');
+
+searchInput.addEventListener('input', function () {
+    const query = searchInput.value.trim().toLowerCase();
+
+    if (!query) {
+        searchDropdown.style.display = 'none';
+        searchDropdown.innerHTML = '';
+        return;
+    }
+
+    const filtered = allProducts.filter(p =>
+        p.Name.toLowerCase().includes(query)
+    );
+
+    if (filtered.length === 0) {
+        searchDropdown.innerHTML = '<p style="padding:10px;">No products found</p>';
+    } else {
+        searchDropdown.innerHTML = filtered.map(p => `
+            <div class="dropdown-item" onclick="
+                window.chrome.webview.postMessage({
+                    action:'viewProduct',
+                    productId:${p.Id}
+                })
+            ">
+                <img src="./images/${p.MainImageUrl}">
+                <div>
+                    <div>${p.Name}</div>
+                    <div>$${p.Price}</div>
+                    <div>${p.CategoryName}</div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    searchDropdown.style.display = 'block';
+});
+</script>
+
+    <script>
         const slides = document.querySelectorAll('.slide');
 let currentIndex = 0;
 
@@ -611,6 +949,24 @@ function showNextSlide() {
 
 setInterval(showNextSlide, 5000);
       </script>
+      <script>
+function addToCart(productId) {
+
+    window.chrome.webview.postMessage({
+        action: "addToCart",
+        productId: productId,
+        quantity: 1
+    });
+
+}
+
+function openCartPage() {
+    window.chrome.webview.postMessage({
+        action: "openCart"
+    });
+}
+</script>
+
 </body>
 
 </html>

@@ -8,10 +8,11 @@ namespace ECommerce.ApplicationLayer.Services
 {
     public interface IProductService
     {
-        List<ProductDto> GetAllProducts();
+        Task<List<ProductDto>> GetAllProductsAsync();
          ProductDto GetProductById(int id);
         void CreateProduct(CreateProductDto dto);
         void UpdateProduct(UpdateProductDto dto);
         void DeleteProduct(int id);
+        Task SaveChangesAsync();
     }
 }

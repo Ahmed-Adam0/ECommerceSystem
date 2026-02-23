@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using ECommerce.ApplicationLayer.DTOs.CategoryDTos;
+﻿using ECommerce.ApplicationLayer.DTOs.CategoryDTos;
 using ECommerce.ApplicationLayer.Interfaces;
 using ECommerce.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace ECommerce.ApplicationLayer.Services
 {
@@ -19,17 +20,16 @@ namespace ECommerce.ApplicationLayer.Services
 
         public List<CategoryDto> GetAllCategories()
         {
-          
-            var categories = _categoryRepo.GetAll().ToList();
 
-            
-            var dtoList = categories.Select(c => new CategoryDto
-            {
-                Id = c.Id,
-                Name = c.Name,
-                ImageUrl=c.ImageUrl
-
-            }).ToList();
+            var dtoList = _categoryRepo.GetAll()
+                     .Include(c => c.Products)
+                     .Select(c => new CategoryDto
+                     {
+                         Id = c.Id,
+                         Name = c.Name,
+                         ImageUrl = c.ImageUrl,
+                         ProductCount = c.Products.Count
+                     }).ToList();
 
             return dtoList;
         }

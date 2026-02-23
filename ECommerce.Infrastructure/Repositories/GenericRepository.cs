@@ -28,13 +28,13 @@ namespace ECommerce.Infrastructure.Repositories
         public void Add(TEntity entity)
         {
             _dbSet.Add(entity);
-            _context.SaveChanges();
+           // _context.SaveChanges();
         }
 
         public void Update(TEntity entity)
         {
             _dbSet.Update(entity);
-            _context.SaveChanges();
+           // _context.SaveChanges();
         }
 
         public void Delete(TEntity entity)
@@ -42,5 +42,8 @@ namespace ECommerce.Infrastructure.Repositories
             _dbSet.Remove(entity);
             _context.SaveChanges();
         }
+
+
+        public async Task SaveChangesAsync() => await _context.SaveChangesAsync();
     }
 }
