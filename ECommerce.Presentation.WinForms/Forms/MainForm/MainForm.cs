@@ -204,7 +204,7 @@ namespace ECommerce.Presentation.WinForms.Forms
             else
             {
                 // منتج جديد في الكارت
-                _cartItemService.CreateCartItem(userId, new CreateCartItemDto
+                await _cartItemService.CreateCartItemAsync(userId, new CreateCartItemDto
                 {
                     ProductId = productId,
                     Quantity = quantityToAdd

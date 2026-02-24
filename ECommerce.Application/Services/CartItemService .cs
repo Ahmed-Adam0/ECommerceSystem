@@ -13,10 +13,15 @@ namespace ECommerce.ApplicationLayer.Services
     public class CartItemService : ICartItemService
     {
         private readonly IGenericRepository<CartItem, int> _cartItemRepo;
+        private readonly IGenericRepository<User, int> _userRepo; // نضيف UserRepo
 
-        public CartItemService(IGenericRepository<CartItem, int> cartItemRepo)
+
+        public CartItemService(
+      IGenericRepository<CartItem, int> cartItemRepo,
+      IGenericRepository<User, int> userRepo) // استلامه بالكونستركتور
         {
             _cartItemRepo = cartItemRepo;
+            _userRepo = userRepo;
         }
 
         public List<CartItemDto> GetAllCartItems()
@@ -35,18 +40,23 @@ namespace ECommerce.ApplicationLayer.Services
 
 
 
-        public void CreateCartItem(int userId, CreateCartItemDto dto)
+        public async Task CreateCartItemAsync(int userId, CreateCartItemDto dto)
         {
+            var user = await _userRepo.GetAll().FirstOrDefaultAsync(u => u.Id == userId);
+            if (user == null)
+                throw new Exception("User not found");
+
             var entity = new CartItem()
             {
                 UserId = userId,
                 ProductId = dto.ProductId,
                 Quantity = dto.Quantity,
-                IsOrdered = false 
+                IsOrdered = false
             };
-            _cartItemRepo.Add(entity);
-        }
 
+            _cartItemRepo.Add(entity);
+            await _cartItemRepo.SaveChangesAsync();
+        }
 
         public void UpdateCartItem(UpdateCartItemDto dto)
         {
