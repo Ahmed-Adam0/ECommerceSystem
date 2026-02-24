@@ -66,10 +66,24 @@ namespace ECommerce.Presentation.WinForms.Forms
             webView.CoreWebView2.WebMessageReceived -= WebMessageReceived; // مهم
             webView.CoreWebView2.WebMessageReceived += WebMessageReceived;
 
-            webView.CoreWebView2.NavigationCompleted += WebView_NavigationCompleted;
+            //webView.CoreWebView2.NavigationCompleted += WebView_NavigationCompleted;
 
             string htmlPath = Path.Combine(Application.StartupPath, "UI", "mainform.html");
             webView.Source = new Uri(htmlPath);
+
+            // استنى الصفحة تفتح قبل ارسال البيانات
+            var tcs = new TaskCompletionSource();
+            void Handler(object? s, CoreWebView2NavigationCompletedEventArgs e)
+            {
+                if (!e.IsSuccess) return;
+                webView.CoreWebView2.NavigationCompleted -= Handler;
+                tcs.SetResult();
+            }
+            webView.CoreWebView2.NavigationCompleted += Handler;
+            await tcs.Task;
+
+            // بعد ما الصفحة تتحمل، ابعتي البيانات
+            await SendHomePageData();
         }
 
 
@@ -95,6 +109,7 @@ namespace ECommerce.Presentation.WinForms.Forms
         // =========================
         private async Task SendHomePageData()
         {
+
             int cartCount = await _cartItemService.GetUserCartCountAsync(_currentUserId);
 
             var allProductsList = await _productService.GetAllProductsAsync();
