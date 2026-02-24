@@ -1,4 +1,4 @@
-﻿namespace ECommerce.Presentation.WinForms
+namespace ECommerce.Presentation.WinForms
 {
     partial class AdminDashboardForm
     {
@@ -43,11 +43,17 @@
             textBox4 = new TextBox();
             button6 = new Button();
             tabPage3 = new TabPage();
+            dataGridViewOrders = new DataGridView();
+            comboBoxStatusFilter = new ComboBox();
+            buttonApproveOrder = new Button();
+            buttonRejectOrder = new Button();
             Products.SuspendLayout();
             tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
+            tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewOrders).BeginInit();
             SuspendLayout();
             // 
             // Products
@@ -217,6 +223,10 @@
             // 
             // tabPage3
             // 
+            tabPage3.Controls.Add(buttonRejectOrder);
+            tabPage3.Controls.Add(buttonApproveOrder);
+            tabPage3.Controls.Add(comboBoxStatusFilter);
+            tabPage3.Controls.Add(dataGridViewOrders);
             tabPage3.Location = new Point(4, 29);
             tabPage3.Name = "tabPage3";
             tabPage3.Padding = new Padding(3);
@@ -224,7 +234,62 @@
             tabPage3.TabIndex = 2;
             tabPage3.Text = "Orders";
             tabPage3.UseVisualStyleBackColor = true;
-            tabPage3.UseWaitCursor = true;
+            tabPage3.Click += tabPage3_Click;
+
+
+            //=========================================================
+            // 
+            // dataGridViewOrders
+            // 
+            dataGridViewOrders.AllowUserToAddRows = false;
+            dataGridViewOrders.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridViewOrders.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewOrders.Location = new Point(57, 74);
+            dataGridViewOrders.Name = "dataGridViewOrders";
+            dataGridViewOrders.ReadOnly = true;
+            dataGridViewOrders.RowHeadersWidth = 51;
+            dataGridViewOrders.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridViewOrders.Size = new Size(673, 309);
+            dataGridViewOrders.TabIndex = 14;
+            dataGridViewOrders.CellDoubleClick += dataGridViewOrders_CellDoubleClick;
+
+            // 
+            // comboBoxStatusFilter
+            // 
+            comboBoxStatusFilter.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxStatusFilter.FormattingEnabled = true;
+            comboBoxStatusFilter.Items.AddRange(new object[] { "All", "Pending", "Processing", "Delivered" });
+            comboBoxStatusFilter.Location = new Point(445, 20);
+            comboBoxStatusFilter.Name = "comboBoxStatusFilter";
+            comboBoxStatusFilter.Size = new Size(285, 28);
+            comboBoxStatusFilter.TabIndex = 15;
+            comboBoxStatusFilter.SelectedIndexChanged += comboBoxStatusFilter_SelectedIndexChanged;
+
+            // 
+            // buttonApproveOrder
+            // 
+            buttonApproveOrder.BackColor = Color.SeaGreen;
+            buttonApproveOrder.ForeColor = SystemColors.ControlLightLight;
+            buttonApproveOrder.Location = new Point(57, 20);
+            buttonApproveOrder.Name = "buttonApproveOrder";
+            buttonApproveOrder.Size = new Size(94, 36);
+            buttonApproveOrder.TabIndex = 16;
+            buttonApproveOrder.Text = "Approve";
+            buttonApproveOrder.UseVisualStyleBackColor = false;
+            buttonApproveOrder.Click += buttonApproveOrder_Click;
+
+            // 
+            // buttonRejectOrder
+            // 
+            buttonRejectOrder.BackColor = Color.Firebrick;
+            buttonRejectOrder.ForeColor = SystemColors.ControlLightLight;
+            buttonRejectOrder.Location = new Point(157, 20);
+            buttonRejectOrder.Name = "buttonRejectOrder";
+            buttonRejectOrder.Size = new Size(94, 36);
+            buttonRejectOrder.TabIndex = 17;
+            buttonRejectOrder.Text = "Reject";
+            buttonRejectOrder.UseVisualStyleBackColor = false;
+            buttonRejectOrder.Click += buttonRejectOrder_Click;
             // 
             // AdminDashboardForm
             // 
@@ -243,6 +308,8 @@
             tabPage2.ResumeLayout(false);
             tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).EndInit();
+            tabPage3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dataGridViewOrders).EndInit();
             ResumeLayout(false);
         }
 
@@ -262,5 +329,9 @@
         private TextBox textBox4;
         private Button button6;
         private TabPage tabPage3;
+        private DataGridView dataGridViewOrders;
+        private ComboBox comboBoxStatusFilter;
+        private Button buttonApproveOrder;
+        private Button buttonRejectOrder;
     }
 }

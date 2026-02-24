@@ -1,6 +1,8 @@
-﻿using ECommerce.ApplicationLayer.DTOs.CategoryDTos;
+using ECommerce.ApplicationLayer.DTOs.CategoryDTos;
 using ECommerce.ApplicationLayer.DTOs.ProductDtos;
+using ECommerce.ApplicationLayer.DTOs.OrderDtos;
 using ECommerce.ApplicationLayer.Services;
+using ECommerce.Domain.Enums;
 using ECommerce.Presentation.WinForms.Forms;
 using System;
 using System.Collections.Generic;
@@ -19,13 +21,16 @@ namespace ECommerce.Presentation.WinForms
         private readonly IProductService _productService;
         private List<CategoryDto> _allCategories = new();
         private List<ProductDto> _allProducts = new();
+        private readonly IOrderService _orderService;
+        private List<OrderDto> _allOrders = new();
 
 
-        public AdminDashboardForm(ICategoryService categoryService, IProductService productService)
+        public AdminDashboardForm(ICategoryService categoryService, IProductService productService, IOrderService orderService)
         {
             InitializeComponent();
             _categoryService = categoryService;
             _productService = productService;
+            _orderService = orderService;
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -53,10 +58,79 @@ namespace ECommerce.Presentation.WinForms
             _allProducts = _productService.GetAllProducts();
             dataGridView2.DataSource = _allProducts;
         }
+
+        private void LoadOrders()
+        {
+            _allOrders = _orderService.GetAllOrders();
+            dataGridViewOrders.DataSource = _allOrders;
+        }
+
+        private void FilterOrdersByStatus()
+        {
+            if (comboBoxStatusFilter.SelectedItem == null || comboBoxStatusFilter.SelectedItem.ToString() == "All")
+            {
+                dataGridViewOrders.DataSource = _allOrders;
+                return;
+            }
+
+            string selectedStatus = comboBoxStatusFilter.SelectedItem.ToString();
+            dataGridViewOrders.DataSource = _allOrders
+                .Where(o => o.Status.Equals(selectedStatus, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+        }
+
+        private void comboBoxStatusFilter_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            FilterOrdersByStatus();
+        }
+
+        private void buttonApproveOrder_Click(object sender, EventArgs e)
+        {
+            if (dataGridViewOrders.CurrentRow == null)
+            {
+                MessageBox.Show("Please select an order to approve.");
+                return;
+            }
+
+            if (dataGridViewOrders.CurrentRow.DataBoundItem is not OrderDto selectedOrder)
+                return;
+
+            _orderService.UpdateOrder(new UpdateOrderDto
+            {
+                Id = selectedOrder.Id,
+                Status = OrderStatus.Delivered
+            });
+
+            LoadOrders();
+            FilterOrdersByStatus();
+        }
+
+        private void buttonRejectOrder_Click(object sender, EventArgs e)
+        {
+            if (dataGridViewOrders.CurrentRow == null)
+            {
+                MessageBox.Show("Please select an order to reject.");
+                return;
+            }
+
+            if (dataGridViewOrders.CurrentRow.DataBoundItem is not OrderDto selectedOrder)
+                return;
+
+            var confirm = MessageBox.Show("Are you sure you want to reject (delete) this order?",
+                "Confirm", MessageBoxButtons.YesNo);
+
+            if (confirm == DialogResult.Yes)
+            {
+                _orderService.DeleteOrder(selectedOrder.Id);
+                LoadOrders();
+                FilterOrdersByStatus();
+            }
+        }
         private void AdminDashboardForm_Load(object sender, EventArgs e)
         {
             LoadCategories();
             LoadProducts();
+            LoadOrders();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -143,6 +217,20 @@ namespace ECommerce.Presentation.WinForms
                     .ToList();
         }
         private void tabPage2_Click(object sender, EventArgs e) { }
+
+        private void dataGridViewOrders_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+            if (dataGridViewOrders.Rows[e.RowIndex].DataBoundItem is not OrderDto selectedOrder)
+                return;
+
+            var detailsForm = new OrderDetailsForm(selectedOrder);
+            detailsForm.ShowDialog();
+        }
+
+        private void tabPage3_Click(object sender, EventArgs e)
+        {
+        }
 
     }
 }
