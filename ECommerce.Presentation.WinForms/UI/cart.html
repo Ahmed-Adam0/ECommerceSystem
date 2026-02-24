@@ -610,7 +610,7 @@
                     <nav>
                         <ul class="d-flex nav_ul " style="list-style: none; ">
                             <li style="margin-right: 20px;">
-                             <a href="./mainform.html">
+                             <a href="#" onclick="goHome()">
                             Home
                             </a>
                             </li>
@@ -948,6 +948,12 @@ document.addEventListener("DOMContentLoaded", function () {
         searchDropdown.style.display = 'block';
     });
 });
+function goHome() {
+    window.chrome.webview.postMessage({
+        action: "navigate",
+        page: "mainform.html"
+    });
+}
 </script>
 </body>
 </html>

@@ -58,14 +58,37 @@ namespace ECommerce.Presentation.WinForms.Forms
                     };
 
                     var user = _userService.Login(dto);
+
                     if (user != null)
                     {
+                        // ابعتي رسالة نجاح
+                        webView.CoreWebView2.PostWebMessageAsJson(
+                            JsonSerializer.Serialize(new
+                            {
+                                action = "loginSuccess",
+                                message = $"Welcome back {user.FullName} 👋"
+                            })
+                        );
+
+                        // استنى شوية وبعدين افتحي المين
+                        await Task.Delay(1500);
+
                         var main = Program.ServiceProvider.GetRequiredService<MainForm>();
                         main.SetUser(user.Id);
 
                         this.Hide();
-                        await Task.Delay(500);
-                        main.ShowDialog();
+                        main.Show();
+                    }
+                    else
+                    {
+                        // ابعتي رسالة خطأ
+                        webView.CoreWebView2.PostWebMessageAsJson(
+                            JsonSerializer.Serialize(new
+                            {
+                                action = "loginError",
+                                message = "Invalid email or password"
+                            })
+                        );
                     }
                 }
             };
