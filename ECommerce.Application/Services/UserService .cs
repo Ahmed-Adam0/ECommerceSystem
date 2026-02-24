@@ -57,6 +57,7 @@ namespace ECommerce.ApplicationLayer.Services
             };
 
             _userRepo.Add(entity);
+            _userRepo.SaveChangesAsync();
 
             return new UserDto
             {

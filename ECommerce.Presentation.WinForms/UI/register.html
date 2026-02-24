@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Register</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI';
+    background: linear-gradient(135deg, #1cc88a, #4e73df);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    width: 360px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    background: #1cc88a;
+    color: white;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #17a673;
+}
+
+/* Popup */
+.popup {
+    position: fixed;
+    top: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 15px 25px;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 14px;
+    display: none;
+}
+
+.popup.success { background: #1cc88a; }
+.popup.error { background: #e74a3b; }
+</style>
+</head>
+
+<body>
+
+<div class="card">
+    <h2>Create Account</h2>
+
+    <input type="text" id="fullName" placeholder="Full Name">
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Password">
+
+    <button onclick="register()">Register</button>
+</div>
+
+<div id="popup" class="popup"></div>
+
+<script>
+const popup = document.getElementById("popup");
+
+function showPopup(message, type) {
+    popup.textContent = message;
+    popup.className = `popup ${type}`;
+    popup.style.display = "block";
+
+    setTimeout(() => {
+        popup.style.display = "none";
+    }, 2000);
+}
+
+// Receive message from C#
+window.chrome.webview.addEventListener("message", event => {
+    const data = typeof event.data === "string"
+        ? JSON.parse(event.data)
+        : event.data;
+
+    if (data.action === "showPopup") {
+        showPopup(data.message, data.type);
+    }
+});
+
+// Send register data
+function register() {
+    const data = {
+        action: "register",
+        fullName: document.getElementById("fullName").value,
+        email: document.getElementById("email").value,
+        password: document.getElementById("password").value
+    };
+
+    window.chrome.webview.postMessage(data);
+}
+</script>
+
+</body>
+</html>

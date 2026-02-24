@@ -590,7 +590,7 @@ header {
                     <nav>
                         <ul class="d-flex nav_ul " style="list-style: none; ">
                             <li style="margin-right: 20px;">
-                            <a href="./mainform.html">
+                            <a href="#" onclick="goHome()">
                             Home
                             </a>
                             </li>
@@ -963,6 +963,12 @@ function addToCart(productId) {
 function openCartPage() {
     window.chrome.webview.postMessage({
         action: "openCart"
+    });
+}
+function goHome() {
+    window.chrome.webview.postMessage({
+        action: "navigate",
+        page: "mainform.html"
     });
 }
 </script>

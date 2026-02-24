@@ -204,7 +204,7 @@ namespace ECommerce.Presentation.WinForms.Forms
             else
             {
                 // منتج جديد في الكارت
-                _cartItemService.CreateCartItem(userId, new CreateCartItemDto
+                await _cartItemService.CreateCartItemAsync(userId, new CreateCartItemDto
                 {
                     ProductId = productId,
                     Quantity = quantityToAdd
@@ -436,25 +436,40 @@ namespace ECommerce.Presentation.WinForms.Forms
             await _cartItemService.RemoveFromCartAsync(_currentUserId, productId);
 
             await _productService.SaveChangesAsync();
-            await _cartItemService.SaveChangesAsync();
+           await _cartItemService.SaveChangesAsync();
 
             await SendCartData(_currentUserId);
         }
         // =========================
         // Navigation
         // =========================
-        private void HandleNavigation(JsonElement root)
+        private async void HandleNavigation(JsonElement root)
         {
             if (!root.TryGetProperty("page", out var pageProp))
                 return;
 
-            string page = pageProp.GetString() ?? "mainform.html";
+            string page = pageProp.GetString() ?? "";
             string path = Path.Combine(Application.StartupPath, "UI", page);
 
-            if (File.Exists(path))
-                webView.Source = new Uri(path);
-        }
+            if (!File.Exists(path))
+                return;
 
+            void Handler(object? s, CoreWebView2NavigationCompletedEventArgs e)
+            {
+                if (!e.IsSuccess) return;
+
+                webView.CoreWebView2.NavigationCompleted -= Handler;
+
+                // 👈 لو رجعنا للهوم ابعتي الداتا تاني
+                if (page == "mainform.html")
+                {
+                    _ = SendHomePageData();
+                }
+            }
+
+            webView.CoreWebView2.NavigationCompleted += Handler;
+            webView.Source = new Uri(path);
+        }
 
 
         private async void HandleViewProduct(JsonElement root)
@@ -545,7 +560,11 @@ namespace ECommerce.Presentation.WinForms.Forms
         // =========================
         // View Product
         // =========================
-
+        protected override void OnFormClosed(FormClosedEventArgs e)
+        {
+            base.OnFormClosed(e);
+            Application.Exit();
+        }
 
     }
 }

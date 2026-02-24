@@ -55,6 +55,41 @@ button:hover {
 .link {
     margin-top: 15px;
 }
+.popup {
+    position: fixed;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 15px 25px;
+    border-radius: 10px;
+    font-size: 15px;
+    color: #fff;
+    z-index: 9999;
+    animation: fadeIn 0.3s ease;
+}
+
+.popup.success {
+    background: #1cc88a;
+}
+
+.popup.error {
+    background: #e74a3b;
+}
+
+.hidden {
+    display: none;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -10px);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}
 </style>
 </head>
 <body>
@@ -70,11 +105,13 @@ button:hover {
 
         <p class="link">
             Don't have an account?
-            <a href="register.html">Register</a>
+            <a href="#" onclick="openRegister()">Register</a>
         </p>
     </div>
 </div>
-
+<div id="popup" class="popup hidden">
+    <span id="popup-message"></span>
+</div>
 <script>
 function login() {
     const data = {
@@ -84,6 +121,40 @@ function login() {
     };
 
     window.chrome.webview.postMessage(data);
+}
+function showPopup(message, type) {
+    const popup = document.getElementById("popup");
+    const text = document.getElementById("popup-message");
+
+    text.innerText = message;
+    popup.className = `popup ${type}`;
+
+    popup.classList.remove("hidden");
+
+    setTimeout(() => {
+        popup.classList.add("hidden");
+    }, 2000);
+}
+
+window.chrome.webview.addEventListener("message", event => {
+    const msg = typeof event.data === "string"
+        ? JSON.parse(event.data)
+        : event.data;
+
+    if (!msg.action) return;
+
+    if (msg.action === "loginSuccess") {
+        showPopup(msg.message, "success");
+    }
+
+    if (msg.action === "loginError") {
+        showPopup(msg.message, "error");
+    }
+});
+function openRegister() {
+    window.chrome.webview.postMessage({
+        action: "openRegister"
+    });
 }
 </script>
 
