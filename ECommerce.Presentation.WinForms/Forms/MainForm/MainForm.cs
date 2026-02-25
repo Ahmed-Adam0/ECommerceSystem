@@ -1,12 +1,13 @@
-﻿using ECommerce.ApplicationLayer.DTOs.CartItemDtos;
+﻿ using ECommerce.ApplicationLayer.DTOs.CartItemDtos;
+using ECommerce.ApplicationLayer.DTOs.ProductDtos;
 using ECommerce.ApplicationLayer.Interfaces;
 using ECommerce.ApplicationLayer.Services;
 using ECommerce.Domain.Entities;
+using ECommerce.Domain.Enums;
 using ECommerce.Infrastructure.Repositories;
 using Microsoft.VisualBasic.ApplicationServices;
 using Microsoft.Web.WebView2.Core;
 using Microsoft.Web.WebView2.WinForms;
-using ECommerce.ApplicationLayer.DTOs.ProductDtos;
 using System;
 using System.IO;
 using System.Linq;
@@ -22,18 +23,21 @@ namespace ECommerce.Presentation.WinForms.Forms
         private readonly IProductService _productService;
         private readonly ICategoryService _categoryService;
         private readonly ICartItemService _cartItemService;
+        private readonly IOrderService _orderService; // ⬅ جديد
         private int _currentUserId;
 
         private WebView2 webView;
 
         public MainForm(
-            IProductService productService,
-            ICategoryService categoryService,
-            ICartItemService cartItemService)
+     IProductService productService,
+     ICategoryService categoryService,
+     ICartItemService cartItemService,
+     IOrderService orderService) // ⬅ جديد
         {
             _productService = productService;
             _categoryService = categoryService;
             _cartItemService = cartItemService;
+            _orderService = orderService; // ⬅ ربط الـ field بالـ service
 
             InitializeComponent();
         }
@@ -44,8 +48,7 @@ namespace ECommerce.Presentation.WinForms.Forms
         private void InitializeComponent()
         {
             this.Text = "Home";
-            this.Width = 1200;
-            this.Height = 800;
+            this.WindowState = FormWindowState.Maximized;
         }
 
         protected override async void OnLoad(EventArgs e)
@@ -71,7 +74,6 @@ namespace ECommerce.Presentation.WinForms.Forms
             string htmlPath = Path.Combine(Application.StartupPath, "UI", "mainform.html");
             webView.Source = new Uri(htmlPath);
 
-            // استنى الصفحة تفتح قبل ارسال البيانات
             var tcs = new TaskCompletionSource();
             void Handler(object? s, CoreWebView2NavigationCompletedEventArgs e)
             {
@@ -155,7 +157,7 @@ namespace ECommerce.Presentation.WinForms.Forms
                 categories = allCategories.Take(4),
                 allProducts,
                 allCategories,
-                 cartCount
+                cartCount
             };
 
             var json = JsonSerializer.Serialize(new
@@ -350,12 +352,150 @@ namespace ECommerce.Presentation.WinForms.Forms
                     await HandleRemoveFromCart(root);
                     break;
 
+                case "openOrder":   // 👈 الجديد
+                    await OpenOrderPage(root);
+                    break;
+
+                case "createOrder":
+                    await HandleCreateOrder();
+                    break;
+
+                case "cancelOrder":
+                    await HandleCancelOrder(root);
+                    break;
+
+                case "orderPageReady":
+                    await SendOrderData(_currentUserId);
+                    break;
+
                 default:
                     break;
             }
         }
 
 
+        private async Task HandleCancelOrder(JsonElement root)
+        {
+            int orderId = root.GetProperty("orderId").GetInt32();
+            var order = _orderService.GetOrderById(orderId);
+
+            if (order == null || order.Status == OrderStatus.Shipping)
+                return; // لا يمكن إلغاء الأوردر إذا Shipping
+
+            _orderService.DeleteOrder(orderId);
+            await _orderService.SaveChangesAsync();
+
+            // رجع الأوردرات المحدثة للـ WebView
+            var orders = _orderService.GetOrdersByUserId(_currentUserId);
+            webView.CoreWebView2.PostWebMessageAsJson(
+                JsonSerializer.Serialize(new
+                {
+                    action = "renderOrders",
+                    orders = orders.Select(o => new
+                    {
+                        o.Id,
+                        Status = o.Status.ToString(),
+                        o.TotalPrice
+                    })
+                })
+            );
+        }
+
+        private async Task HandleCreateOrder()
+        {
+            int userId = _currentUserId;
+
+            var cartItems = await _cartItemService.GetUserCartAsync(userId);
+            if (!cartItems.Any()) return;
+
+            var order = new Order
+            {
+                UserId = userId,
+                Status = OrderStatus.Pending,
+                OrderDate = DateTime.Now,
+                TotalPrice = cartItems.Sum(c => c.Product.Price * c.Quantity)
+            };
+
+            await _orderService.CreateOrderAsync(order);
+
+            // فرغ الكارت بعد حفظ الأوردر
+            foreach (var item in cartItems)
+                await _cartItemService.RemoveFromCartAsync(userId, item.ProductId);
+            await _cartItemService.SaveChangesAsync();
+
+            string orderPath = Path.Combine(Application.StartupPath, "UI", "order.html");
+
+            // استنى الصفحة تفتح تمام قبل إرسال البيانات
+            var tcs = new TaskCompletionSource();
+            void Handler(object? s, CoreWebView2NavigationCompletedEventArgs e)
+            {
+                if (!e.IsSuccess) return;
+
+                webView.CoreWebView2.NavigationCompleted -= Handler;
+                tcs.SetResult();
+            }
+
+            webView.CoreWebView2.NavigationCompleted += Handler;
+            webView.Source = new Uri(orderPath);
+            await tcs.Task; // استنى الصفحة تتحمل
+
+            // ابعتي الأوردرات الجديدة بعد تحميل الصفحة
+            var orders = _orderService.GetOrdersByUserId(userId);
+
+            webView.CoreWebView2.PostWebMessageAsJson(
+                JsonSerializer.Serialize(new
+                {
+                    action = "renderOrders",
+                    orders = orders.Select(o => new
+                    {
+                        o.Id,
+                        Status = o.Status.ToString(),
+                        o.TotalPrice,
+                        OrderDate = o.OrderDate.ToString("yyyy-MM-dd")
+                    })
+                })
+            );
+        }
+        private async Task OpenOrderPage(JsonElement root)
+        {
+            int userId = _currentUserId;
+
+            string orderPath = Path.Combine(Application.StartupPath, "UI", "order.html");
+
+            var tcs = new TaskCompletionSource();
+
+            void Handler(object? s, CoreWebView2NavigationCompletedEventArgs e)
+            {
+                if (!e.IsSuccess) return;
+
+                webView.CoreWebView2.NavigationCompleted -= Handler;
+                tcs.SetResult();
+            }
+
+            webView.CoreWebView2.NavigationCompleted += Handler;
+            webView.Source = new Uri(orderPath);
+
+            await tcs.Task; // 👈 استنى الصفحة تفتح فعليًا
+
+            await SendOrderData(userId);
+        }
+        private async Task SendOrderData(int userId)
+        {
+            var orders = _orderService.GetOrdersByUserId(userId);
+
+            webView.CoreWebView2.PostWebMessageAsJson(
+                JsonSerializer.Serialize(new
+                {
+                    action = "renderOrders",
+                    orders = orders.Select(o => new
+                    {
+                        o.Id,
+                        Status = o.Status.ToString(),
+                        o.TotalPrice
+                    })
+                })
+            );
+        }
         private async Task HandleChangeQuantity(JsonElement root)
         {
             int productId = root.GetProperty("productId").GetInt32();
@@ -436,7 +576,7 @@ namespace ECommerce.Presentation.WinForms.Forms
             await _cartItemService.RemoveFromCartAsync(_currentUserId, productId);
 
             await _productService.SaveChangesAsync();
-           await _cartItemService.SaveChangesAsync();
+            await _cartItemService.SaveChangesAsync();
 
             await SendCartData(_currentUserId);
         }
