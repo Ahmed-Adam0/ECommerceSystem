@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using ECommerce.Domain.Models;
@@ -9,7 +9,8 @@ namespace ECommerce.Domain.Enums
     public enum OrderStatus
     {
         Pending = 1,
-        Processing = 2,
-        Delivered = 3
+        Shipping = 2,
+        Delivered = 3,
+        Canceled = 4
     }
 }

@@ -98,8 +98,11 @@ namespace ECommerce.Presentation.WinForms
             _orderService.UpdateOrder(new UpdateOrderDto
             {
                 Id = selectedOrder.Id,
-                Status = OrderStatus.Delivered
+                Status = OrderStatus.Shipping
             });
+
+            MessageBox.Show("Order has been approved and moved to Shipping status.", "Order Approved",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             LoadOrders();
             FilterOrdersByStatus();
@@ -116,12 +119,21 @@ namespace ECommerce.Presentation.WinForms
             if (dataGridViewOrders.CurrentRow.DataBoundItem is not OrderDto selectedOrder)
                 return;
 
-            var confirm = MessageBox.Show("Are you sure you want to reject (delete) this order?",
+            var confirm = MessageBox.Show("Are you sure you want to reject this order?",
                 "Confirm", MessageBoxButtons.YesNo);
 
             if (confirm == DialogResult.Yes)
             {
-                _orderService.DeleteOrder(selectedOrder.Id);
+                // Change status to Canceled so customer can see it later
+                _orderService.UpdateOrder(new UpdateOrderDto
+                {
+                    Id = selectedOrder.Id,
+                    Status = OrderStatus.Canceled
+                });
+
+                MessageBox.Show("Order has been rejected and marked as Canceled.", "Order Rejected",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                 LoadOrders();
                 FilterOrdersByStatus();
             }
@@ -226,6 +238,31 @@ namespace ECommerce.Presentation.WinForms
 
             var detailsForm = new OrderDetailsForm(selectedOrder);
             detailsForm.ShowDialog();
+        }
+
+        private void buttonViewOrderDetails_Click(object sender, EventArgs e)
+        {
+            if (dataGridViewOrders.CurrentRow == null)
+            {
+                MessageBox.Show("Please select an order to view details.");
+                return;
+            }
+
+            if (dataGridViewOrders.CurrentRow.DataBoundItem is not OrderDto selectedOrder)
+                return;
+
+            var detailsForm = new OrderDetailsForm(selectedOrder);
+            detailsForm.ShowDialog();
+        }
+
+        private void buttonViewOrderDetails_MouseEnter(object sender, EventArgs e)
+        {
+            buttonViewOrderDetails.BackColor = Color.FromArgb(41, 128, 185);
+        }
+
+        private void buttonViewOrderDetails_MouseLeave(object sender, EventArgs e)
+        {
+            buttonViewOrderDetails.BackColor = Color.FromArgb(52, 152, 219);
         }
 
         private void tabPage3_Click(object sender, EventArgs e)

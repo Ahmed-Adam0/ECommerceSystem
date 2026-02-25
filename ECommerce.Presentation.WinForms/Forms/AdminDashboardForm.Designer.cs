@@ -43,10 +43,13 @@ namespace ECommerce.Presentation.WinForms
             textBox4 = new TextBox();
             button6 = new Button();
             tabPage3 = new TabPage();
+            panelOrdersContainer = new Panel();
+            labelOrdersTitle = new Label();
             dataGridViewOrders = new DataGridView();
             comboBoxStatusFilter = new ComboBox();
             buttonApproveOrder = new Button();
             buttonRejectOrder = new Button();
+            buttonViewOrderDetails = new Button();
             Products.SuspendLayout();
             tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
@@ -58,13 +61,15 @@ namespace ECommerce.Presentation.WinForms
             // 
             // Products
             // 
+            Products.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            // ترتيب التابات: Orders أول واحد، ثم Categories، ثم Products
+            Products.Controls.Add(tabPage3);
             Products.Controls.Add(tabPage1);
             Products.Controls.Add(tabPage2);
-            Products.Controls.Add(tabPage3);
-            Products.Location = new Point(-4, 0);
+            Products.Location = new Point(8, 8);
             Products.Name = "Products";
             Products.SelectedIndex = 0;
-            Products.Size = new Size(807, 449);
+            Products.Size = new Size(1180, 680);
             Products.TabIndex = 7;
             // 
             // tabPage1
@@ -79,7 +84,7 @@ namespace ECommerce.Presentation.WinForms
             tabPage1.Location = new Point(4, 29);
             tabPage1.Name = "tabPage1";
             tabPage1.Padding = new Padding(3);
-            tabPage1.Size = new Size(799, 416);
+            tabPage1.Size = new Size(1172, 647);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Categories";
             tabPage1.Click += tabPage1_Click;
@@ -89,12 +94,12 @@ namespace ECommerce.Presentation.WinForms
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(63, 85);
+            dataGridView1.Location = new Point(40, 85);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.ReadOnly = true;
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView1.Size = new Size(674, 291);
+            dataGridView1.Size = new Size(1080, 520);
             dataGridView1.TabIndex = 7;
             // 
             // button3
@@ -159,7 +164,7 @@ namespace ECommerce.Presentation.WinForms
             tabPage2.Location = new Point(4, 29);
             tabPage2.Name = "tabPage2";
             tabPage2.Padding = new Padding(3);
-            tabPage2.Size = new Size(799, 416);
+            tabPage2.Size = new Size(1172, 647);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Products";
             tabPage2.UseVisualStyleBackColor = true;
@@ -170,12 +175,12 @@ namespace ECommerce.Presentation.WinForms
             dataGridView2.AllowUserToAddRows = false;
             dataGridView2.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView2.Location = new Point(57, 74);
+            dataGridView2.Location = new Point(40, 74);
             dataGridView2.Name = "dataGridView2";
             dataGridView2.ReadOnly = true;
             dataGridView2.RowHeadersWidth = 51;
             dataGridView2.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView2.Size = new Size(673, 309);
+            dataGridView2.Size = new Size(1080, 520);
             dataGridView2.TabIndex = 13;
             // 
             // button4
@@ -223,33 +228,67 @@ namespace ECommerce.Presentation.WinForms
             // 
             // tabPage3
             // 
-            tabPage3.Controls.Add(buttonRejectOrder);
-            tabPage3.Controls.Add(buttonApproveOrder);
-            tabPage3.Controls.Add(comboBoxStatusFilter);
-            tabPage3.Controls.Add(dataGridViewOrders);
+            tabPage3.BackColor = Color.FromArgb(24, 30, 54);
+            tabPage3.Controls.Add(panelOrdersContainer);
             tabPage3.Location = new Point(4, 29);
             tabPage3.Name = "tabPage3";
             tabPage3.Padding = new Padding(3);
-            tabPage3.Size = new Size(799, 416);
+            tabPage3.Size = new Size(1172, 647);
             tabPage3.TabIndex = 2;
             tabPage3.Text = "Orders";
             tabPage3.UseVisualStyleBackColor = true;
             tabPage3.Click += tabPage3_Click;
 
 
-            //=========================================================
+            // panelOrdersContainer
+            // 
+            panelOrdersContainer.BackColor = Color.FromArgb(37, 42, 64);
+            panelOrdersContainer.BorderStyle = BorderStyle.None;
+            panelOrdersContainer.Location = new Point(24, 20);
+            panelOrdersContainer.Name = "panelOrdersContainer";
+            panelOrdersContainer.Size = new Size(1120, 600);
+            panelOrdersContainer.TabIndex = 0;
+            panelOrdersContainer.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            panelOrdersContainer.Controls.Add(buttonViewOrderDetails);
+            panelOrdersContainer.Controls.Add(buttonRejectOrder);
+            panelOrdersContainer.Controls.Add(buttonApproveOrder);
+            panelOrdersContainer.Controls.Add(comboBoxStatusFilter);
+            panelOrdersContainer.Controls.Add(dataGridViewOrders);
+            panelOrdersContainer.Controls.Add(labelOrdersTitle);
+
+            // 
+            // labelOrdersTitle
+            // 
+            labelOrdersTitle.AutoSize = true;
+            labelOrdersTitle.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Point);
+            labelOrdersTitle.ForeColor = Color.WhiteSmoke;
+            labelOrdersTitle.Location = new Point(20, 15);
+            labelOrdersTitle.Name = "labelOrdersTitle";
+            labelOrdersTitle.Size = new Size(162, 32);
+            labelOrdersTitle.TabIndex = 0;
+            labelOrdersTitle.Text = "Manage Orders";
+
             // 
             // dataGridViewOrders
             // 
             dataGridViewOrders.AllowUserToAddRows = false;
             dataGridViewOrders.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridViewOrders.BackgroundColor = Color.FromArgb(46, 51, 73);
+            dataGridViewOrders.EnableHeadersVisualStyles = false;
+            dataGridViewOrders.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(15, 76, 129);
+            dataGridViewOrders.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dataGridViewOrders.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            dataGridViewOrders.DefaultCellStyle.BackColor = Color.FromArgb(46, 51, 73);
+            dataGridViewOrders.DefaultCellStyle.ForeColor = Color.WhiteSmoke;
+            dataGridViewOrders.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(37, 42, 64);
+            dataGridViewOrders.GridColor = Color.FromArgb(67, 76, 94);
             dataGridViewOrders.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewOrders.Location = new Point(57, 74);
+            dataGridViewOrders.Location = new Point(20, 120);
             dataGridViewOrders.Name = "dataGridViewOrders";
             dataGridViewOrders.ReadOnly = true;
             dataGridViewOrders.RowHeadersWidth = 51;
             dataGridViewOrders.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridViewOrders.Size = new Size(673, 309);
+            dataGridViewOrders.Size = new Size(1080, 450);
             dataGridViewOrders.TabIndex = 14;
             dataGridViewOrders.CellDoubleClick += dataGridViewOrders_CellDoubleClick;
 
@@ -258,21 +297,25 @@ namespace ECommerce.Presentation.WinForms
             // 
             comboBoxStatusFilter.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxStatusFilter.FormattingEnabled = true;
-            comboBoxStatusFilter.Items.AddRange(new object[] { "All", "Pending", "Processing", "Delivered" });
-            comboBoxStatusFilter.Location = new Point(445, 20);
+            comboBoxStatusFilter.Items.AddRange(new object[] { "All", "Pending", "Shipping", "Delivered", "Canceled" });
+            comboBoxStatusFilter.Location = new Point(780, 25);
             comboBoxStatusFilter.Name = "comboBoxStatusFilter";
-            comboBoxStatusFilter.Size = new Size(285, 28);
+            comboBoxStatusFilter.Size = new Size(320, 28);
             comboBoxStatusFilter.TabIndex = 15;
             comboBoxStatusFilter.SelectedIndexChanged += comboBoxStatusFilter_SelectedIndexChanged;
 
             // 
             // buttonApproveOrder
             // 
-            buttonApproveOrder.BackColor = Color.SeaGreen;
-            buttonApproveOrder.ForeColor = SystemColors.ControlLightLight;
-            buttonApproveOrder.Location = new Point(57, 20);
+            buttonApproveOrder.BackColor = Color.FromArgb(39, 174, 96);
+            buttonApproveOrder.FlatStyle = FlatStyle.Flat;
+            buttonApproveOrder.FlatAppearance.BorderSize = 0;
+            buttonApproveOrder.FlatAppearance.MouseOverBackColor = Color.FromArgb(30, 132, 73);
+            buttonApproveOrder.ForeColor = Color.White;
+            buttonApproveOrder.Location = new Point(20, 60);
             buttonApproveOrder.Name = "buttonApproveOrder";
-            buttonApproveOrder.Size = new Size(94, 36);
+            buttonApproveOrder.Size = new Size(170, 50);
+            buttonApproveOrder.Font = new Font("Segoe UI", 11F, FontStyle.Bold, GraphicsUnit.Point);
             buttonApproveOrder.TabIndex = 16;
             buttonApproveOrder.Text = "Approve";
             buttonApproveOrder.UseVisualStyleBackColor = false;
@@ -281,25 +324,49 @@ namespace ECommerce.Presentation.WinForms
             // 
             // buttonRejectOrder
             // 
-            buttonRejectOrder.BackColor = Color.Firebrick;
-            buttonRejectOrder.ForeColor = SystemColors.ControlLightLight;
-            buttonRejectOrder.Location = new Point(157, 20);
+            buttonRejectOrder.BackColor = Color.FromArgb(192, 57, 43);
+            buttonRejectOrder.FlatStyle = FlatStyle.Flat;
+            buttonRejectOrder.FlatAppearance.BorderSize = 0;
+            buttonRejectOrder.FlatAppearance.MouseOverBackColor = Color.FromArgb(169, 50, 38);
+            buttonRejectOrder.ForeColor = Color.White;
+            buttonRejectOrder.Location = new Point(170, 60);
             buttonRejectOrder.Name = "buttonRejectOrder";
-            buttonRejectOrder.Size = new Size(94, 36);
+            buttonRejectOrder.Size = new Size(170, 50);
+            buttonRejectOrder.Font = new Font("Segoe UI", 11F, FontStyle.Bold, GraphicsUnit.Point);
             buttonRejectOrder.TabIndex = 17;
             buttonRejectOrder.Text = "Reject";
             buttonRejectOrder.UseVisualStyleBackColor = false;
             buttonRejectOrder.Click += buttonRejectOrder_Click;
+
+            // 
+            // buttonViewOrderDetails
+            // 
+            buttonViewOrderDetails.BackColor = Color.FromArgb(41, 128, 185);
+            buttonViewOrderDetails.FlatStyle = FlatStyle.Flat;
+            buttonViewOrderDetails.FlatAppearance.BorderSize = 0;
+            buttonViewOrderDetails.FlatAppearance.MouseOverBackColor = Color.FromArgb(31, 97, 141);
+            buttonViewOrderDetails.ForeColor = Color.White;
+            buttonViewOrderDetails.Location = new Point(320, 60);
+            buttonViewOrderDetails.Name = "buttonViewOrderDetails";
+            buttonViewOrderDetails.Size = new Size(190, 50);
+            buttonViewOrderDetails.Font = new Font("Segoe UI", 11F, FontStyle.Bold, GraphicsUnit.Point);
+            buttonViewOrderDetails.TabIndex = 18;
+            buttonViewOrderDetails.Text = "View Details";
+            buttonViewOrderDetails.UseVisualStyleBackColor = false;
+            buttonViewOrderDetails.Click += buttonViewOrderDetails_Click;
+            buttonViewOrderDetails.MouseEnter += buttonViewOrderDetails_MouseEnter;
+            buttonViewOrderDetails.MouseLeave += buttonViewOrderDetails_MouseLeave;
             // 
             // AdminDashboardForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = SystemColors.Control;
-            ClientSize = new Size(800, 450);
+            BackColor = Color.FromArgb(240, 244, 248);
+            ClientSize = new Size(1200, 700);
             Controls.Add(Products);
             Name = "AdminDashboardForm";
-            Text = "AdminDashboardForm";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Admin Dashboard";
             Load += AdminDashboardForm_Load;
             Products.ResumeLayout(false);
             tabPage1.ResumeLayout(false);
@@ -329,9 +396,12 @@ namespace ECommerce.Presentation.WinForms
         private TextBox textBox4;
         private Button button6;
         private TabPage tabPage3;
+        private Panel panelOrdersContainer;
+        private Label labelOrdersTitle;
         private DataGridView dataGridViewOrders;
         private ComboBox comboBoxStatusFilter;
         private Button buttonApproveOrder;
         private Button buttonRejectOrder;
+        private Button buttonViewOrderDetails;
     }
 }
