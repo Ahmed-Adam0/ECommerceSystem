@@ -2,61 +2,60 @@ namespace ECommerce.Presentation.WinForms
 {
     partial class AdminDashboardForm
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
+            if (disposing && (components != null)) components.Dispose();
             base.Dispose(disposing);
         }
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             Products = new TabControl();
             tabPage1 = new TabPage();
             dataGridView1 = new DataGridView();
-            button3 = new Button();
-            textBox1 = new TextBox();
-            button2 = new Button();
-            textBox2 = new TextBox();
+            pnlCatToolbar = new Panel();
             button1 = new Button();
+            button7 = new Button();
+            button2 = new Button();
+      
+            button3 = new Button();
+            textBox2 = new TextBox();
             tabPage2 = new TabPage();
             dataGridView2 = new DataGridView();
-            button4 = new Button();
-            button5 = new Button();
-            textBox4 = new TextBox();
+            pnlProdToolbar = new Panel();
             button6 = new Button();
+            button8 = new Button();
+            button5 = new Button();
+            button4 = new Button();
+            textBox4 = new TextBox();
             tabPage3 = new TabPage();
             panelOrdersContainer = new Panel();
             labelOrdersTitle = new Label();
             dataGridViewOrders = new DataGridView();
-            comboBoxStatusFilter = new ComboBox();
+            pnlOrderToolbar = new Panel();
             buttonApproveOrder = new Button();
             buttonRejectOrder = new Button();
-            buttonViewOrderDetails = new Button();
+            comboBoxStatusFilter = new ComboBox();
             Products.SuspendLayout();
             tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            pnlCatToolbar.SuspendLayout();
             tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
+            pnlProdToolbar.SuspendLayout();
             tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewOrders).BeginInit();
+            pnlOrderToolbar.SuspendLayout();
             SuspendLayout();
             // 
             // Products
@@ -66,181 +65,300 @@ namespace ECommerce.Presentation.WinForms
             Products.Controls.Add(tabPage3);
             Products.Controls.Add(tabPage1);
             Products.Controls.Add(tabPage2);
-            Products.Location = new Point(8, 8);
+            Products.Controls.Add(tabPage3);
+            Products.Dock = DockStyle.Fill;
+            Products.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            Products.Location = new Point(0, 0);
             Products.Name = "Products";
             Products.SelectedIndex = 0;
-            Products.Size = new Size(1180, 680);
-            Products.TabIndex = 7;
+            Products.Size = new Size(900, 580);
+            Products.TabIndex = 0;
             // 
             // tabPage1
             // 
-            tabPage1.BackColor = Color.WhiteSmoke;
+            tabPage1.BackColor = Color.White;
             tabPage1.Controls.Add(dataGridView1);
-            tabPage1.Controls.Add(button3);
-            tabPage1.Controls.Add(textBox1);
-            tabPage1.Controls.Add(button2);
-            tabPage1.Controls.Add(textBox2);
-            tabPage1.Controls.Add(button1);
-            tabPage1.Location = new Point(4, 29);
+            tabPage1.Controls.Add(pnlCatToolbar);
+            tabPage1.Location = new Point(4, 32);
             tabPage1.Name = "tabPage1";
-            tabPage1.Padding = new Padding(3);
-            tabPage1.Size = new Size(1172, 647);
+            tabPage1.Size = new Size(892, 544);
             tabPage1.TabIndex = 0;
-            tabPage1.Text = "Categories";
+            tabPage1.Text = "📂  Categories";
             tabPage1.Click += tabPage1_Click;
             // 
             // dataGridView1
             // 
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView1.BackgroundColor = Color.White;
+            dataGridView1.BorderStyle = BorderStyle.None;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(41, 128, 185);
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            dataGridViewCellStyle1.ForeColor = Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(40, 85);
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = SystemColors.Window;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 10F);
+            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridView1.Dock = DockStyle.Fill;
+            dataGridView1.GridColor = Color.FromArgb(220, 220, 220);
+            dataGridView1.Location = new Point(0, 55);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.ReadOnly = true;
+            dataGridView1.RowHeadersVisible = false;
             dataGridView1.RowHeadersWidth = 51;
+            dataGridView1.RowTemplate.Height = 35;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView1.Size = new Size(1080, 520);
-            dataGridView1.TabIndex = 7;
+            dataGridView1.Size = new Size(892, 489);
+            dataGridView1.TabIndex = 0;
+            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             // 
-            // button3
+            // pnlCatToolbar
             // 
-            button3.Location = new Point(403, 23);
-            button3.Name = "button3";
-            button3.Size = new Size(37, 29);
-            button3.TabIndex = 12;
-            button3.Text = "🔍";
-            button3.UseVisualStyleBackColor = true;
-            button3.Click += button3_Click;
-            // 
-            // textBox1
-            // 
-            textBox1.ForeColor = Color.DimGray;
-            textBox1.Location = new Point(106, 25);
-            textBox1.Name = "textBox1";
-            textBox1.PlaceholderText = "add Category...";
-            textBox1.Size = new Size(291, 27);
-            textBox1.TabIndex = 10;
-            // 
-            // button2
-            // 
-            button2.BackColor = Color.Firebrick;
-            button2.ForeColor = SystemColors.ControlLight;
-            button2.Location = new Point(23, 25);
-            button2.Name = "button2";
-            button2.Size = new Size(34, 36);
-            button2.TabIndex = 11;
-            button2.Text = "🗑️";
-            button2.UseVisualStyleBackColor = false;
-            button2.Click += button2_Click;
-            // 
-            // textBox2
-            // 
-            textBox2.ForeColor = Color.DimGray;
-            textBox2.Location = new Point(446, 23);
-            textBox2.Name = "textBox2";
-            textBox2.PlaceholderText = "Search...";
-            textBox2.Size = new Size(291, 27);
-            textBox2.TabIndex = 8;
+            pnlCatToolbar.BackColor = Color.FromArgb(236, 240, 241);
+            pnlCatToolbar.Controls.Add(button1);
+            pnlCatToolbar.Controls.Add(button7);
+            pnlCatToolbar.Controls.Add(button2);
+           
+            pnlCatToolbar.Controls.Add(button3);
+            pnlCatToolbar.Controls.Add(textBox2);
+            pnlCatToolbar.Dock = DockStyle.Top;
+            pnlCatToolbar.Location = new Point(0, 0);
+            pnlCatToolbar.Name = "pnlCatToolbar";
+            pnlCatToolbar.Size = new Size(892, 55);
+            pnlCatToolbar.TabIndex = 1;
             // 
             // button1
             // 
-            button1.BackColor = Color.SteelBlue;
-            button1.ForeColor = SystemColors.ButtonHighlight;
-            button1.Location = new Point(63, 25);
+            button1.BackColor = Color.FromArgb(39, 174, 96);
+            button1.Cursor = Cursors.Hand;
+            button1.FlatAppearance.BorderSize = 0;
+            button1.FlatStyle = FlatStyle.Flat;
+            button1.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            button1.ForeColor = Color.White;
+            button1.Location = new Point(10, 10);
             button1.Name = "button1";
-            button1.Size = new Size(37, 36);
-            button1.TabIndex = 9;
-            button1.Text = "➕";
+            button1.Size = new Size(85, 34);
+            button1.TabIndex = 0;
+            button1.Text = "➕ Add";
             button1.UseVisualStyleBackColor = false;
             button1.Click += button1_Click;
             // 
+            // button7
+            // 
+            button7.BackColor = Color.FromArgb(243, 156, 18);
+            button7.Cursor = Cursors.Hand;
+            button7.FlatAppearance.BorderSize = 0;
+            button7.FlatStyle = FlatStyle.Flat;
+            button7.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            button7.ForeColor = Color.White;
+            button7.Location = new Point(103, 10);
+            button7.Name = "button7";
+            button7.Size = new Size(85, 34);
+            button7.TabIndex = 1;
+            button7.Text = "✏️ Edit";
+            button7.UseVisualStyleBackColor = false;
+            button7.Click += button7_Click;
+            // 
+            // button2
+            // 
+            button2.BackColor = Color.FromArgb(192, 57, 43);
+            button2.Cursor = Cursors.Hand;
+            button2.FlatAppearance.BorderSize = 0;
+            button2.FlatStyle = FlatStyle.Flat;
+            button2.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            button2.ForeColor = Color.White;
+            button2.Location = new Point(196, 10);
+            button2.Name = "button2";
+            button2.Size = new Size(95, 34);
+            button2.TabIndex = 2;
+            button2.Text = "🗑️ Delete";
+            button2.UseVisualStyleBackColor = false;
+            button2.Click += button2_Click;
+           
+            // 
+            // button3
+            // 
+            button3.BackColor = Color.FromArgb(41, 128, 185);
+            button3.Cursor = Cursors.Hand;
+            button3.FlatAppearance.BorderSize = 0;
+            button3.FlatStyle = FlatStyle.Flat;
+            button3.Font = new Font("Segoe UI", 10F);
+            button3.ForeColor = Color.White;
+            button3.Location = new Point(718, 10);
+            button3.Name = "button3";
+            button3.Size = new Size(75, 34);
+            button3.TabIndex = 4;
+            button3.Text = "Search";
+            button3.UseVisualStyleBackColor = false;
+            button3.Click += button3_Click;
+            // 
+            // textBox2
+            // 
+            textBox2.BorderStyle = BorderStyle.FixedSingle;
+            textBox2.Font = new Font("Segoe UI", 10F);
+            textBox2.Location = new Point(540, 12);
+            textBox2.Name = "textBox2";
+            textBox2.PlaceholderText = "🔍 Search...";
+            textBox2.Size = new Size(170, 30);
+            textBox2.TabIndex = 5;
+            // 
             // tabPage2
             // 
+            tabPage2.BackColor = Color.White;
             tabPage2.Controls.Add(dataGridView2);
-            tabPage2.Controls.Add(button4);
-            tabPage2.Controls.Add(button5);
-            tabPage2.Controls.Add(textBox4);
-            tabPage2.Controls.Add(button6);
-            tabPage2.Location = new Point(4, 29);
+            tabPage2.Controls.Add(pnlProdToolbar);
+            tabPage2.Location = new Point(4, 32);
             tabPage2.Name = "tabPage2";
-            tabPage2.Padding = new Padding(3);
-            tabPage2.Size = new Size(1172, 647);
+            tabPage2.Size = new Size(892, 544);
             tabPage2.TabIndex = 1;
-            tabPage2.Text = "Products";
-            tabPage2.UseVisualStyleBackColor = true;
+            tabPage2.Text = "📦  Products";
             tabPage2.Click += tabPage2_Click;
             // 
             // dataGridView2
             // 
             dataGridView2.AllowUserToAddRows = false;
             dataGridView2.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView2.BackgroundColor = Color.White;
+            dataGridView2.BorderStyle = BorderStyle.None;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.FromArgb(142, 68, 173);
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            dataGridViewCellStyle3.ForeColor = Color.White;
+            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
+            dataGridView2.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             dataGridView2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView2.Location = new Point(40, 74);
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = SystemColors.Window;
+            dataGridViewCellStyle4.Font = new Font("Segoe UI", 10F);
+            dataGridViewCellStyle4.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
+            dataGridView2.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridView2.Dock = DockStyle.Fill;
+            dataGridView2.GridColor = Color.FromArgb(220, 220, 220);
+            dataGridView2.Location = new Point(0, 55);
             dataGridView2.Name = "dataGridView2";
             dataGridView2.ReadOnly = true;
+            dataGridView2.RowHeadersVisible = false;
             dataGridView2.RowHeadersWidth = 51;
+            dataGridView2.RowTemplate.Height = 35;
             dataGridView2.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView2.Size = new Size(1080, 520);
-            dataGridView2.TabIndex = 13;
+            dataGridView2.Size = new Size(892, 489);
+            dataGridView2.TabIndex = 0;
             // 
-            // button4
+            // pnlProdToolbar
             // 
-            button4.Location = new Point(402, 20);
-            button4.Name = "button4";
-            button4.Size = new Size(37, 29);
-            button4.TabIndex = 18;
-            button4.Text = "🔍";
-            button4.UseVisualStyleBackColor = true;
-            button4.Click += button4_Click;
-            // 
-            // button5
-            // 
-            button5.BackColor = Color.Firebrick;
-            button5.FlatAppearance.BorderSize = 0;
-            button5.ForeColor = SystemColors.ControlLight;
-            button5.Location = new Point(57, 20);
-            button5.Name = "button5";
-            button5.Size = new Size(40, 36);
-            button5.TabIndex = 17;
-            button5.Text = "🗑️";
-            button5.UseVisualStyleBackColor = false;
-            button5.Click += button5_Click;
-            // 
-            // textBox4
-            // 
-            textBox4.Location = new Point(445, 20);
-            textBox4.Name = "textBox4";
-            textBox4.Size = new Size(285, 27);
-            textBox4.TabIndex = 14;
+            pnlProdToolbar.BackColor = Color.FromArgb(236, 240, 241);
+            pnlProdToolbar.Controls.Add(button6);
+            pnlProdToolbar.Controls.Add(button8);
+            pnlProdToolbar.Controls.Add(button5);
+            pnlProdToolbar.Controls.Add(button4);
+            pnlProdToolbar.Controls.Add(textBox4);
+            pnlProdToolbar.Dock = DockStyle.Top;
+            pnlProdToolbar.Location = new Point(0, 0);
+            pnlProdToolbar.Name = "pnlProdToolbar";
+            pnlProdToolbar.Size = new Size(892, 55);
+            pnlProdToolbar.TabIndex = 1;
             // 
             // button6
             // 
-            button6.BackColor = Color.SteelBlue;
+            button6.BackColor = Color.FromArgb(39, 174, 96);
+            button6.Cursor = Cursors.Hand;
             button6.FlatAppearance.BorderSize = 0;
-            button6.ForeColor = SystemColors.ButtonHighlight;
-            button6.Location = new Point(103, 20);
+            button6.FlatStyle = FlatStyle.Flat;
+            button6.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            button6.ForeColor = Color.White;
+            button6.Location = new Point(10, 10);
             button6.Name = "button6";
-            button6.Size = new Size(39, 36);
-            button6.TabIndex = 15;
-            button6.Text = "➕";
+            button6.Size = new Size(85, 34);
+            button6.TabIndex = 0;
+            button6.Text = "➕ Add";
             button6.UseVisualStyleBackColor = false;
             button6.Click += button6_Click;
             // 
+            // button8
+            // 
+            button8.BackColor = Color.FromArgb(243, 156, 18);
+            button8.Cursor = Cursors.Hand;
+            button8.FlatAppearance.BorderSize = 0;
+            button8.FlatStyle = FlatStyle.Flat;
+            button8.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            button8.ForeColor = Color.White;
+            button8.Location = new Point(103, 10);
+            button8.Name = "button8";
+            button8.Size = new Size(85, 34);
+            button8.TabIndex = 1;
+            button8.Text = "✏️ Edit";
+            button8.UseVisualStyleBackColor = false;
+            button8.Click += button8_Click;
+            // 
+            // button5
+            // 
+            button5.BackColor = Color.FromArgb(192, 57, 43);
+            button5.Cursor = Cursors.Hand;
+            button5.FlatAppearance.BorderSize = 0;
+            button5.FlatStyle = FlatStyle.Flat;
+            button5.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            button5.ForeColor = Color.White;
+            button5.Location = new Point(196, 10);
+            button5.Name = "button5";
+            button5.Size = new Size(95, 34);
+            button5.TabIndex = 2;
+            button5.Text = "🗑️ Delete";
+            button5.UseVisualStyleBackColor = false;
+            button5.Click += button5_Click;
+            // 
+            // button4
+            // 
+            button4.BackColor = Color.FromArgb(142, 68, 173);
+            button4.Cursor = Cursors.Hand;
+            button4.FlatAppearance.BorderSize = 0;
+            button4.FlatStyle = FlatStyle.Flat;
+            button4.Font = new Font("Segoe UI", 10F);
+            button4.ForeColor = Color.White;
+            button4.Location = new Point(718, 10);
+            button4.Name = "button4";
+            button4.Size = new Size(75, 34);
+            button4.TabIndex = 3;
+            button4.Text = "Search";
+            button4.UseVisualStyleBackColor = false;
+            button4.Click += button4_Click;
+            // 
+            // textBox4
+            // 
+            textBox4.BorderStyle = BorderStyle.FixedSingle;
+            textBox4.Font = new Font("Segoe UI", 10F);
+            textBox4.Location = new Point(490, 12);
+            textBox4.Name = "textBox4";
+            textBox4.PlaceholderText = "🔍 Search by name or category...";
+            textBox4.Size = new Size(220, 30);
+            textBox4.TabIndex = 4;
+            // 
             // tabPage3
             // 
-            tabPage3.BackColor = Color.FromArgb(24, 30, 54);
-            tabPage3.Controls.Add(panelOrdersContainer);
+            tabPage3.BackColor = Color.White;
+            tabPage3.Controls.Add(dataGridViewOrders);
+            tabPage3.Controls.Add(pnlOrderToolbar);
+            tabPage3.Location = new Point(4, 32);
             tabPage3.Location = new Point(4, 29);
-            tabPage3.Name = "tabPage3";
-            tabPage3.Padding = new Padding(3);
-            tabPage3.Size = new Size(1172, 647);
+            tabPage3.Size = new Size(892, 544);
+            tabPage3.Size = new Size(799, 416);
             tabPage3.TabIndex = 2;
-            tabPage3.Text = "Orders";
-            tabPage3.UseVisualStyleBackColor = true;
-            tabPage3.Click += tabPage3_Click;
-
-
-            // panelOrdersContainer
+            tabPage3.Text = "\U0001f6d2  Orders";
+            //=========================================================
             // 
             panelOrdersContainer.BackColor = Color.FromArgb(37, 42, 64);
             panelOrdersContainer.BorderStyle = BorderStyle.None;
@@ -272,68 +390,79 @@ namespace ECommerce.Presentation.WinForms
             // dataGridViewOrders
             // 
             dataGridViewOrders.AllowUserToAddRows = false;
+            dataGridViewOrders.BackgroundColor = Color.White;
+            dataGridViewOrders.BorderStyle = BorderStyle.None;
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = Color.FromArgb(44, 62, 80);
+            dataGridViewCellStyle5.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            dataGridViewCellStyle5.ForeColor = Color.White;
+            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
+            dataGridViewOrders.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
             dataGridViewOrders.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewOrders.BackgroundColor = Color.FromArgb(46, 51, 73);
-            dataGridViewOrders.EnableHeadersVisualStyles = false;
-            dataGridViewOrders.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(15, 76, 129);
-            dataGridViewOrders.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
-            dataGridViewOrders.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point);
-            dataGridViewOrders.DefaultCellStyle.BackColor = Color.FromArgb(46, 51, 73);
-            dataGridViewOrders.DefaultCellStyle.ForeColor = Color.WhiteSmoke;
-            dataGridViewOrders.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(37, 42, 64);
-            dataGridViewOrders.GridColor = Color.FromArgb(67, 76, 94);
-            dataGridViewOrders.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewOrders.Location = new Point(20, 120);
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = SystemColors.Window;
+            dataGridViewCellStyle6.Font = new Font("Segoe UI", 10F);
+            dataGridViewCellStyle6.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle6.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.False;
+            dataGridViewOrders.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewOrders.Dock = DockStyle.Fill;
+            dataGridViewOrders.GridColor = Color.FromArgb(220, 220, 220);
+            dataGridViewOrders.Location = new Point(0, 55);
+            dataGridViewOrders.Location = new Point(57, 74);
             dataGridViewOrders.Name = "dataGridViewOrders";
             dataGridViewOrders.ReadOnly = true;
+            dataGridViewOrders.RowHeadersVisible = false;
             dataGridViewOrders.RowHeadersWidth = 51;
-            dataGridViewOrders.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridViewOrders.Size = new Size(1080, 450);
+            dataGridViewOrders.RowTemplate.Height = 35;
+            dataGridViewOrders.Size = new Size(892, 489);
+            dataGridViewOrders.TabIndex = 0;
             dataGridViewOrders.TabIndex = 14;
             dataGridViewOrders.CellDoubleClick += dataGridViewOrders_CellDoubleClick;
-
             // 
-            // comboBoxStatusFilter
-            // 
-            comboBoxStatusFilter.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboBoxStatusFilter.FormattingEnabled = true;
-            comboBoxStatusFilter.Items.AddRange(new object[] { "All", "Pending", "Shipping", "Delivered", "Canceled" });
-            comboBoxStatusFilter.Location = new Point(780, 25);
-            comboBoxStatusFilter.Name = "comboBoxStatusFilter";
-            comboBoxStatusFilter.Size = new Size(320, 28);
-            comboBoxStatusFilter.TabIndex = 15;
-            comboBoxStatusFilter.SelectedIndexChanged += comboBoxStatusFilter_SelectedIndexChanged;
+            // pnlOrderToolbar
+            pnlOrderToolbar.BackColor = Color.FromArgb(236, 240, 241);
+            pnlOrderToolbar.Controls.Add(buttonApproveOrder);
+            pnlOrderToolbar.Controls.Add(buttonRejectOrder);
+            pnlOrderToolbar.Controls.Add(comboBoxStatusFilter);
+            pnlOrderToolbar.Dock = DockStyle.Top;
+            pnlOrderToolbar.Location = new Point(0, 0);
+            pnlOrderToolbar.Name = "pnlOrderToolbar";
+            pnlOrderToolbar.Size = new Size(892, 55);
+            pnlOrderToolbar.TabIndex = 1;
 
             // 
             // buttonApproveOrder
-            // 
             buttonApproveOrder.BackColor = Color.FromArgb(39, 174, 96);
-            buttonApproveOrder.FlatStyle = FlatStyle.Flat;
+            buttonApproveOrder.Cursor = Cursors.Hand;
             buttonApproveOrder.FlatAppearance.BorderSize = 0;
-            buttonApproveOrder.FlatAppearance.MouseOverBackColor = Color.FromArgb(30, 132, 73);
+            buttonApproveOrder.FlatStyle = FlatStyle.Flat;
+            buttonApproveOrder.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             buttonApproveOrder.ForeColor = Color.White;
-            buttonApproveOrder.Location = new Point(20, 60);
-            buttonApproveOrder.Name = "buttonApproveOrder";
-            buttonApproveOrder.Size = new Size(170, 50);
-            buttonApproveOrder.Font = new Font("Segoe UI", 11F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonApproveOrder.TabIndex = 16;
+            buttonApproveOrder.Location = new Point(10, 10);
+            buttonApproveOrder.Location = new Point(57, 20);
+            buttonApproveOrder.Size = new Size(110, 34);
+            buttonApproveOrder.TabIndex = 0;
+            buttonApproveOrder.Text = "✅ Approve";
             buttonApproveOrder.Text = "Approve";
             buttonApproveOrder.UseVisualStyleBackColor = false;
             buttonApproveOrder.Click += buttonApproveOrder_Click;
-
             // 
             // buttonRejectOrder
-            // 
             buttonRejectOrder.BackColor = Color.FromArgb(192, 57, 43);
-            buttonRejectOrder.FlatStyle = FlatStyle.Flat;
+            buttonRejectOrder.Cursor = Cursors.Hand;
             buttonRejectOrder.FlatAppearance.BorderSize = 0;
-            buttonRejectOrder.FlatAppearance.MouseOverBackColor = Color.FromArgb(169, 50, 38);
+            buttonRejectOrder.FlatStyle = FlatStyle.Flat;
+            buttonRejectOrder.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             buttonRejectOrder.ForeColor = Color.White;
-            buttonRejectOrder.Location = new Point(170, 60);
-            buttonRejectOrder.Name = "buttonRejectOrder";
-            buttonRejectOrder.Size = new Size(170, 50);
-            buttonRejectOrder.Font = new Font("Segoe UI", 11F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonRejectOrder.TabIndex = 17;
+            buttonRejectOrder.Location = new Point(128, 10);
+            buttonRejectOrder.Location = new Point(157, 20);
+            buttonRejectOrder.Size = new Size(100, 34);
+            buttonRejectOrder.TabIndex = 1;
+            buttonRejectOrder.Text = "❌ Reject";
             buttonRejectOrder.Text = "Reject";
             buttonRejectOrder.UseVisualStyleBackColor = false;
             buttonRejectOrder.Click += buttonRejectOrder_Click;
@@ -357,12 +486,23 @@ namespace ECommerce.Presentation.WinForms
             buttonViewOrderDetails.MouseEnter += buttonViewOrderDetails_MouseEnter;
             buttonViewOrderDetails.MouseLeave += buttonViewOrderDetails_MouseLeave;
             // 
+            // comboBoxStatusFilter
+            // 
+            comboBoxStatusFilter.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxStatusFilter.Font = new Font("Segoe UI", 10F);
+            comboBoxStatusFilter.Items.AddRange(new object[] { "All", "Pending", "Processing", "Delivered" });
+            comboBoxStatusFilter.Location = new Point(530, 13);
+            comboBoxStatusFilter.Name = "comboBoxStatusFilter";
+            comboBoxStatusFilter.Size = new Size(200, 31);
+            comboBoxStatusFilter.TabIndex = 2;
+            comboBoxStatusFilter.SelectedIndexChanged += comboBoxStatusFilter_SelectedIndexChanged;
+            // 
             // AdminDashboardForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(240, 244, 248);
-            ClientSize = new Size(1200, 700);
+            BackColor = Color.White;
+            ClientSize = new Size(900, 580);
+            ClientSize = new Size(800, 450);
             Controls.Add(Products);
             Name = "AdminDashboardForm";
             StartPosition = FormStartPosition.CenterScreen;
@@ -370,38 +510,44 @@ namespace ECommerce.Presentation.WinForms
             Load += AdminDashboardForm_Load;
             Products.ResumeLayout(false);
             tabPage1.ResumeLayout(false);
-            tabPage1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            pnlCatToolbar.ResumeLayout(false);
+            pnlCatToolbar.PerformLayout();
             tabPage2.ResumeLayout(false);
-            tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).EndInit();
+            pnlProdToolbar.ResumeLayout(false);
+            pnlProdToolbar.PerformLayout();
             tabPage3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dataGridViewOrders).EndInit();
+            pnlOrderToolbar.ResumeLayout(false);
             ResumeLayout(false);
         }
 
-        #endregion
-        private TabControl Products;
-        private TabPage tabPage1;
-        private TabPage tabPage2;
-        private DataGridView dataGridView1;
-        private Button button3;
-        private TextBox textBox1;
-        private Button button2;
-        private TextBox textBox2;
-        private Button button1;
-        private DataGridView dataGridView2;
-        private Button button4;
-        private Button button5;
-        private TextBox textBox4;
-        private Button button6;
-        private TabPage tabPage3;
-        private Panel panelOrdersContainer;
-        private Label labelOrdersTitle;
-        private DataGridView dataGridViewOrders;
-        private ComboBox comboBoxStatusFilter;
-        private Button buttonApproveOrder;
+
+        private System.Windows.Forms.TabControl Products;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.Panel pnlCatToolbar;
+        private System.Windows.Forms.Panel pnlProdToolbar;
+        private System.Windows.Forms.Panel pnlOrderToolbar;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Button button2;
+    
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.DataGridView dataGridView2;
+        private System.Windows.Forms.Button buttonApproveOrder;
+        private System.Windows.Forms.Button buttonRejectOrder;
+        private System.Windows.Forms.ComboBox comboBoxStatusFilter;
+        private System.Windows.Forms.DataGridView dataGridViewOrders;
         private Button buttonRejectOrder;
-        private Button buttonViewOrderDetails;
     }
 }
