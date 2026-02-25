@@ -36,18 +36,23 @@ namespace ECommerce.ApplicationLayer.Services
 
         public void CreateCategory(CreateCategoryDto createCategory)
         {
-            var entity = new Category() { Name = createCategory.Name };
+            var entity = new Category()
+            {
+                Name = createCategory.Name,
+                ImageUrl = createCategory.ImageUrl
+            };
             _categoryRepo.Add(entity);
         }
 
         public void UpdateCategory(UpdateCategoryDto updateCategory)
         {
-            var entity = new Category()
+            var entity = _categoryRepo.GetAll().FirstOrDefault(x => x.Id == updateCategory.Id);
+            if (entity != null)
             {
-                Id = updateCategory.Id,
-                Name = updateCategory.Name
-            };
-            _categoryRepo.Update(entity);
+                entity.Name = updateCategory.Name;
+                entity.ImageUrl = updateCategory.ImageUrl;
+                _categoryRepo.Update(entity);
+            }
         }
 
         public void DeleteCategory(int id)

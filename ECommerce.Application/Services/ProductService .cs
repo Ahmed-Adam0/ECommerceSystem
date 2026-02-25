@@ -44,19 +44,19 @@ namespace ECommerce.ApplicationLayer.Services
                 .AsNoTracking()
                 .Include(p => p.Images)
                 .Include(p => p.Category)
-                .Where(p => p.Stock > 0)
                 .Select(p => new ProductDto
                 {
                     Id = p.Id,
                     Name = p.Name,
                     Price = p.Price,
                     Stock = p.Stock,
+                    Description = p.Description,
                     CategoryId = p.CategoryId,
                     CategoryName = p.Category.Name,
                     MainImageUrl = p.ImageUrl,
                     ImageUrls = p.Images.OrderBy(i => i.Id).Select(i => i.ImageUrl).Take(1).ToList()
                 })
-                .ToList(); // مزامنة بدون Async
+                .ToList();
         }
         public ProductDto GetProductById(int id)
         {
@@ -94,7 +94,9 @@ namespace ECommerce.ApplicationLayer.Services
                 Name = dto.Name,
                 Price = dto.Price,
                 Description = dto.Description,
-                CategoryId = dto.CategoryId
+                CategoryId = dto.CategoryId,
+                Stock = dto.Stock,
+                ImageUrl = dto.ImageUrl
             };
             _productRepo.Add(entity);
         }
@@ -109,7 +111,7 @@ namespace ECommerce.ApplicationLayer.Services
             entity.Description = dto.Description;
             entity.CategoryId = dto.CategoryId;
             entity.Stock = dto.Stock;
-
+            entity.ImageUrl = dto.ImageUrl;
             _productRepo.Update(entity);
         }
 
