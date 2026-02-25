@@ -194,10 +194,11 @@ namespace ECommerce.Presentation.WinForms
                 return;
             }
 
+            // ✅ Admin approval => move order to Shipping
             _orderService.UpdateOrder(new UpdateOrderDto
             {
                 Id = selectedOrder.Id,
-                Status = OrderStatus.Delivered
+                Status = OrderStatus.Shipping
             });
 
             LoadOrders();
@@ -218,7 +219,13 @@ namespace ECommerce.Presentation.WinForms
 
             if (confirm == DialogResult.Yes)
             {
-                _orderService.DeleteOrder(selectedOrder.Id);
+                // ❌ فقط نغيّر الحالة حتى يراها العميل لاحقًا
+                _orderService.UpdateOrder(new UpdateOrderDto
+                {
+                    Id = selectedOrder.Id,
+                    Status = OrderStatus.Canceled
+                });
+
                 LoadOrders();
                 FilterOrdersByStatus();
             }
@@ -231,6 +238,31 @@ namespace ECommerce.Presentation.WinForms
 
             var detailsForm = new OrderDetailsForm(selectedOrder);
             detailsForm.ShowDialog();
+        }
+
+        private void buttonViewOrderDetails_Click(object sender, EventArgs e)
+        {
+            if (dataGridViewOrders.CurrentRow?.DataBoundItem is not OrderDto selectedOrder)
+            {
+                MessageBox.Show("Please select an order to view details.", "Warning",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var detailsForm = new OrderDetailsForm(selectedOrder);
+            detailsForm.ShowDialog();
+        }
+
+        private void buttonViewOrderDetails_MouseEnter(object sender, EventArgs e)
+        {
+            // لون أغمق بسيط عند الـ hover
+            buttonViewOrderDetails.BackColor = Color.FromArgb(31, 97, 141);
+        }
+
+        private void buttonViewOrderDetails_MouseLeave(object sender, EventArgs e)
+        {
+            // نرجّع اللون الأساسي للزر
+            buttonViewOrderDetails.BackColor = Color.FromArgb(41, 128, 185);
         }
 
         // ── Empty handlers ──
