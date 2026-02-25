@@ -36,9 +36,9 @@ namespace ECommerce.Presentation.WinForms
 
         private static void ConfigureServices(IServiceCollection services)
         {
-            
-            services.AddDbContext<ApplicationDbContext>();
 
+            services.AddDbContext<ApplicationDbContext>();
+            //services.AddDbContext<ApplicationDbContext>(ServiceLifetime.Singleton);
             services.AddScoped(typeof(IGenericRepository<,>), typeof(GenericRepository<,>));
 
             services.AddScoped<IUserService, UserService>();

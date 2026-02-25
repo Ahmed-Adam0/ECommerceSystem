@@ -1,17 +1,16 @@
 using ECommerce.ApplicationLayer.DTOs.CategoryDTos;
 using ECommerce.ApplicationLayer.DTOs.ProductDtos;
+using ECommerce.ApplicationLayer.DTOs.CategoryDTos;
+using ECommerce.ApplicationLayer.DTOs.ProductDtos;
 using ECommerce.ApplicationLayer.DTOs.OrderDtos;
 using ECommerce.ApplicationLayer.Services;
 using ECommerce.Domain.Enums;
 using ECommerce.Presentation.WinForms.Forms;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
+using System.Linq;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ECommerce.Presentation.WinForms
 {
@@ -19,11 +18,10 @@ namespace ECommerce.Presentation.WinForms
     {
         private readonly ICategoryService _categoryService;
         private readonly IProductService _productService;
+        private readonly IOrderService _orderService;
         private List<CategoryDto> _allCategories = new();
         private List<ProductDto> _allProducts = new();
-        private readonly IOrderService _orderService;
         private List<OrderDto> _allOrders = new();
-
 
         public AdminDashboardForm(ICategoryService categoryService, IProductService productService, IOrderService orderService)
         {
@@ -33,41 +31,144 @@ namespace ECommerce.Presentation.WinForms
             _orderService = orderService;
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        // ══════════════════════════════
+        //  LOAD
+        // ══════════════════════════════
+        private void AdminDashboardForm_Load(object sender, EventArgs e)
         {
-
+            LoadCategories();
+            LoadProducts();
+            LoadOrders();
         }
 
-        private void button3_Click(object sender, EventArgs e)
-        {
-            string keyword = textBox2.Text.Trim().ToLower();
-            if (string.IsNullOrEmpty(keyword))
-                dataGridView1.DataSource = _allCategories;
-            else
-                dataGridView1.DataSource = _allCategories
-                    .Where(c => c.Name.ToLower().Contains(keyword))
-                    .ToList();
-        }
+        // ══════════════════════════════
+        //  CATEGORIES
+        // ══════════════════════════════
         private void LoadCategories()
         {
             _allCategories = _categoryService.GetAllCategories();
+            dataGridView1.DataSource = null;
             dataGridView1.DataSource = _allCategories;
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var addForm = new AddCategoryForm(_categoryService);
+            addForm.ShowDialog();
+            LoadCategories();
+        }
+
+        private void button7_Click(object sender, EventArgs e) // ✏️ Edit Category
+        {
+            if (dataGridView1.CurrentRow?.DataBoundItem is not CategoryDto selected)
+            {
+                MessageBox.Show("Please select a category to edit.", "Warning",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var editForm = new EditCategoryForm(_categoryService, selected.Id, selected.Name, selected.ImageUrl);
+            editForm.ShowDialog();
+            LoadCategories();
+        }
+
+        private void button2_Click(object sender, EventArgs e) // 🗑️ Delete Category
+        {
+            if (dataGridView1.CurrentRow?.DataBoundItem is not CategoryDto selected)
+            {
+                MessageBox.Show("Please select a category to delete.", "Warning",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var confirm = MessageBox.Show($"Are you sure you want to delete \"{selected.Name}\"?",
+                "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (confirm == DialogResult.Yes)
+            {
+                _categoryService.DeleteCategory(selected.Id);
+                LoadCategories();
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e) // 🔍 Search Category
+        {
+            string keyword = textBox2.Text.Trim().ToLower();
+            dataGridView1.DataSource = string.IsNullOrEmpty(keyword)
+                ? _allCategories
+                : _allCategories.Where(c => c.Name.ToLower().Contains(keyword)).ToList();
+        }
+
+        // ══════════════════════════════
+        //  PRODUCTS
+        // ══════════════════════════════
         private void LoadProducts()
         {
             _allProducts = _productService.GetAllProducts();
+            dataGridView2.DataSource = null;
             dataGridView2.DataSource = _allProducts;
         }
+        private void button6_Click(object sender, EventArgs e) // ➕ Add Product
+        {
+            var addForm = new AddProductForm(_productService, _categoryService);
+            addForm.ShowDialog();
+            LoadProducts();
+        }
 
+        private void button8_Click(object sender, EventArgs e) // ✏️ Edit Product
+        {
+            if (dataGridView2.CurrentRow?.DataBoundItem is not ProductDto selected)
+            {
+                MessageBox.Show("Please select a product to edit.", "Warning",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var editForm = new EditProductForm(_productService, _categoryService, selected);
+            editForm.ShowDialog();
+            LoadProducts();
+        }
+
+        private void button5_Click(object sender, EventArgs e) // 🗑️ Delete Product
+        {
+            if (dataGridView2.CurrentRow?.DataBoundItem is not ProductDto selected)
+            {
+                MessageBox.Show("Please select a product to delete.", "Warning",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var confirm = MessageBox.Show($"Are you sure you want to delete \"{selected.Name}\"?",
+                "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (confirm == DialogResult.Yes)
+            {
+                _productService.DeleteProduct(selected.Id);
+                LoadProducts();
+            }
+        }
+
+        private void button4_Click(object sender, EventArgs e) // 🔍 Search Product
+        {
+            string keyword = textBox4.Text.Trim().ToLower();
+            dataGridView2.DataSource = string.IsNullOrEmpty(keyword)
+                ? _allProducts
+                : _allProducts.Where(p => p.Name.ToLower().Contains(keyword) ||
+                                          (p.CategoryName?.ToLower().Contains(keyword) ?? false)).ToList();
+        }
+
+        // ══════════════════════════════
+        //  ORDERS
+        // ══════════════════════════════
         private void LoadOrders()
         {
             _allOrders = _orderService.GetAllOrders();
+            dataGridViewOrders.DataSource = null;
             dataGridViewOrders.DataSource = _allOrders;
         }
 
         private void FilterOrdersByStatus()
         {
-            if (comboBoxStatusFilter.SelectedItem == null || comboBoxStatusFilter.SelectedItem.ToString() == "All")
+            if (comboBoxStatusFilter.SelectedItem == null ||
+                comboBoxStatusFilter.SelectedItem.ToString() == "All")
             {
                 dataGridViewOrders.DataSource = _allOrders;
                 return;
@@ -86,14 +187,12 @@ namespace ECommerce.Presentation.WinForms
 
         private void buttonApproveOrder_Click(object sender, EventArgs e)
         {
-            if (dataGridViewOrders.CurrentRow == null)
+            if (dataGridViewOrders.CurrentRow?.DataBoundItem is not OrderDto selectedOrder)
             {
-                MessageBox.Show("Please select an order to approve.");
+                MessageBox.Show("Please select an order to approve.", "Warning",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
-            if (dataGridViewOrders.CurrentRow.DataBoundItem is not OrderDto selectedOrder)
-                return;
 
             _orderService.UpdateOrder(new UpdateOrderDto
             {
@@ -107,17 +206,15 @@ namespace ECommerce.Presentation.WinForms
 
         private void buttonRejectOrder_Click(object sender, EventArgs e)
         {
-            if (dataGridViewOrders.CurrentRow == null)
+            if (dataGridViewOrders.CurrentRow?.DataBoundItem is not OrderDto selectedOrder)
             {
-                MessageBox.Show("Please select an order to reject.");
+                MessageBox.Show("Please select an order to reject.", "Warning",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            if (dataGridViewOrders.CurrentRow.DataBoundItem is not OrderDto selectedOrder)
-                return;
-
-            var confirm = MessageBox.Show("Are you sure you want to reject (delete) this order?",
-                "Confirm", MessageBoxButtons.YesNo);
+            var confirm = MessageBox.Show("Are you sure you want to reject this order?",
+                "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (confirm == DialogResult.Yes)
             {
@@ -126,111 +223,21 @@ namespace ECommerce.Presentation.WinForms
                 FilterOrdersByStatus();
             }
         }
-        private void AdminDashboardForm_Load(object sender, EventArgs e)
-        {
-            LoadCategories();
-            LoadProducts();
-            LoadOrders();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(textBox1.Text))
-            {
-                MessageBox.Show("Category name is required.");
-                return;
-            }
-
-            _categoryService.CreateCategory(new CreateCategoryDto { Name = textBox1.Text.Trim() });
-            textBox1.Clear();
-            LoadCategories();
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            if (dataGridView1.CurrentRow == null)
-            {
-                MessageBox.Show("Please select a category to delete.");
-                return;
-            }
-
-            if (dataGridView1.CurrentRow.DataBoundItem is not CategoryDto selected) return;
-
-            var confirm = MessageBox.Show("Are you sure you want to delete this category?",
-                "Confirm", MessageBoxButtons.YesNo);
-            if (confirm == DialogResult.Yes)
-            {
-                _categoryService.DeleteCategory(selected.Id);
-                LoadCategories();
-            }
-        }
-
-        private void textBox1_TextChanged_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void tabPage1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button6_Click(object sender, EventArgs e)
-        {
-            var addForm = new AddProductForm(_productService, _categoryService);
-            addForm.ShowDialog();
-            LoadProducts();
-        }
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-            if (dataGridView2.CurrentRow == null)
-            {
-                MessageBox.Show("Please select a product to delete.");
-                return;
-            }
-
-            if (dataGridView2.CurrentRow.DataBoundItem is not ProductDto selected) return;
-
-            var confirm = MessageBox.Show("Are you sure you want to delete this product?",
-                "Confirm", MessageBoxButtons.YesNo);
-            if (confirm == DialogResult.Yes)
-            {
-                _productService.DeleteProduct(selected.Id);
-                LoadProducts();
-            }
-        }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-            string keyword = textBox4.Text.Trim().ToLower();
-            if (string.IsNullOrEmpty(keyword))
-                dataGridView2.DataSource = _allProducts;
-            else
-                dataGridView2.DataSource = _allProducts
-                    .Where(p => p.Name.ToLower().Contains(keyword))
-                    .ToList();
-        }
-        private void tabPage2_Click(object sender, EventArgs e) { }
 
         private void dataGridViewOrders_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
-            if (dataGridViewOrders.Rows[e.RowIndex].DataBoundItem is not OrderDto selectedOrder)
-                return;
+            if (dataGridViewOrders.Rows[e.RowIndex].DataBoundItem is not OrderDto selectedOrder) return;
 
             var detailsForm = new OrderDetailsForm(selectedOrder);
             detailsForm.ShowDialog();
         }
 
-        private void tabPage3_Click(object sender, EventArgs e)
-        {
-        }
-
+        // ── Empty handlers ──
+        private void tabPage1_Click(object sender, EventArgs e) { }
+        private void tabPage2_Click(object sender, EventArgs e) { }
+        private void tabPage3_Click(object sender, EventArgs e) { }
+        private void textBox1_TextChanged(object sender, EventArgs e) { }
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
     }
 }
