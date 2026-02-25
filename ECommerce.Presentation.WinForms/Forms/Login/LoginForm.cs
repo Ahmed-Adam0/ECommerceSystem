@@ -96,16 +96,38 @@ namespace ECommerce.Presentation.WinForms.Forms
                             if (user.Role == UserRole.Admin)
                             {
                                 var adminForm = Program.ServiceProvider.GetRequiredService<AdminDashboardForm>();
-                                adminForm.ShowDialog();
+
+                                adminForm.StartPosition = FormStartPosition.CenterScreen;
+                                adminForm.TopMost = true;
+
+                                adminForm.Show();
+
+                                adminForm.Shown += (s, ev) =>
+                                {
+                                    adminForm.TopMost = false;
+                                };
+
+                                this.Hide();
                             }
                             else
                             {
                                 var customerForm = Program.ServiceProvider.GetRequiredService<MainForm>();
 
-                                // 🚀 هنا نحدد الـ current user
-                                customerForm.SetUser(user.Id); // user.Id من الـ UserDto اللي رجع من Login
+                                customerForm.SetUser(user.Id);
 
-                                customerForm.ShowDialog();
+                                // خليه يطلع فوق
+                                customerForm.StartPosition = FormStartPosition.CenterScreen;
+                                customerForm.TopMost = true;
+
+                                customerForm.Show();
+
+                                // رجّعي TopMost false بعد ما يظهر (مهم)
+                                customerForm.Shown += (s, ev) =>
+                                {
+                                    customerForm.TopMost = false;
+                                };
+
+                                this.Hide();
                             }
                         }
                         else

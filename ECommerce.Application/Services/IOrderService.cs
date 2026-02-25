@@ -1,16 +1,18 @@
-﻿using System;
+﻿using ECommerce.Domain.Entities;
 using System.Collections.Generic;
-using System.Text;
-using ECommerce.ApplicationLayer.DTOs.OrderDtos;
-using ECommerce.Domain.Entities;
+using System.Threading.Tasks;
 
 namespace ECommerce.ApplicationLayer.Services
 {
     public interface IOrderService
     {
-        List<OrderDto> GetAllOrders();
-        void CreateOrder(int customerId);
-        void UpdateOrder(UpdateOrderDto dto);
-        void DeleteOrder(int id);
+        Task CreateOrderAsync(Order order); // async مع body في service
+        void DeleteOrder(int orderId);
+        Task SaveChangesAsync();
+
+        Order? GetOrderById(int orderId);
+        IEnumerable<Order> GetOrdersByUserId(int userId);
+
+        void AddOrderItem(OrderItem item);
     }
 }

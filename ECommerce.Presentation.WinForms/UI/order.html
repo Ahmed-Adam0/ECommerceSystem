@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+    <title>Your Orders</title>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
         integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/js/bootstrap.min.js"
@@ -14,7 +14,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/css/bootstrap-grid.min.css"
         integrity="sha512-dOjUSaLkr6G2pwQ7ry9juX+iXw5602zg1kg8yH+guR3uSEidGyCnOEQnGlr7xwu/8WE+pVm1ZNqaIs5ETTIJQg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-
 
 <style>
     *{
@@ -577,11 +576,84 @@ header {
 }
 </style>
 
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f8f8f8;
+            margin: 0;
+            padding: 0;
+        }
 
+        
+
+        h2 {
+            margin-bottom: 25px;
+        }
+
+        .orders-header {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            font-weight: bold;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+            margin-bottom: 15px;
+        }
+
+        .order-item {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+            align-items: center;
+        }
+
+        .order-item:last-child {
+            border-bottom: none;
+        }
+
+        .order-item span {
+            font-size: 14px;
+        }
+
+        .order-item button {
+            padding: 6px 14px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            background: #c0392b;
+            color: #fff;
+            font-size: 13px;
+        }
+
+        .order-item button:hover {
+            background: #a93226;
+        }
+
+        .status-pending {
+            color: #e67e22;
+            font-weight: bold;
+        }
+
+        .status-shipping {
+            color: #2980b9;
+            font-weight: bold;
+        }
+
+        .status-delivered {
+            color: #27ae60;
+            font-weight: bold;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 40px;
+            color: #777;
+            font-size: 15px;
+        }
+    </style>
 </head>
-
 <body>
-    <header>
+  <header>
         <div class="container my-con">
             <div class="row header-row justify-content-between">
                 <div class="col justify-content-between   d-flex align-items-center">
@@ -657,321 +729,89 @@ header {
         </div>
     </header>
 
-    <div class="hero-slider">
-        <div class="slide active" style="background-image: url('./images/bg1.webp');">
-          <div class=" container slide-text left">
-            <h1>Welcome to Our Store</h1>
-            <p>The Best Online Shopping Experience</p>
-          </div>
-        </div>
-        <div class="slide" style="background-image: url('./images/bg2.webp');">
-          <div class="  container slide-text right">
-            <h1>Discover Our Products</h1>
-            <p>High Quality at Affordable Prices</p>
-          </div>
-        </div>
-        <div class="slide" style="background-image: url('./images/bg3.webp');">
-          <div class=" container slide-text right">
-            <h1>Fast & Secure Delivery</h1>
-            <p>Enjoy Excellent Service</p>
-          </div>
-        </div>
-      </div>
+<div class="container">
+    <h2>Your Orders</h2>
 
-      <!-- Categories -->
-<div class="category-cards container justify-content-center text-center" id="categories-container">
+    <div class="orders-header">
+        <span>Order ID</span>
+        <span>Status</span>
+        <span>Total</span>
+        <span>Action</span>
+    </div>
+
+    <div id="orders-container"></div>
 </div>
 
-<!-- Products -->
-<section class="best-sellers container">
-    <div class="section-header">
-        <h2>Best Sellers For You</h2>
-        <p>Discover our most popular products hand-picked for you.</p>
-    </div>
-    <div class="products-grid" id="best-sellers-container">
-        <!-- المنتجات هتتضاف هنا ديناميكيًا -->
-    </div>
-</section>
+<script>
+/* ===============================
+   Render Orders
+================================*/
+function renderOrders(message) {
+    const container = document.getElementById("orders-container");
+    container.innerHTML = "";
 
-
-      <section class="promo-banner">
-  <div class="banner-content">
-    <div class="discount-text">
-      <span class="percent">50%</span>
-      <span class="off">OFF</span>
-    </div>
-    <p>Grab your favorite products at half price for a limited time!</p>
-  </div>
-</section>
-
-
-
-<section class="all-products container">
-    <div class="section-header">
-        <h2 style="color:#5D3754;">Our Products</h2>
-        <p>Browse all products and filter by category.</p>
-
-        <!-- فلتر الكاتيجوري -->
-       <div class="category-buttons" id="category-buttons-container" style="margin-bottom:20px;">
-    <!-- بوتنز الكاتيجوري هتتضاف هنا -->
-</div>
-    </div>
-
-    <div class="products-grid" id="all-products-container">
-        <!-- المنتجات هتتضاف هنا ديناميكيًا -->
-    </div>
-</section>
-
-
-  
-
-
-
-
- <script>
-let allProducts = [];
-let allCategories = [];
-
-// ===============================
-// Receive messages from C#
-// ===============================
-window.chrome.webview.addEventListener('message', event => {
-
-    const payload = typeof event.data === "string"
-        ? JSON.parse(event.data)
-        : event.data;
-
-    console.log("Payload from C#:", payload);
-
-    if (!payload.action) return;
-
-    switch (payload.action) {
-        case 'homeData':
-            handleHomeData(payload.data);
-            break;
-
-        case 'displayProductDetails':
-            handleProductDetails(payload.product);
-            break;
-
-         case 'updateCartCount':
-            updateCartCounter(payload.count);
-            break;
-
-    }
-});
-
-
-function updateCartCounter(count) {
-    const counter = document.getElementById("cart-notification-count");
-    counter.textContent = count;
-    counter.style.display = count > 0 ? "block" : "none";
-
-    // حذف أي أنيميشن موجود
-    counter.classList.remove("pop");
-
-    // إعادة تطبيق الأنيميشن بعد إعادة الرسم
-    void counter.offsetWidth; // trick لإعادة تفعيل الأنيميشن
-    counter.classList.add("pop");
-}
-
-// ===============================
-// Handle Home Page Data
-// ===============================
-function handleHomeData(data) {
-    allProducts = data.allProducts || [];
-    allCategories = data.allCategories || [];
-
-     if (data.cartCount !== undefined) {
-        updateCartCounter(data.cartCount);
-    }
-
-    // ===== Categories =====
-    if (data.categories && data.categories.length > 0) {
-        const container = document.getElementById('categories-container');
-        container.innerHTML = '';
-
-        data.categories.forEach(c => {
-            const div = document.createElement('div');
-            div.className = 'card';
-            div.innerHTML = `
-                <div class="card-image">
-                    <img src="./images/${c.ImageUrl}" alt="${c.Name}">
-                </div>
-                <div class="card-info">
-                    <h3>${c.Name}</h3>
-                    <p>${c.ProductCount} Items</p>
-                </div>
-            `;
-            container.appendChild(div);
-        });
-    }
-
-    // ===== Products =====
-    renderProducts(data.products || [], 'best-sellers-container');
-    renderProducts(allProducts, 'all-products-container');
-
-    // ===== Category Buttons =====
-    renderCategoryButtons();
-}
-
-// ===============================
-// Render Products
-// ===============================
-function renderProducts(products, containerId) {
-    const container = document.getElementById(containerId);
-    if (!container) return;
-
-    container.innerHTML = '';
-
-    products.forEach(p => {
-        const div = document.createElement('div');
-        div.className = 'product-card';
-
-        div.onclick = () => {
-            console.log("Sending viewProduct:", p.Id);
-            window.chrome.webview.postMessage({
-                action: 'viewProduct',
-                productId: p.Id
-            });
-        };
-
-        div.innerHTML = `
-            <div class="product-image">
-                <img src="./images/${p.MainImageUrl}" alt="${p.Name}" class="main-img">
-                <img src="./images/${p.HoverImageUrl}" alt="${p.Name}" class="hover-img">
-                <div class="product-actions">
-                    <button class="add-cart" onclick="event.stopPropagation(); addToCart(${p.Id})">
-                        <i class="fa-solid fa-bag-shopping"></i>
-                    </button>
-                    <button class="view" onclick="event.stopPropagation();
-                        window.chrome.webview.postMessage({
-                            action:'viewProduct',
-                            productId:${p.Id}
-                        })">
-                        <i class="fa-solid fa-eye"></i>
-                    </button>
-                </div>
-            </div>
-            <h3>${p.Name}</h3>
-            <p>$${p.Price}</p>
-            <div class="product-category">${p.CategoryName}</div>
-        `;
-        container.appendChild(div);
-    });
-}
-
-// ===============================
-// Category Buttons
-// ===============================
-function renderCategoryButtons() {
-    const container = document.getElementById('category-buttons-container');
-    if (!container) return;
-
-    container.innerHTML = '';
-
-    const allBtn = document.createElement('button');
-    allBtn.textContent = 'All';
-    allBtn.classList.add('active');
-    allBtn.onclick = () => {
-        setActiveButton(allBtn);
-        renderProducts(allProducts, 'all-products-container');
-    };
-    container.appendChild(allBtn);
-
-    allCategories.forEach(c => {
-        const btn = document.createElement('button');
-        btn.textContent = c.Name;
-        btn.onclick = () => {
-            setActiveButton(btn);
-            const filtered = allProducts.filter(p => p.CategoryName === c.Name);
-            renderProducts(filtered, 'all-products-container');
-        };
-        container.appendChild(btn);
-    });
-}
-
-function setActiveButton(activeBtn) {
-    document.querySelectorAll('.category-buttons button')
-        .forEach(b => b.classList.remove('active'));
-    activeBtn.classList.add('active');
-}
-</script>
-
-    <script>
-const searchInput = document.getElementById('search-input');
-const searchDropdown = document.getElementById('search-dropdown');
-
-searchInput.addEventListener('input', function () {
-    const query = searchInput.value.trim().toLowerCase();
-
-    if (!query) {
-        searchDropdown.style.display = 'none';
-        searchDropdown.innerHTML = '';
+    if (!message.orders || message.orders.length === 0) {
+        container.innerHTML =
+            "<div class='empty'>You have no orders</div>";
         return;
     }
 
-    const filtered = allProducts.filter(p =>
-        p.Name.toLowerCase().includes(query)
-    );
+    message.orders.forEach(order => {
+        const statusClass =
+            order.Status === "Pending" ? "status-pending" :
+            order.Status === "Shipping" ? "status-shipping" :
+            "status-delivered";
 
-    if (filtered.length === 0) {
-        searchDropdown.innerHTML = '<p style="padding:10px;">No products found</p>';
-    } else {
-        searchDropdown.innerHTML = filtered.map(p => `
-            <div class="dropdown-item" onclick="
-                window.chrome.webview.postMessage({
-                    action:'viewProduct',
-                    productId:${p.Id}
-                })
-            ">
-                <img src="./images/${p.MainImageUrl}">
-                <div>
-                    <div>${p.Name}</div>
-                    <div>$${p.Price}</div>
-                    <div>${p.CategoryName}</div>
-                </div>
+        container.innerHTML += `
+            <div class="order-item">
+                <span>#${order.Id}</span>
+                <span class="${statusClass}">${order.Status}</span>
+                <span>${order.TotalPrice.toFixed(2)} $</span>
+                <span>
+                    ${
+                        order.Status !== "Shipping"
+                            ? `<button onclick="cancelOrder(${order.Id})">Cancel</button>`
+                            : "Cannot cancel"
+                    }
+                </span>
             </div>
-        `).join('');
+        `;
+    });
+}
+
+/* ===============================
+   Cancel Order
+================================*/
+function cancelOrder(orderId) {
+    window.chrome.webview.postMessage({
+        action: "cancelOrder",
+        orderId: orderId
+    });
+}
+
+/* ===============================
+   Receive Message From C#
+================================*/
+window.chrome.webview.addEventListener("message", event => {
+    const message =
+        typeof event.data === "string"
+            ? JSON.parse(event.data)
+            : event.data;
+
+    if (!message.action) return;
+
+    if (message.action === "renderOrders") {
+        renderOrders(message);
     }
-
-    searchDropdown.style.display = 'block';
 });
-</script>
 
-    <script>
-        const slides = document.querySelectorAll('.slide');
-let currentIndex = 0;
+/* ===============================
+   Notify C# Page Is Ready
+================================*/
+window.chrome.webview.postMessage({
+    action: "orderPageReady"
+});
 
-function showNextSlide() {
-  slides[currentIndex].classList.remove('active');
-  currentIndex = (currentIndex + 1) % slides.length;
-  slides[currentIndex].classList.add('active');
-}
-
-setInterval(showNextSlide, 5000);
-      </script>
-      <script>
-function addToCart(productId) {
-
-    window.chrome.webview.postMessage({
-        action: "addToCart",
-        productId: productId,
-        quantity: 1
-    });
-
-}
-
-function openCartPage() {
-    window.chrome.webview.postMessage({
-        action: "openCart"
-    });
-}
-function openOrderPage() {
-    window.chrome.webview.postMessage({
-        action: "openOrder"
-    });
-}
 
 function goHome() {
     window.chrome.webview.postMessage({
@@ -982,5 +822,4 @@ function goHome() {
 </script>
 
 </body>
-
 </html>

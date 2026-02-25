@@ -599,6 +599,22 @@
 }
 
     </style>
+    <style>
+.order-btn {
+    background-color: #000;
+    color: #fff;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: 0.3s;
+}
+
+.order-btn:hover {
+    background-color: #333;
+}
+</style>
 </head>
 <body>
  <header>
@@ -614,7 +630,11 @@
                             Home
                             </a>
                             </li>
-                            <li>Shop</li>
+                            <li>
+                            <a href="#" onclick="openOrderPage()">
+                            Orders
+                            </a>
+                            </li>
                         </ul>
                     </nav>
                 </div>
@@ -736,6 +756,11 @@
 <div class="cart-total">
     Total: <span id="cart-total">0</span> 
 </div>
+<div style="text-align: right; margin-top: 15px;">
+    <button class="order-btn" onclick="openOrderPage()">
+        Order Now
+    </button>
+</div>
  </div><script>
 /* ===============================
    Cart Rendering
@@ -744,6 +769,7 @@ function renderCart(message) {
 
     const container = document.getElementById("cart-container");
     const totalElement = document.getElementById("cart-total");
+    const orderBtn = document.querySelector(".order-btn");
 
     if (!container || !totalElement) return;
 
@@ -954,6 +980,13 @@ function goHome() {
         page: "mainform.html"
     });
 }
+function openOrderPage() {
+
+    window.chrome.webview.postMessage({
+        action: "createOrder"
+    });
+}
+
 </script>
 </body>
 </html>

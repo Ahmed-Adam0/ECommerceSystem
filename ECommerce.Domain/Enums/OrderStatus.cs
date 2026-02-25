@@ -10,6 +10,7 @@ namespace ECommerce.Domain.Enums
     {
         Pending = 1,
         Processing = 2,
-        Delivered = 3
+        Delivered = 3,
+        Shipping=4
     }
 }
