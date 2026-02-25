@@ -144,5 +144,33 @@ namespace ECommerce.Presentation.WinForms
         }
         private void tabPage2_Click(object sender, EventArgs e) { }
 
+        private void dataGridViewOrders_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+            if (dataGridViewOrders.Rows[e.RowIndex].DataBoundItem is not OrderDto selectedOrder)
+                return;
+
+            var detailsForm = new OrderDetailsForm(selectedOrder);
+            detailsForm.ShowDialog();
+        }
+
+        private void tabPage3_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.CurrentRow == null)
+            {
+                MessageBox.Show("Please select a category to edit.");
+                return;
+            }
+
+            if (dataGridView1.CurrentRow.DataBoundItem is not CategoryDto selected) return;
+
+            var editForm = new EditCategoryForm(_categoryService, selected.Id, selected.Name);
+            editForm.ShowDialog();
+            LoadCategories();
+        }
     }
 }

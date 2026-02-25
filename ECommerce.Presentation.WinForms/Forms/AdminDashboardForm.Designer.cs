@@ -30,6 +30,7 @@
         {
             Products = new TabControl();
             tabPage1 = new TabPage();
+            button7 = new Button();
             dataGridView1 = new DataGridView();
             button3 = new Button();
             textBox1 = new TextBox();
@@ -43,6 +44,10 @@
             textBox4 = new TextBox();
             button6 = new Button();
             tabPage3 = new TabPage();
+            buttonRejectOrder = new Button();
+            buttonApproveOrder = new Button();
+            comboBoxStatusFilter = new ComboBox();
+            dataGridViewOrders = new DataGridView();
             Products.SuspendLayout();
             tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
@@ -64,6 +69,7 @@
             // tabPage1
             // 
             tabPage1.BackColor = Color.WhiteSmoke;
+            tabPage1.Controls.Add(button7);
             tabPage1.Controls.Add(dataGridView1);
             tabPage1.Controls.Add(button3);
             tabPage1.Controls.Add(textBox1);
@@ -78,22 +84,34 @@
             tabPage1.Text = "Categories";
             tabPage1.Click += tabPage1_Click;
             // 
+            // button7
+            // 
+            button7.BackColor = Color.Orange;
+            button7.ForeColor = SystemColors.ControlLight;
+            button7.Location = new Point(200, 34);
+            button7.Name = "button7";
+            button7.Size = new Size(80, 36);
+            button7.TabIndex = 13;
+            button7.Text = "✏️";
+            button7.UseVisualStyleBackColor = false;
+            button7.Click += button7_Click;
+            // 
             // dataGridView1
             // 
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(63, 85);
+            dataGridView1.Location = new Point(23, 85);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.ReadOnly = true;
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView1.Size = new Size(674, 291);
+            dataGridView1.Size = new Size(743, 291);
             dataGridView1.TabIndex = 7;
             // 
             // button3
             // 
-            button3.Location = new Point(403, 23);
+            button3.Location = new Point(432, 34);
             button3.Name = "button3";
             button3.Size = new Size(37, 29);
             button3.TabIndex = 12;
@@ -104,7 +122,7 @@
             // textBox1
             // 
             textBox1.ForeColor = Color.DimGray;
-            textBox1.Location = new Point(106, 25);
+            textBox1.Location = new Point(135, 36);
             textBox1.Name = "textBox1";
             textBox1.PlaceholderText = "add Category...";
             textBox1.Size = new Size(291, 27);
@@ -114,7 +132,7 @@
             // 
             button2.BackColor = Color.Firebrick;
             button2.ForeColor = SystemColors.ControlLight;
-            button2.Location = new Point(23, 25);
+            button2.Location = new Point(12, 31);
             button2.Name = "button2";
             button2.Size = new Size(34, 36);
             button2.TabIndex = 11;
@@ -125,7 +143,7 @@
             // textBox2
             // 
             textBox2.ForeColor = Color.DimGray;
-            textBox2.Location = new Point(446, 23);
+            textBox2.Location = new Point(475, 34);
             textBox2.Name = "textBox2";
             textBox2.PlaceholderText = "Search...";
             textBox2.Size = new Size(291, 27);
@@ -135,7 +153,7 @@
             // 
             button1.BackColor = Color.SteelBlue;
             button1.ForeColor = SystemColors.ButtonHighlight;
-            button1.Location = new Point(63, 25);
+            button1.Location = new Point(92, 31);
             button1.Name = "button1";
             button1.Size = new Size(37, 36);
             button1.TabIndex = 9;
@@ -224,7 +242,60 @@
             tabPage3.TabIndex = 2;
             tabPage3.Text = "Orders";
             tabPage3.UseVisualStyleBackColor = true;
+
             tabPage3.UseWaitCursor = true;
+
+            tabPage3.Click += tabPage3_Click;
+            // 
+            // buttonRejectOrder
+            // 
+            buttonRejectOrder.BackColor = Color.Firebrick;
+            buttonRejectOrder.ForeColor = SystemColors.ControlLightLight;
+            buttonRejectOrder.Location = new Point(157, 20);
+            buttonRejectOrder.Name = "buttonRejectOrder";
+            buttonRejectOrder.Size = new Size(94, 36);
+            buttonRejectOrder.TabIndex = 17;
+            buttonRejectOrder.Text = "Reject";
+            buttonRejectOrder.UseVisualStyleBackColor = false;
+            buttonRejectOrder.Click += buttonRejectOrder_Click;
+            // 
+            // buttonApproveOrder
+            // 
+            buttonApproveOrder.BackColor = Color.SeaGreen;
+            buttonApproveOrder.ForeColor = SystemColors.ControlLightLight;
+            buttonApproveOrder.Location = new Point(57, 20);
+            buttonApproveOrder.Name = "buttonApproveOrder";
+            buttonApproveOrder.Size = new Size(94, 36);
+            buttonApproveOrder.TabIndex = 16;
+            buttonApproveOrder.Text = "Approve";
+            buttonApproveOrder.UseVisualStyleBackColor = false;
+            buttonApproveOrder.Click += buttonApproveOrder_Click;
+            // 
+            // comboBoxStatusFilter
+            // 
+            comboBoxStatusFilter.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxStatusFilter.FormattingEnabled = true;
+            comboBoxStatusFilter.Items.AddRange(new object[] { "All", "Pending", "Processing", "Delivered" });
+            comboBoxStatusFilter.Location = new Point(445, 20);
+            comboBoxStatusFilter.Name = "comboBoxStatusFilter";
+            comboBoxStatusFilter.Size = new Size(285, 28);
+            comboBoxStatusFilter.TabIndex = 15;
+            comboBoxStatusFilter.SelectedIndexChanged += comboBoxStatusFilter_SelectedIndexChanged;
+            // 
+            // dataGridViewOrders
+            // 
+            dataGridViewOrders.AllowUserToAddRows = false;
+            dataGridViewOrders.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridViewOrders.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewOrders.Location = new Point(57, 74);
+            dataGridViewOrders.Name = "dataGridViewOrders";
+            dataGridViewOrders.ReadOnly = true;
+            dataGridViewOrders.RowHeadersWidth = 51;
+            dataGridViewOrders.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridViewOrders.Size = new Size(673, 309);
+            dataGridViewOrders.TabIndex = 14;
+            dataGridViewOrders.CellDoubleClick += dataGridViewOrders_CellDoubleClick;
+>>>>>>> Stashed changes
             // 
             // AdminDashboardForm
             // 
@@ -262,5 +333,13 @@
         private TextBox textBox4;
         private Button button6;
         private TabPage tabPage3;
+<<<<<<< Updated upstream
+=======
+        private DataGridView dataGridViewOrders;
+        private ComboBox comboBoxStatusFilter;
+        private Button buttonApproveOrder;
+        private Button buttonRejectOrder;
+        private Button button7;
+>>>>>>> Stashed changes
     }
 }
