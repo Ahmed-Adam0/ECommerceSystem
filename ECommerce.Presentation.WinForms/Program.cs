@@ -1,19 +1,57 @@
+using System;
 using System.Windows.Forms;
+using ECommerce.ApplicationLayer.Interfaces;
+using ECommerce.ApplicationLayer.Services;
+using ECommerce.Infrastructure.Data;
+using ECommerce.Infrastructure.Repositories;
+using Microsoft.Extensions.DependencyInjection;
+using ECommerce.Presentation.WinForms.Forms;
+using ECommerce.Presentation.WinForms.Forms;
 
 namespace ECommerce.Presentation.WinForms
 {
     internal static class Program
     {
-        /// <summary>
-        ///  The main entry point for the application.
-        /// </summary>
+        public static IServiceProvider ServiceProvider { get; private set; }
+
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
-            ApplicationConfiguration.Initialize();
-            System.Windows.Forms.Application.Run(new Form1());
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+
+            var services = new ServiceCollection();
+            ConfigureServices(services);
+            ServiceProvider = services.BuildServiceProvider();
+
+
+         
+            var loginForm = ServiceProvider.GetRequiredService<LoginForm>();
+            Application.Run(loginForm);
+
+           
+
+
+        }
+
+        private static void ConfigureServices(IServiceCollection services)
+        {
+
+            services.AddDbContext<ApplicationDbContext>();
+            //services.AddDbContext<ApplicationDbContext>(ServiceLifetime.Singleton);
+            services.AddScoped(typeof(IGenericRepository<,>), typeof(GenericRepository<,>));
+
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<ICartItemService, CartItemService>();
+            services.AddScoped<IOrderService, OrderService>();
+
+            services.AddTransient<LoginForm>();
+            services.AddTransient<RegisterForm>();
+            services.AddTransient<AdminDashboardForm>();
+            services.AddTransient<CustomerHomeForm>();
+            services.AddTransient<MainForm>();
         }
     }
 }

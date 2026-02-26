@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/js/bootstrap.min.js"
+        integrity="sha512-nKXmKvJyiGQy343jatQlzDprflyB5c+tKCzGP3Uq67v+lmzfnZUi/ZT+fc6ITZfSC5HhaBKUIvr/nTLCV+7F+Q=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/css/bootstrap-grid.min.css"
+        integrity="sha512-dOjUSaLkr6G2pwQ7ry9juX+iXw5602zg1kg8yH+guR3uSEidGyCnOEQnGlr7xwu/8WE+pVm1ZNqaIs5ETTIJQg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+     a{
+     color: inherit;
+     text-decoration: none;
+ }
+.nav_ul li {
+    margin-right: 20px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
+    cursor: pointer;
+}
+
+header {
+    padding: 20px 0;
+
+}
+
+.mycon .header-row .header-col {
+    align-items: center;
+    justify-content: space-between;
+}
+    .search {
+        position: relative;
+    }
+    .search__input {
+        padding: 8px 20px;
+        border: none;
+        border-radius: 40px;
+        width: 300px;
+        background-color: #f5f5f5;
+    }
+    .search__button {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0 8px;
+    }
+.cart-counter {
+    position: relative;
+    margin-right: 20px;
+    margin-top: 10px;
+    cursor: pointer;
+    
+}
+#fi_9454066 {
+    color: #333;
+    font-size: 20px;
+    height: 30px;
+    width: 30px;
+}
+.cart-count-bubble {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: #5B3652;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 12px;
+}
+
+
+.hero-slider {
+    position: relative;
+    width: 100%;
+    height: 500px; /* ارتفاع الهيرو */
+    overflow: hidden;
+  }
+  
+  .slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+  }
+  
+  .slide.active {
+    opacity: 1;
+  }
+  .hero-slider {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    overflow: hidden;
+  }
+  html, body {
+    height: auto;       /* بدل 100% */
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;   /* مهم جدًا */
+}
+  
+  .slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+  }
+  
+  .slide.active {
+    opacity: 1;
+  }
+  
+  .slide-text {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #fff;
+    max-width: 50%;
+    opacity: 0;
+    transition: all 1s ease-in-out;
+  }
+  
+  .slide-text.left {
+    left: 50px;
+    text-align: left;
+  }
+  
+  .slide-text.right {
+    right: 50px;
+    text-align: right;
+  }
+  
+  /* عند تفعيل السلايد، يظهر النص مع تحريك خفيف */
+  .slide.active .slide-text {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+  }
+  
+  /* التحريك عند البداية قبل الظهور */
+  .slide-text.left {
+    transform: translateY(-50%) translateX(-50px);
+  }
+  
+  .slide-text.right {
+    transform: translateY(-50%) translateX(50px);
+  }
+  
+  .slide-text h1 {
+    font-size: 56px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  
+  .slide-text p {
+    font-size: 28px;
+  }
+
+  .category-cards {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap; 
+    margin: 70px auto;
+  }
+  
+  .card {
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    text-align: center;
+    width: calc(25% - 15px); /* 4 كاردات جنب بعض */
+    transition: transform 0.3s ease;
+    cursor: pointer;
+  }
+  
+
+  
+  .card-image img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+  }
+  
+  .card-image img:hover {
+    transform: scale(1.1); /* تكبير الصورة عند المرور */
+  }
+  
+  .card-info h3 {
+    font-size: 18px;
+    margin: 10px 0 5px 0;
+  }
+  
+  .card-info p {
+    font-size: 16px;
+    color: #666;
+  }
+
+  /* Section header */
+.best-sellers {
+    padding: 50px 20px;
+  }
+  
+  .section-header h2 {
+    font-size: 32px;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  
+  .section-header p {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 50px;
+    text-align: center;
+  }
+  
+  /* Products Grid */
+  .products-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+  }
+  
+  .product-card {
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    width: calc(25% - 15px);
+    text-align: center;
+   
+    transition: transform 0.3s ease;
+    cursor: pointer;
+  }
+  
+ 
+  /* Product Image */
+  .product-image {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+  }
+  
+  .product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  
+  .product-image .hover-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+  }
+  
+  /* Show hover image on hover */
+  .product-card:hover .hover-img {
+    opacity: 1;
+  }
+  
+  .product-card:hover .main-img {
+    opacity: 0.3; /* تعتيم الصورة الأصلية عند hover */
+  }
+  
+  /* Product Actions (Icons) */
+  .product-actions {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .product-card:hover .product-actions {
+    opacity: 1;
+  }
+  
+  .product-actions button {
+    background-color: rgba(255,255,255,0.9);
+    border: none;
+    color:#5d3754;
+    padding: 8px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  /* نبضة صغيرة عند زيادة العدد */
+@keyframes pop {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.5);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.cart-count-bubble.pop {
+    animation: pop 0.3s ease-in-out;
+}
+  .product-actions button:hover {
+    background-color: #5d3754;
+    color: #fff;
+
+  } .product-actions button.add-cart:hover {
+    background-color: #5d3754;
+    color: #fff !important;
+
+  }
+  
+  /* Product Info */
+  .product-card h3 {
+    font-size: 18px;
+    margin: 10px 0 5px 0;
+  }
+  
+  .product-card p {
+    font-size: 16px;
+    color: #5d3754;
+    margin-bottom: 15px;
+  }
+/* Banner full width */
+.promo-banner {
+    width: 100%;
+    height: 300px;
+    background-image: url('./images/footer.webp'); /* ضع هنا صورة البانر */
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Inner dotted border */
+  .promo-banner::before {
+    content: "";
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    border: 2px dotted rgba(255,255,255,0.5);
+    pointer-events: none;
+  }
+  
+  /* Banner Content */
+  .banner-content {
+    position: relative;
+    z-index: 2;
+    margin-left: 40px;
+    color: #fff;
+  }
+  
+  /* Discount Text */
+  .discount-text {
+    display: flex;
+    align-items: center;
+    font-size: 72px;
+    font-weight: bold;
+    gap: 15px;
+  }
+  
+  .discount-text .percent {
+    color: #5d3754;
+  }
+  
+  .discount-text .off {
+    -webkit-text-stroke: 2px #fff; /* يجعل النص مفرغ */
+    color: transparent;
+    font-size: 72px;
+  }
+  
+  /* Description Text */
+  .banner-content p {
+    font-size: 18px;
+    margin: 15px 0;
+  }
+  
+  /* Shop Button */
+  .shop-btn {
+    background-color: #ff6f61;
+    color: #fff;
+    padding: 12px 30px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .shop-btn:hover {
+    background-color: #e05550;
+  }
+</style>
+
+<style>
+/* بطاقة المنتج */
+.product-card {
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    background: #fff;
+}
+
+.product-card img {
+    width: 100%;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.product-card h3 {
+    margin: 10px;
+    font-size: 16px;
+    color: #5D3754;
+}
+
+.product-card p {
+    margin: 0 10px 10px 10px;
+    font-size: 14px;
+    color: #555;
+}
+
+.product-card .product-category {
+    margin: 0 10px 10px 10px;
+    font-size: 12px;
+    color: #888;
+}
+
+.category-buttons button {
+    padding: 8px 16px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background: #fff;
+    color: #5D3754;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+
+.category-buttons{
+    text-align: center;
+}
+.category-buttons button:hover,
+.category-buttons button.active {
+    background: #5D3754;
+    color: #fff;
+}
+
+.all-products .product-card {
+    
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    background: #fff;
+    text-align: center;
+}
+
+.all-products .product-card img {
+    width: 100%;
+    object-fit: cover;
+}
+
+.all-products .product-card h3 {
+    margin: 10px 5px 5px 5px;
+    font-size: 16px;
+    color: #5D3754;
+}
+
+.all-products .product-card p {
+    margin: 0 5px 10px 5px;
+    font-size: 14px;
+    color: #555;
+}
+
+.all-products .product-card .product-category {
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 10px;
+}
+</style>
+
+
+<style>
+/* Hover effect لكل نتيجة */
+#search-dropdown .dropdown-item:hover {
+    background-color: #f5f5f5;
+}
+
+/* كل نتيجة تظهر كـ flex row */
+#search-dropdown .dropdown-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+    transition: background 0.2s;
+}
+
+/* صورة المنتج */
+#search-dropdown .dropdown-item img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-right: 12px;
+}
+
+/* نصوص المنتج */
+#search-dropdown .dropdown-item div {
+    display: flex;
+    flex-direction: column;
+}
+
+/* اسم المنتج */
+#search-dropdown .dropdown-item div .product-name {
+    font-weight: 500;
+    color: #333;
+}
+
+/* السعر */
+#search-dropdown .dropdown-item div .product-price {
+    font-size: 14px;
+    color: #555;
+}
+
+/* اسم الكاتيجوري */
+#search-dropdown .dropdown-item div .product-category {
+    font-size: 12px;
+    color: #999;
+}
+</style>
+
+
+</head>
+
+<body>
+    <header>
+        <div class="container my-con">
+            <div class="row header-row justify-content-between">
+                <div class="col justify-content-between   d-flex align-items-center">
+                    <img class="img-fluid " src="./images/logo.png" alt="">
+
+                    <nav>
+                        <ul class="d-flex nav_ul " style="list-style: none; ">
+                            <li style="margin-right: 20px;">
+                            <a href="#" onclick="goHome()">
+                            Home
+                            </a>
+                            </li>
+                            <li>
+                            <a href="#" onclick="openOrderPage()">Orders</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col justify-content-between   d-flex align-items-center">
+                 <div style="position: relative; display:inline-block; width: 100%;">
+  <!-- Search Wrapper -->
+<div class="search-wrapper" style="position: relative; width: 100%; max-width: 400px; margin: 0 auto;">
+
+    <form class="search" style="margin: 0;">
+        <input class="search__input" id="search-input" type="search" name="q"
+            placeholder="Search our store" 
+            style="
+                width: 100%;
+                padding: 12px 20px;
+                border-radius: 30px;
+                border: 1px solid #ddd;
+                font-size: 16px;
+                outline: none;
+                transition: all 0.3s;
+            "
+        >
+    </form>
+
+    <!-- Dropdown لنتائج البحث -->
+    <div id="search-dropdown" style="
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        max-height: 350px;
+        overflow-y: auto;
+        z-index: 999;
+        display: none;
+        margin-top: 5px;
+    ">
+        <!-- النتائج هتظهر هنا -->
+    </div>
+</div>
+
+</div>
+                    <div class="cart-counter" style="cursor:pointer;" onclick="openCartPage()">
+
+                        <svg id="fi_9454066" enable-background="new 0 0 512 512" height="20" viewBox="0 0 512 512"
+                            width="20" xmlns="http://www.w3.org/2000/svg" cursorshover="true">
+                            <path
+                                d="m182.436 381.615h-24v-114.404h24zm85.125-124.313h-24v134.221h24zm85.096 9.909h-24v114.404h24zm139.343-53.313h-23.645l-38.681 195.749c-5.696 29.01-30.366 49.281-59.99 49.281h-227.368c-29.605 0-54.286-20.265-60.019-49.281l-38.653-195.749h-23.644v-24h111.88l30.479-87.796c10.311-29.781 37.383-49.03 68.965-49.03h49.351c31.548 0 58.618 19.245 68.964 49.028l30.454 87.798h111.907zm-334.715-24h197.406l-27.724-79.928c-6.942-19.983-25.113-32.898-46.292-32.898h-49.351c-21.202 0-39.371 12.911-46.29 32.892zm286.606 24h-375.784l37.735 191.098c3.482 17.623 18.48 29.932 36.474 29.932h227.368c17.998 0 32.984-12.303 36.442-29.919z"
+                                cursorshover="true"></path>
+                        </svg>
+                        <div class="cart-count-bubble header"><span id="cart-notification-count">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="hero-slider">
+        <div class="slide active" style="background-image: url('./images/bg1.webp');">
+          <div class=" container slide-text left">
+            <h1>Welcome to Our Store</h1>
+            <p>The Best Online Shopping Experience</p>
+          </div>
+        </div>
+        <div class="slide" style="background-image: url('./images/bg2.webp');">
+          <div class="  container slide-text right">
+            <h1>Discover Our Products</h1>
+            <p>High Quality at Affordable Prices</p>
+          </div>
+        </div>
+        <div class="slide" style="background-image: url('./images/bg3.webp');">
+          <div class=" container slide-text right">
+            <h1>Fast & Secure Delivery</h1>
+            <p>Enjoy Excellent Service</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Categories -->
+<div class="category-cards container justify-content-center text-center" id="categories-container">
+</div>
+
+<!-- Products -->
+<section class="best-sellers container">
+    <div class="section-header">
+        <h2>Best Sellers For You</h2>
+        <p>Discover our most popular products hand-picked for you.</p>
+    </div>
+    <div class="products-grid" id="best-sellers-container">
+        <!-- المنتجات هتتضاف هنا ديناميكيًا -->
+    </div>
+</section>
+
+
+      <section class="promo-banner">
+  <div class="banner-content">
+    <div class="discount-text">
+      <span class="percent">50%</span>
+      <span class="off">OFF</span>
+    </div>
+    <p>Grab your favorite products at half price for a limited time!</p>
+  </div>
+</section>
+
+
+
+<section class="all-products container">
+    <div class="section-header">
+        <h2 style="color:#5D3754;">Our Products</h2>
+        <p>Browse all products and filter by category.</p>
+
+        <!-- فلتر الكاتيجوري -->
+       <div class="category-buttons" id="category-buttons-container" style="margin-bottom:20px;">
+    <!-- بوتنز الكاتيجوري هتتضاف هنا -->
+</div>
+    </div>
+
+    <div class="products-grid" id="all-products-container">
+        <!-- المنتجات هتتضاف هنا ديناميكيًا -->
+    </div>
+</section>
+
+
+  
+
+
+
+
+ <script>
+let allProducts = [];
+let allCategories = [];
+
+// ===============================
+// Receive messages from C#
+// ===============================
+window.chrome.webview.addEventListener('message', event => {
+
+    const payload = typeof event.data === "string"
+        ? JSON.parse(event.data)
+        : event.data;
+
+    console.log("Payload from C#:", payload);
+
+    if (!payload.action) return;
+
+    switch (payload.action) {
+        case 'homeData':
+            handleHomeData(payload.data);
+            break;
+
+        case 'displayProductDetails':
+            handleProductDetails(payload.product);
+            break;
+
+         case 'updateCartCount':
+            updateCartCounter(payload.count);
+            break;
+
+    }
+});
+
+
+function updateCartCounter(count) {
+    const counter = document.getElementById("cart-notification-count");
+    counter.textContent = count;
+    counter.style.display = count > 0 ? "block" : "none";
+
+    // حذف أي أنيميشن موجود
+    counter.classList.remove("pop");
+
+    // إعادة تطبيق الأنيميشن بعد إعادة الرسم
+    void counter.offsetWidth; // trick لإعادة تفعيل الأنيميشن
+    counter.classList.add("pop");
+}
+
+// ===============================
+// Handle Home Page Data
+// ===============================
+function handleHomeData(data) {
+    allProducts = data.allProducts || [];
+    allCategories = data.allCategories || [];
+
+     if (data.cartCount !== undefined) {
+        updateCartCounter(data.cartCount);
+    }
+
+    // ===== Categories =====
+    if (data.categories && data.categories.length > 0) {
+        const container = document.getElementById('categories-container');
+        container.innerHTML = '';
+
+        data.categories.forEach(c => {
+            const div = document.createElement('div');
+            div.className = 'card';
+            div.innerHTML = `
+                <div class="card-image">
+                    <img src="./images/${c.ImageUrl}" alt="${c.Name}">
+                </div>
+                <div class="card-info">
+                    <h3>${c.Name}</h3>
+                    <p>${c.ProductCount} Items</p>
+                </div>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    // ===== Products =====
+    renderProducts(data.products || [], 'best-sellers-container');
+    renderProducts(allProducts, 'all-products-container');
+
+    // ===== Category Buttons =====
+    renderCategoryButtons();
+}
+
+// ===============================
+// Render Products
+// ===============================
+function renderProducts(products, containerId) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    container.innerHTML = '';
+
+    products.forEach(p => {
+        const div = document.createElement('div');
+        div.className = 'product-card';
+
+        div.onclick = () => {
+            console.log("Sending viewProduct:", p.Id);
+            window.chrome.webview.postMessage({
+                action: 'viewProduct',
+                productId: p.Id
+            });
+        };
+
+        div.innerHTML = `
+            <div class="product-image">
+                <img src="./images/${p.MainImageUrl}" alt="${p.Name}" class="main-img">
+                <img src="./images/${p.HoverImageUrl}" alt="${p.Name}" class="hover-img">
+                <div class="product-actions">
+                    <button class="add-cart" onclick="event.stopPropagation(); addToCart(${p.Id})">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                    </button>
+                    <button class="view" onclick="event.stopPropagation();
+                        window.chrome.webview.postMessage({
+                            action:'viewProduct',
+                            productId:${p.Id}
+                        })">
+                        <i class="fa-solid fa-eye"></i>
+                    </button>
+                </div>
+            </div>
+            <h3>${p.Name}</h3>
+            <p>$${p.Price}</p>
+            <div class="product-category">${p.CategoryName}</div>
+        `;
+        container.appendChild(div);
+    });
+}
+
+// ===============================
+// Category Buttons
+// ===============================
+function renderCategoryButtons() {
+    const container = document.getElementById('category-buttons-container');
+    if (!container) return;
+
+    container.innerHTML = '';
+
+    const allBtn = document.createElement('button');
+    allBtn.textContent = 'All';
+    allBtn.classList.add('active');
+    allBtn.onclick = () => {
+        setActiveButton(allBtn);
+        renderProducts(allProducts, 'all-products-container');
+    };
+    container.appendChild(allBtn);
+
+    allCategories.forEach(c => {
+        const btn = document.createElement('button');
+        btn.textContent = c.Name;
+        btn.onclick = () => {
+            setActiveButton(btn);
+            const filtered = allProducts.filter(p => p.CategoryName === c.Name);
+            renderProducts(filtered, 'all-products-container');
+        };
+        container.appendChild(btn);
+    });
+}
+
+function setActiveButton(activeBtn) {
+    document.querySelectorAll('.category-buttons button')
+        .forEach(b => b.classList.remove('active'));
+    activeBtn.classList.add('active');
+}
+</script>
+
+    <script>
+const searchInput = document.getElementById('search-input');
+const searchDropdown = document.getElementById('search-dropdown');
+
+searchInput.addEventListener('input', function () {
+    const query = searchInput.value.trim().toLowerCase();
+
+    if (!query) {
+        searchDropdown.style.display = 'none';
+        searchDropdown.innerHTML = '';
+        return;
+    }
+
+    const filtered = allProducts.filter(p =>
+        p.Name.toLowerCase().includes(query)
+    );
+
+    if (filtered.length === 0) {
+        searchDropdown.innerHTML = '<p style="padding:10px;">No products found</p>';
+    } else {
+        searchDropdown.innerHTML = filtered.map(p => `
+            <div class="dropdown-item" onclick="
+                window.chrome.webview.postMessage({
+                    action:'viewProduct',
+                    productId:${p.Id}
+                })
+            ">
+                <img src="./images/${p.MainImageUrl}">
+                <div>
+                    <div>${p.Name}</div>
+                    <div>$${p.Price}</div>
+                    <div>${p.CategoryName}</div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    searchDropdown.style.display = 'block';
+});
+</script>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+let currentIndex = 0;
+
+function showNextSlide() {
+  slides[currentIndex].classList.remove('active');
+  currentIndex = (currentIndex + 1) % slides.length;
+  slides[currentIndex].classList.add('active');
+}
+
+setInterval(showNextSlide, 5000);
+      </script>
+      <script>
+function addToCart(productId) {
+
+    window.chrome.webview.postMessage({
+        action: "addToCart",
+        productId: productId,
+        quantity: 1
+    });
+
+}
+
+function openCartPage() {
+    window.chrome.webview.postMessage({
+        action: "openCart"
+    });
+}
+function openOrderPage() {
+    window.chrome.webview.postMessage({
+        action: "openOrder"
+    });
+}
+
+function goHome() {
+    window.chrome.webview.postMessage({
+        action: "navigate",
+        page: "mainform.html"
+    });
+}
+</script>
+
+</body>
+
+</html>
