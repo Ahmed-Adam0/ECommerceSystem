@@ -39,12 +39,12 @@ namespace ECommerce.Presentation.WinForms.Forms
             webView = new WebView2 { Dock = DockStyle.Fill };
             this.Controls.Add(webView);
 
-            // تأكد من WebView2 Runtime مثبت
+            
             await webView.EnsureCoreWebView2Async();
 
             string pagePath = Path.Combine(Application.StartupPath, "UI", "login.html");
 
-            // مؤقتًا للتأكد من المسار
+            
             if (!File.Exists(pagePath))
             {
                 MessageBox.Show($"Login HTML not found at: {pagePath}");
@@ -67,7 +67,6 @@ namespace ECommerce.Presentation.WinForms.Forms
 
                     var action = actionProp.GetString();
 
-                    // ✅ فتح صفحة التسجيل
                     if (action == "openRegister")
                     {
                         var register = Program.ServiceProvider.GetRequiredService<RegisterForm>();
@@ -75,7 +74,6 @@ namespace ECommerce.Presentation.WinForms.Forms
                         return;
                     }
 
-                    // ✅ تسجيل الدخول
                     if (action == "login")
                     {
                         string email = root.GetProperty("email").GetString();
@@ -95,7 +93,7 @@ namespace ECommerce.Presentation.WinForms.Forms
                                 JsonSerializer.Serialize(new
                                 {
                                     action = "loginSuccess",
-                                    message = $"Welcome back {user.FullName} 👋"
+                                    message = $"Welcome back {user.FullName} "
                                 })
                             );
 
@@ -127,13 +125,11 @@ namespace ECommerce.Presentation.WinForms.Forms
 
                                     customerForm.SetUser(user.Id);
 
-                                    // خليه يطلع فوق
                                     customerForm.StartPosition = FormStartPosition.CenterScreen;
                                     customerForm.TopMost = true;
 
                                     customerForm.Show();
 
-                                    // رجّعي TopMost false بعد ما يظهر (مهم)
                                     customerForm.Shown += (s, ev) =>
                                     {
                                         customerForm.TopMost = false;
@@ -144,7 +140,6 @@ namespace ECommerce.Presentation.WinForms.Forms
                             }
                             catch (Exception ex)
                             {
-                                // نعرض أي خطأ يحصل في فتح الشاشات بدل ما يختفي التطبيق
                                 MessageBox.Show($"Error while opening dashboard:\n{ex}", "Error",
                                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 this.Show();
@@ -152,13 +147,11 @@ namespace ECommerce.Presentation.WinForms.Forms
 
                                 customerForm.SetUser(user.Id);
 
-                                // خليه يطلع فوق
                                 customerForm.StartPosition = FormStartPosition.CenterScreen;
                                 customerForm.TopMost = true;
 
                                 customerForm.Show();
 
-                                // رجّعي TopMost false بعد ما يظهر (مهم)
                                 customerForm.Shown += (s, ev) =>
                                 {
                                     customerForm.TopMost = false;
@@ -200,7 +193,6 @@ namespace ECommerce.Presentation.WinForms.Forms
             {
                 Form targetForm;
 
-                // ⚡ تحديد الفورم حسب الدور
                 if (user.Role == Domain.Enums.UserRole.Admin)
                     targetForm = Program.ServiceProvider.GetRequiredService<AdminDashboardForm>();
                 else
