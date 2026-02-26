@@ -1,4 +1,4 @@
-﻿using ECommerce.ApplicationLayer.DTOs.LoginDtos;
+using ECommerce.ApplicationLayer.DTOs.LoginDtos;
 using ECommerce.ApplicationLayer.Services;
 using ECommerce.Domain.Enums;
 using Microsoft.Extensions.DependencyInjection;
@@ -103,19 +103,69 @@ namespace ECommerce.Presentation.WinForms.Forms
 
                             this.Hide();
 
-                            if (user.Role == UserRole.Admin)
+                            try
                             {
-                                var adminForm = Program.ServiceProvider.GetRequiredService<AdminDashboardForm>();
-                                adminForm.ShowDialog();
+                                if (user.Role == UserRole.Admin)
+                                {
+                                    var adminForm = Program.ServiceProvider.GetRequiredService<AdminDashboardForm>();
+
+                                    adminForm.StartPosition = FormStartPosition.CenterScreen;
+                                    adminForm.TopMost = true;
+
+                                    adminForm.Show();
+
+                                    adminForm.Shown += (s, ev) =>
+                                    {
+                                        adminForm.TopMost = false;
+                                    };
+
+                                    this.Hide();
+                                }
+                                else
+                                {
+                                    var customerForm = Program.ServiceProvider.GetRequiredService<MainForm>();
+
+                                    customerForm.SetUser(user.Id);
+
+                                    // خليه يطلع فوق
+                                    customerForm.StartPosition = FormStartPosition.CenterScreen;
+                                    customerForm.TopMost = true;
+
+                                    customerForm.Show();
+
+                                    // رجّعي TopMost false بعد ما يظهر (مهم)
+                                    customerForm.Shown += (s, ev) =>
+                                    {
+                                        customerForm.TopMost = false;
+                                    };
+
+                                    this.Hide();
+                                }
                             }
-                            else
+                            catch (Exception ex)
                             {
+                                // نعرض أي خطأ يحصل في فتح الشاشات بدل ما يختفي التطبيق
+                                MessageBox.Show($"Error while opening dashboard:\n{ex}", "Error",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                this.Show();
                                 var customerForm = Program.ServiceProvider.GetRequiredService<MainForm>();
 
-                                // 🚀 هنا نحدد الـ current user
-                                customerForm.SetUser(user.Id); // user.Id من الـ UserDto اللي رجع من Login
+                                customerForm.SetUser(user.Id);
 
-                                customerForm.ShowDialog();
+                                // خليه يطلع فوق
+                                customerForm.StartPosition = FormStartPosition.CenterScreen;
+                                customerForm.TopMost = true;
+
+                                customerForm.Show();
+
+                                // رجّعي TopMost false بعد ما يظهر (مهم)
+                                customerForm.Shown += (s, ev) =>
+                                {
+                                    customerForm.TopMost = false;
+                                };
+
+                                this.Hide();
+
                             }
                         }
                         else
@@ -130,9 +180,10 @@ namespace ECommerce.Presentation.WinForms.Forms
                         }
                     }
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // optional logging
+                    MessageBox.Show($"Unexpected error in login handler:\n{ex}", "Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             };
         }
