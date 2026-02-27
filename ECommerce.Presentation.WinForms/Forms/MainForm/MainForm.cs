@@ -23,7 +23,7 @@ namespace ECommerce.Presentation.WinForms.Forms
         private readonly IProductService _productService;
         private readonly ICategoryService _categoryService;
         private readonly ICartItemService _cartItemService;
-        private readonly IOrderService _orderService; // ⬅ جديد
+        private readonly IOrderService _orderService; 
         private int _currentUserId;
 
         private WebView2 webView;
@@ -32,12 +32,12 @@ namespace ECommerce.Presentation.WinForms.Forms
      IProductService productService,
      ICategoryService categoryService,
      ICartItemService cartItemService,
-     IOrderService orderService) // ⬅ جديد
+     IOrderService orderService) 
         {
             _productService = productService;
             _categoryService = categoryService;
             _cartItemService = cartItemService;
-            _orderService = orderService; // ⬅ ربط الـ field بالـ service
+            _orderService = orderService;
 
             InitializeComponent();
         }
@@ -56,9 +56,7 @@ namespace ECommerce.Presentation.WinForms.Forms
             base.OnLoad(e);
             await InitWebView();
         }
-        // =========================
-        // WebView Init
-        // =========================
+       
         private async Task InitWebView()
         {
             webView = new WebView2 { Dock = DockStyle.Fill };
@@ -66,10 +64,9 @@ namespace ECommerce.Presentation.WinForms.Forms
 
             await webView.EnsureCoreWebView2Async();
 
-            webView.CoreWebView2.WebMessageReceived -= WebMessageReceived; // مهم
+            webView.CoreWebView2.WebMessageReceived -= WebMessageReceived; 
             webView.CoreWebView2.WebMessageReceived += WebMessageReceived;
 
-            //webView.CoreWebView2.NavigationCompleted += WebView_NavigationCompleted;
 
             string htmlPath = Path.Combine(Application.StartupPath, "UI", "mainform.html");
             webView.Source = new Uri(htmlPath);
@@ -84,14 +81,11 @@ namespace ECommerce.Presentation.WinForms.Forms
             webView.CoreWebView2.NavigationCompleted += Handler;
             await tcs.Task;
 
-            // بعد ما الصفحة تتحمل، ابعتي البيانات
             await SendHomePageData();
         }
 
 
-        // =========================
-        // After Page Load
-        // =========================
+       
         private async void WebView_NavigationCompleted(object? sender,
      CoreWebView2NavigationCompletedEventArgs e)
         {
@@ -106,9 +100,7 @@ namespace ECommerce.Presentation.WinForms.Forms
             await SendHomePageData();
         }
 
-        // =========================
-        // Send Home Data
-        // =========================
+        
         private async Task SendHomePageData()
         {
 
@@ -179,22 +171,17 @@ namespace ECommerce.Presentation.WinForms.Forms
 
             int userId = _currentUserId;
 
-            // 1️⃣ هات المنتج
             var product = _productService.GetProductById(productId);
             if (product == null || product.Stock <= 0)
-                return; // مفيش منتج أو مفيش ستوك
-
-            // 2️⃣ هات العنصر من الكارت لو موجود
+                return; 
             var existingItem = await _cartItemService.GetCartItemAsync(userId, productId);
 
-            // 3️⃣ احسب الكمية المسموح إضافتها (مينفعش أكتر من الستوك)
             int quantityToAdd = Math.Min(quantityRequested, product.Stock);
             if (quantityToAdd <= 0)
                 return;
 
             if (existingItem != null)
             {
-                // المنتج موجود في الكارت
                 existingItem.Quantity += quantityToAdd;
 
                 _cartItemService.UpdateCartItem(new UpdateCartItemDto
@@ -205,7 +192,6 @@ namespace ECommerce.Presentation.WinForms.Forms
             }
             else
             {
-                // منتج جديد في الكارت
                 await _cartItemService.CreateCartItemAsync(userId, new CreateCartItemDto
                 {
                     ProductId = productId,
@@ -213,7 +199,6 @@ namespace ECommerce.Presentation.WinForms.Forms
                 });
             }
 
-            // 4️⃣ خصم الكمية من الستوك الحقيقي
             product.Stock -= quantityToAdd;
 
             _productService.UpdateProduct(new UpdateProductDto
@@ -226,14 +211,11 @@ namespace ECommerce.Presentation.WinForms.Forms
                 Stock = product.Stock
             });
 
-            // 5️⃣ حفظ التغييرات
             await _cartItemService.SaveChangesAsync();
             await _productService.SaveChangesAsync();
 
-            // 6️⃣ تحديث بيانات الهوم (products + cart count)
             await SendHomePageData();
 
-            // 7️⃣ تحديث عداد الكارت
             int cartCount = await _cartItemService.GetUserCartCountAsync(userId);
             webView.CoreWebView2.PostWebMessageAsJson(
                 JsonSerializer.Serialize(new
@@ -243,7 +225,6 @@ namespace ECommerce.Presentation.WinForms.Forms
                 })
             );
 
-            // 8️⃣ تحديث الستوك فورًا في صفحة الـ single product
             webView.CoreWebView2.PostWebMessageAsJson(
                 JsonSerializer.Serialize(new
                 {
@@ -273,7 +254,7 @@ namespace ECommerce.Presentation.WinForms.Forms
             webView.CoreWebView2.NavigationCompleted += Handler;
             webView.Source = new Uri(cartPath);
 
-            await tcs.Task; // 👈 استنى الصفحة تفتح فعليًا
+            await tcs.Task; 
 
             await SendCartData(userId);
         }
@@ -310,10 +291,7 @@ namespace ECommerce.Presentation.WinForms.Forms
 
             webView.CoreWebView2.PostWebMessageAsJson(JsonSerializer.Serialize(data));
         }
-        // =========================
-        // Receive Messages
-        // =========================
-
+      
 
         private async void WebMessageReceived(object? sender, CoreWebView2WebMessageReceivedEventArgs e)
         {
@@ -324,7 +302,6 @@ namespace ECommerce.Presentation.WinForms.Forms
                 return;
 
             string action = actionProp.GetString() ?? "";
-            //MessageBox.Show($"Action received: {action}"); // 👈 اختبار
 
             switch (action)
             {
@@ -352,7 +329,7 @@ namespace ECommerce.Presentation.WinForms.Forms
                     await HandleRemoveFromCart(root);
                     break;
 
-                case "openOrder":   // 👈 الجديد
+                case "openOrder":   
                     await OpenOrderPage(root);
                     break;
 
@@ -380,12 +357,11 @@ namespace ECommerce.Presentation.WinForms.Forms
             var order = _orderService.GetOrderById(orderId);
 
             if (order == null || order.Status == OrderStatus.Shipping)
-                return; // لا يمكن إلغاء الأوردر إذا Shipping
+                return;
 
             _orderService.DeleteOrder(orderId);
             await _orderService.SaveChangesAsync();
 
-            // رجع الأوردرات المحدثة للـ WebView
             var orders = _orderService.GetOrdersByUserId(_currentUserId);
             webView.CoreWebView2.PostWebMessageAsJson(
                 JsonSerializer.Serialize(new
@@ -418,14 +394,12 @@ namespace ECommerce.Presentation.WinForms.Forms
 
             await _orderService.CreateOrderAsync(order);
 
-            // فرغ الكارت بعد حفظ الأوردر
             foreach (var item in cartItems)
                 await _cartItemService.RemoveFromCartAsync(userId, item.ProductId);
             await _cartItemService.SaveChangesAsync();
 
             string orderPath = Path.Combine(Application.StartupPath, "UI", "order.html");
 
-            // استنى الصفحة تفتح تمام قبل إرسال البيانات
             var tcs = new TaskCompletionSource();
             void Handler(object? s, CoreWebView2NavigationCompletedEventArgs e)
             {
@@ -437,9 +411,7 @@ namespace ECommerce.Presentation.WinForms.Forms
 
             webView.CoreWebView2.NavigationCompleted += Handler;
             webView.Source = new Uri(orderPath);
-            await tcs.Task; // استنى الصفحة تتحمل
-
-            // ابعتي الأوردرات الجديدة بعد تحميل الصفحة
+            await tcs.Task; 
             var orders = _orderService.GetOrdersByUserId(userId);
 
             webView.CoreWebView2.PostWebMessageAsJson(
@@ -475,7 +447,7 @@ namespace ECommerce.Presentation.WinForms.Forms
             webView.CoreWebView2.NavigationCompleted += Handler;
             webView.Source = new Uri(orderPath);
 
-            await tcs.Task; // 👈 استنى الصفحة تفتح فعليًا
+            await tcs.Task; 
 
             await SendOrderData(userId);
         }
@@ -509,20 +481,18 @@ namespace ECommerce.Presentation.WinForms.Forms
             if (cartItem == null)
                 return;
 
-            // لو زيادة
             if (delta > 0)
             {
                 if (product.Stock <= 0)
-                    return; // مفيش ستوك أصلاً
+                    return; 
 
                 cartItem.Quantity += 1;
                 product.Stock -= 1;
             }
-            // لو نقصان
             else if (delta < 0)
             {
                 if (cartItem.Quantity <= 1)
-                    return; // أقل كمية 1
+                    return; 
 
                 cartItem.Quantity -= 1;
                 product.Stock += 1;
@@ -580,9 +550,7 @@ namespace ECommerce.Presentation.WinForms.Forms
 
             await SendCartData(_currentUserId);
         }
-        // =========================
-        // Navigation
-        // =========================
+       
         private async void HandleNavigation(JsonElement root)
         {
             if (!root.TryGetProperty("page", out var pageProp))
@@ -600,7 +568,6 @@ namespace ECommerce.Presentation.WinForms.Forms
 
                 webView.CoreWebView2.NavigationCompleted -= Handler;
 
-                // 👈 لو رجعنا للهوم ابعتي الداتا تاني
                 if (page == "mainform.html")
                 {
                     _ = SendHomePageData();
@@ -651,13 +618,12 @@ namespace ECommerce.Presentation.WinForms.Forms
                         p.MainImageUrl,
                         p.CategoryName
                     }),
-                    cartCount // ✅ ابعت الكارت count فورًا
+                    cartCount 
                 });
 
                 webView.CoreWebView2.PostWebMessageAsJson(json);
             }
 
-            // لو أنا بالفعل في صفحة single-product → ابعتي الداتا فورًا
             if (webView.Source != null &&
                 webView.Source.AbsolutePath.EndsWith("single-product.html"))
             {
@@ -665,12 +631,11 @@ namespace ECommerce.Presentation.WinForms.Forms
                 return;
             }
 
-            // لو أنا في الهوم → روح للسينجل أولاً ثم ابعتي الداتا
             void Handler(object? s, CoreWebView2NavigationCompletedEventArgs e)
             {
                 if (!e.IsSuccess) return;
 
-                _ = SendData(); // ابعتي البيانات بعد التنقل
+                _ = SendData(); 
                 webView.CoreWebView2.NavigationCompleted -= Handler;
             }
 
@@ -697,9 +662,7 @@ namespace ECommerce.Presentation.WinForms.Forms
 
             webView.CoreWebView2.PostWebMessageAsJson(json);
         }
-        // =========================
-        // View Product
-        // =========================
+        
         protected override void OnFormClosed(FormClosedEventArgs e)
         {
             base.OnFormClosed(e);
